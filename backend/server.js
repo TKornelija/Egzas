@@ -1,3 +1,5 @@
+import dotenv from 'dotenv';
+dotenv.config();
 const express = require("express");
 const cors = require("cors");
 
@@ -5,15 +7,8 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// ==== MOCK DATA (rent + buy) ====
-let costumes = [
-  { id: "c1", title: "Vampire Queen",  pricePerDay: 40, priceBuy: 120, sizes: ["S","M","L"] },
-  { id: "c2", title: "Dark Nun",       pricePerDay: 35, priceBuy: 100, sizes: ["M","L"] },
-  { id: "c3", title: "Devil Mistress", pricePerDay: 45, priceBuy: 140, sizes: ["S","M"] },
-];
-
-let reservations = []; // {id,user,costumeId,from,to,status}
-let orders = [];       // {id,user,costumeId,qty,size,total,createdAt}
+// Middleware
+connectDataBase();
 
 // --- health
 app.get("/api/health", (_,res)=> res.json({ ok:true, service:"FreakOrTreat API" }));

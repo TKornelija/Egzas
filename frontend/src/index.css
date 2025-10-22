@@ -33,3 +33,82 @@ body{margin:0;background:#0b0b0b;color:#eee;font-family:system-ui,Segoe UI,Robot
 .btn--primary:hover{filter:brightness(1.1)}
 .btn--ghost{background:transparent;color:#e04646;border:1px solid #e04646}
 .btn--ghost:hover{background:#1a0c0c}
+
+/* DETAILS SECTION */
+.sizes-section {
+  margin-bottom: 18px;
+}
+
+.sizes-title {
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+
+.sizes-list {
+  display: flex;
+  gap: 8px;
+}
+
+.size-btn {
+  border-color: #444;
+}
+
+.size-btn.active {
+  border-color: #e04646;
+  background: #1a0c0c;
+}
+
+/* RENT / BUY SECTION */
+.rent-section {
+  display: grid;
+  gap: 14px;
+  max-width: 320px;
+  margin-top: 6px;
+}
+
+.rent-section label {
+  color: #ccc;
+  display: block;
+}
+
+.input-date {
+  display: block;
+  margin-top: 6px;
+  width: 100%;
+  background: #181818;
+  color: #fff;
+  border: 1px solid #333;
+  border-radius: 8px;
+  padding: 6px 10px;
+}
+
+.total-line {
+  opacity: 0.85;
+}
+
+/* ERROR */
+.error-text {
+  color: #ff6b6b;
+  margin-top: 12px;
+}
+
+/* RESERVE BUTTON */
+.reserve-btn {
+  border: none;
+  color: #fff;
+  font-weight: bold;
+  padding: 12px 0;
+  border-radius: 8px;
+  margin-top: 18px;
+  width: 320px;
+  max-width: 100%;
+  cursor: pointer;
+  opacity: 1;
+  background: #d43b3b;
+}
+
+.reserve-btn.disabled {
+  background: #7a3c3c;
+  cursor: not-allowed;
+  opacity: 0.7;
+}
