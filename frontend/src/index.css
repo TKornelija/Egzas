@@ -6,8 +6,8 @@ body{margin:0;background:#0b0b0b;color:#eee;font-family:system-ui,Segoe UI,Robot
 .container{max-width:1200px;margin:0 auto;padding:0 16px}
 
 /* HERO */
-.hero{position:relative;min-height:70vh;display:flex;align-items:center;justify-content:center;text-align:center;background:#111}
-.hero__overlay{position:absolute;inset:0;background:radial-gradient(60% 60% at 50% 35%, rgba(255,255,255,.06) 0%, rgba(0,0,0,.6) 60%, rgba(0,0,0,.9) 100%)}
+.hero{position:relative;min-height:70vh;display:flex;align-items:center;justify-content:center;text-align:center;background:#d85656}
+.hero__overlay{position:absolute;inset:0;background:radial-gradient(60% 60% at 50% 35%, rgba(173, 6, 6, 0.06) 0%, rgba(0,0,0,.6) 60%, rgba(0,0,0,.9) 100%)}
 .hero__content{position:relative;z-index:1;padding:24px;color:#fff}
 .hero__title{font-size:clamp(32px,5vw,56px);margin:0 0 16px}
 
