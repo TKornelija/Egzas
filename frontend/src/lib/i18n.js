@@ -10,6 +10,8 @@ const translations = {
       how: "Kaip veikia",
       faq: "DUK",
       contact: "Kontaktai",
+      cart: "Krepšelis",
+      login: "Prisijungti",
     },
     home: {
       title: "Išlaisvink savo alter ego šį Heloviną",
@@ -35,7 +37,8 @@ const translations = {
       reserve: "Rezervuoti",
       addToCart: "Į krepšelį",
       priceLine: (pDay, pBuy) => `${pDay} €/diena · Pirkti: ${pBuy} €`,
-      reservedMsg: (t, f, to, d) => `Rezervuota: ${t}\n${f} → ${to}\nDienos: ${d}`,
+      reservedMsg: (t, f, to, d) =>
+        `Rezervuota: ${t}\n${f} → ${to}\nDienos: ${d}`,
       orderedMsg: (t, q) => `Įdėta į krepšelį: ${t}\nKiekis: ${q}`,
     },
     footer: {
@@ -56,6 +59,8 @@ const translations = {
       how: "How it works",
       faq: "FAQ",
       contact: "Contact",
+      cart: "Cart",
+      login: "Login",
     },
     home: {
       title: "Unleash Your Alter Ego This Halloween",
@@ -102,6 +107,8 @@ const translations = {
       how: "Как это работает",
       faq: "FAQ",
       contact: "Контакты",
+      cart: "Корзина",
+      login: "Войти",
     },
     home: {
       title: "Освободи своё альтер-эго на Хэллоуин",
@@ -149,8 +156,11 @@ const I18nCtx = createContext({
 
 export function I18nProvider({ children }) {
   // auto-detect first time, else use saved
-  const saved = typeof window !== "undefined" ? localStorage.getItem("lang") : null;
-  const browser = (typeof navigator !== "undefined" ? navigator.language : "en").slice(0, 2);
+  const saved =
+    typeof window !== "undefined" ? localStorage.getItem("lang") : null;
+  const browser = (
+    typeof navigator !== "undefined" ? navigator.language : "en"
+  ).slice(0, 2);
   const initial =
     saved || (["lt", "en", "ru"].includes(browser) ? browser : "en");
 
