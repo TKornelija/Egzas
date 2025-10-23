@@ -1,31 +1,8 @@
 import { useParams, Link, useSearchParams } from "react-router-dom";
-import { useMemo, useState } from "react";
-import { apiPost } from "../lib/api";
+import { useMemo, useState, useEffect } from "react";
+import { apiGet, apiPost } from "../lib/api";
 import { useI18n } from "../lib/i18n";
-
-const MOCK = {
-  c1: {
-    id: "c1",
-    title: "Vampire Queen",
-    pricePerDay: 40,
-    priceBuy: 120,
-    sizes: ["S", "M", "L"],
-  },
-  c2: {
-    id: "c2",
-    title: "Dark Nun",
-    pricePerDay: 35,
-    priceBuy: 100,
-    sizes: ["M", "L"],
-  },
-  c3: {
-    id: "c3",
-    title: "Devil Mistress",
-    pricePerDay: 45,
-    priceBuy: 140,
-    sizes: ["S", "M"],
-  },
-};
+import "../styles/costumeDetails.css";
 
 export default function CostumeDetails() {
   const { t } = useI18n();
@@ -33,15 +10,33 @@ export default function CostumeDetails() {
   const [params] = useSearchParams();
   const initialMode = params.get("mode") === "buy" ? "buy" : "rent";
 
-  const item = MOCK[id];
+  const [item, setItem] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+  const [currentImage, setCurrentImage] = useState(0);
+
+  useEffect(() => {
+    async function load() {
+      try {
+        setLoading(true);
+        const data = await apiGet(`/api/costumes/${id}`);
+        setItem(data);
+      } catch (e) {
+        console.error(e);
+        setError("Nepavyko gauti kostiumo duomenų.");
+      } finally {
+        setLoading(false);
+      }
+    }
+    load();
+  }, [id]);
+
   const [mode, setMode] = useState(initialMode);
-  const [size, setSize] = useState(item?.sizes?.[0] ?? "");
+  const [size, setSize] = useState("");
   const [from, setFrom] = useState("");
   const [to, setTo] = useState("");
   const [qty, setQty] = useState(1);
-  const [error, setError] = useState("");
 
-  // today's date in YYYY-MM-DD format
   const today = useMemo(() => {
     const d = new Date();
     const mm = String(d.getMonth() + 1).padStart(2, "0");
@@ -57,18 +52,25 @@ export default function CostumeDetails() {
     return diff > 0 ? diff : 0;
   }, [from, to]);
 
-  if (!item)
+  if (loading)
     return (
-      <div className="container" style={{ padding: "60px 0" }}>
-        <p style={{ marginBottom: 20 }}>Not found.</p>
+      <div className="container">
+        <p>Kraunama...</p>
+      </div>
+    );
+
+  if (error || !item)
+    return (
+      <div className="container">
+        <p>{error || "Not found."}</p>
         <Link className="btn btn--ghost" to="/costumes">
           {t("details.back")}
         </Link>
       </div>
     );
 
-  const rentTotal = days * item.pricePerDay;
-  const buyTotal = qty * item.priceBuy;
+  const rentTotal = days * item.rentalPrice;
+  const buyTotal = qty * item.price;
 
   const isRentValid = mode === "rent" ? size && from && to && days > 0 : true;
   const isBuyValid = mode === "buy" ? size && qty >= 1 : true;
@@ -79,9 +81,11 @@ export default function CostumeDetails() {
     try {
       if (mode === "rent") {
         if (!canSubmit)
-          return setError(t("details.reservedMsg", item.title, from, to, days));
+          return setError(
+            t("details.reservedMsg", item.name, from, to, days)
+          );
         const res = await apiPost("/api/reservations", {
-          costumeId: id,
+          costumeId: item.id,
           from,
           to,
           size,
@@ -93,14 +97,14 @@ export default function CostumeDetails() {
         );
       } else {
         const order = await apiPost("/api/purchase", {
-          costumeId: id,
+          costumeId: item.id,
           qty,
           size,
         });
         alert(
-          `🧾 Order #${order.id}\nQty: ${order.qty}\n${t("details.total")}: $${
-            order.total
-          }`
+          `🧾 Order #${order.id}\nQty: ${order.qty}\n${t(
+            "details.total"
+          )}: $${order.total}`
         );
       }
     } catch (e) {
@@ -108,78 +112,78 @@ export default function CostumeDetails() {
     }
   }
 
+  // Carousel navigation
+  function prevImage() {
+    setCurrentImage((prev) =>
+      prev === 0 ? item.imageUrls.length - 1 : prev - 1
+    );
+  }
+  function nextImage() {
+    setCurrentImage((prev) =>
+      prev === item.imageUrls.length - 1 ? 0 : prev + 1
+    );
+  }
+
   return (
-    <div className="container" style={{ padding: "60px 0" }}>
-      <Link
-        to="/costumes"
-        className="btn btn--ghost"
-        style={{ marginBottom: 24 }}
-      >
+    <div className="container">
+      <Link to="/costumes" className="btn btn--ghost back-btn">
         ← {t("details.back")}
       </Link>
 
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: "1fr 1fr",
-          gap: 40,
-          alignItems: "start",
-        }}
-      >
-        <div
-          style={{
-            background:
-              "radial-gradient(circle at center, #1a1a1a 0%, #0e0e0e 100%)",
-            borderRadius: 16,
-            height: 450,
-            boxShadow: "0 0 20px rgba(255,255,255,0.05)",
-          }}
-        />
+      <div className="costume-grid">
+        {/* Carousel */}
+        <div className="carousel-wrapper">
+          <div
+            className="carousel-image"
+            style={{ backgroundImage: `url(${item.imageUrls[currentImage]})` }}
+          />
+          <button className="carousel-arrow left" onClick={prevImage}>
+            ◀
+          </button>
+          <button className="carousel-arrow right" onClick={nextImage}>
+            ▶
+          </button>
+        </div>
 
-        <div>
-          <h1 style={{ fontSize: "2rem", marginBottom: 10 }}>{item.title}</h1>
-          <p style={{ color: "#bbb", marginBottom: 16 }}>
-            {t("details.priceLine", item.pricePerDay, item.priceBuy)}
+        {/* Details */}
+        <div className="details">
+          <h1>{item.name}</h1>
+          <p className="price-line">
+            {t("details.priceLine", item.rentalPrice, item.price)}
           </p>
 
-          {/* Tabs */}
-          <div style={{ display: "flex", gap: 8, marginBottom: 16 }}>
+          <div className="tabs">
             <button
               onClick={() => setMode("rent")}
-              className={`btn ${
-                mode === "rent" ? "btn--primary" : "btn--ghost"
-              }`}
+              className={`btn ${mode === "rent" ? "btn--primary" : "btn--ghost"}`}
             >
               {t("details.rent")}
             </button>
             <button
               onClick={() => setMode("buy")}
-              className={`btn ${
-                mode === "buy" ? "btn--primary" : "btn--ghost"
-              }`}
+              className={`btn ${mode === "buy" ? "btn--primary" : "btn--ghost"}`}
             >
               {t("details.buy")}
             </button>
           </div>
 
-          {/* Sizes */}
-          <div className="sizes-section">
-            <div className="sizes-title">{t("details.sizes")}:</div>
-            <div className="sizes-list">
-              {item.sizes.map((s) => (
-                <button
-                  key={s}
-                  className={`btn btn--ghost size-btn ${
-                    s === size ? "active" : ""
-                  }`}
-                  onClick={() => setSize(s)}
-                  aria-pressed={s === size}
-                >
-                  {s}
-                </button>
-              ))}
+          {item.size?.length > 0 && (
+            <div className="sizes-section">
+              <div className="sizes-title">{t("details.sizes")}:</div>
+              <div className="sizes-list">
+                {item.size.map((s) => (
+                  <button
+                    key={s}
+                    className={`btn btn--ghost size-btn ${s === size ? "active" : ""}`}
+                    onClick={() => setSize(s)}
+                    aria-pressed={s === size}
+                  >
+                    {s}
+                  </button>
+                ))}
+              </div>
             </div>
-          </div>
+          )}
 
           {mode === "rent" ? (
             <div className="rent-section">
@@ -193,7 +197,6 @@ export default function CostumeDetails() {
                   className="input-date"
                 />
               </label>
-
               <label>
                 {t("details.to")}:
                 <input
@@ -204,7 +207,6 @@ export default function CostumeDetails() {
                   className="input-date"
                 />
               </label>
-
               <div className="total-line">
                 {t("details.total")}: <strong>${rentTotal || 0}</strong>{" "}
                 {days ? `(${days} ${t("details.days")})` : ""}
@@ -224,7 +226,6 @@ export default function CostumeDetails() {
                   className="input-date"
                 />
               </label>
-
               <div className="total-line">
                 {t("details.total")}: <strong>${buyTotal}</strong>
               </div>
@@ -240,6 +241,12 @@ export default function CostumeDetails() {
           >
             {mode === "rent" ? t("details.reserve") : t("details.addToCart")}
           </button>
+        </div>
+
+        {/* Description */}
+        <div className="product-description">
+          <h2>{t("Aprašymas")}</h2>
+          <p>{item.description}</p>
         </div>
       </div>
     </div>
