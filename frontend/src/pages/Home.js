@@ -1,28 +1,54 @@
 import { Link } from "react-router-dom";
-import { useI18n } from "../lib/i18n"; // 👈 pridėjom
+import { useEffect, useState } from "react";
+import { useI18n } from "../lib/i18n";
 
 export default function Home() {
-  const { t } = useI18n(); // 👈 naudojam vertimų hook'ą
+  const { t } = useI18n();
+  const slides = [
+    { id: 0, bg: "hero--one" },
+    { id: 1, bg: "hero--two" },
+    { id: 2, bg: "hero--three" },
+  ];
+  const [index, setIndex] = useState(0);
+
+  // Automatinis keitimas kas 6s
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setIndex((i) => (i + 1) % slides.length);
+    }, 6000);
+    return () => clearInterval(timer);
+  }, []);
 
   return (
     <div>
-      {/* HERO */}
+      {/* HERO SLIDER */}
       <section className="hero">
-        <div className="hero__overlay" />
-        <div className="hero__content">
-          <h1 className="hero__title">{t("home.title")}</h1>
-          <Link to="/costumes" className="btn btn--primary">
-            {t("home.rentNow")}
-          </Link>
+        {slides.map((s, i) => (
+          <div
+            key={s.id}
+            className={`hero__slide ${s.bg} ${i === index ? "is-active" : ""}`}
+          >
+            <div className="hero__overlay" />
+            <div className="hero__content">
+              <h1 className="hero__title">{t("home.title")}</h1>
+              <Link to="/costumes" className="btn btn--primary">
+                {t("home.rentNow")}
+              </Link>
+            </div>
+          </div>
+        ))}
+
+        {/* SLIDER DOTS */}
+        <div className="dots">
+          {slides.map((s, i) => (
+            <span
+              key={s.id}
+              className={`dot ${i === index ? "dot--active" : ""}`}
+              onClick={() => setIndex(i)}
+            />
+          ))}
         </div>
       </section>
-
-      {/* SLIDER DOTS */}
-      <div className="dots">
-        <span className="dot dot--active" />
-        <span className="dot" />
-        <span className="dot" />
-      </div>
 
       {/* FEATURED */}
       <section className="featured">
