@@ -1,25 +1,26 @@
 import express from "express";
-import { MongoClient } from "mongodb";
+import { readFile } from 'fs/promises';
 
 const router = express.Router();
-const uri = "mongodb+srv://TOF:egzaminas2025@prekes.qewruix.mongodb.net/";
-const client = new MongoClient(uri);
-const dbName = "prekes";
 
-router.get("/:id", async (req, res) => {
-  try {
-    await client.connect();
-    const db = client.db(dbName);
-    const costumes = db.collection("costumes");
+async function loadCostumes(){
+  const raw = await readFile(new URL('../../data/products.json', import.meta.url));
+  return JSON.parse(raw.toString());
+}
 
-    const costume = await costumes.findOne({ id: Number(req.params.id) });
-    if (!costume) return res.status(404).json({ error: "Kostiumas nerastas" });
+router.get('/', async (req,res)=>{
+  const q = (req.query.q||"").toLowerCase();
+  const costumes = await loadCostumes();
+  const list = q ? costumes.filter(c=> (c.name||"").toLowerCase().includes(q)) : costumes;
+  res.json(list);
+});
 
-    res.json(costume);
-  } catch (err) {
-    console.error("Klaida:", err);
-    res.status(500).json({ error: "Serverio klaida" });
-  }
+router.get('/:id', async (req,res)=>{
+  const id = Number(req.params.id);
+  const costumes = await loadCostumes();
+  const item = costumes.find(c=>c.id===id);
+  if(!item) return res.status(404).json({message:"Not found"});
+  res.json(item);
 });
 
 export default router;
