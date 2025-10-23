@@ -3,6 +3,7 @@ import { useMemo, useState } from "react";
 import { apiPost } from "../lib/api";
 import { useI18n } from "../lib/i18n";
 
+
 const MOCK = {
   c1: {
     id: "c1",
@@ -41,7 +42,7 @@ export default function CostumeDetails() {
   const [qty, setQty] = useState(1);
   const [error, setError] = useState("");
 
-  // today's date in YYYY-MM-DD format
+  // today's date
   const today = useMemo(() => {
     const d = new Date();
     const mm = String(d.getMonth() + 1).padStart(2, "0");
