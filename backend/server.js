@@ -1,14 +1,16 @@
 import dotenv from 'dotenv';
 dotenv.config();
-const express = require("express");
-const cors = require("cors");
+import express from "express";
+import cors from "cors";
+import connectDatabase from "./config/db.js";
+
 
 const app = express();
 app.use(cors());
 app.use(express.json());
 
 // Middleware
-connectDataBase();
+connectDatabase();
 
 // --- health
 app.get("/api/health", (_,res)=> res.json({ ok:true, service:"FreakOrTreat API" }));
@@ -21,7 +23,8 @@ app.get("/api/costumes", (req,res)=>{
 });
 
 app.get("/api/costumes/:id", (req,res)=>{
-  const item = costumes.find(c=>c.id===req.params.id);
+  const id = Number(req.params.id);
+  const item = costumes.find(c=>c.id===id);
   if(!item) return res.status(404).json({message:"Not found"});
   res.json(item);
 });
