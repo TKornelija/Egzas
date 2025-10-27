@@ -2,6 +2,7 @@ import { useParams, Link, useSearchParams } from "react-router-dom";
 import { useMemo, useState, useEffect } from "react";
 import { apiGet, apiPost } from "../lib/api";
 import "../styles/costumeDetails.css";
+import { useI18n } from "../lib/i18n";
 
 export default function CostumeDetails() {
   const { id } = useParams();
@@ -23,6 +24,7 @@ export default function CostumeDetails() {
   const [to, setTo] = useState("");
   const [qty, setQty] = useState(1);
 
+  // today's date in YYYY-MM-DD format
   const today = useMemo(() => {
     const d = new Date();
     const mm = String(d.getMonth() + 1).padStart(2, "0");
