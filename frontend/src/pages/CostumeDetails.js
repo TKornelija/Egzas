@@ -1,11 +1,9 @@
 import { useParams, Link, useSearchParams } from "react-router-dom";
 import { useMemo, useState, useEffect } from "react";
 import { apiGet, apiPost } from "../lib/api";
-import { useI18n } from "../lib/i18n";
 import "../styles/costumeDetails.css";
 
 export default function CostumeDetails() {
-  const { t } = useI18n();
   const { id } = useParams();
   const [params] = useSearchParams();
   const initialMode = params.get("mode") === "buy" ? "buy" : "rent";
@@ -15,21 +13,9 @@ export default function CostumeDetails() {
   const [error, setError] = useState("");
   const [currentImage, setCurrentImage] = useState(0);
 
-  useEffect(() => {
-    async function load() {
-      try {
-        setLoading(true);
-        const data = await apiGet(`/api/costumes/${id}`);
-        setItem(data);
-      } catch (e) {
-        console.error(e);
-        setError("Nepavyko gauti kostiumo duomenų.");
-      } finally {
-        setLoading(false);
-      }
-    }
-    load();
-  }, [id]);
+  const [reviews, setReviews] = useState([]);
+  const [newReview, setNewReview] = useState({ text: "" });
+  const [reviewError, setReviewError] = useState("");
 
   const [mode, setMode] = useState(initialMode);
   const [size, setSize] = useState("");
@@ -52,6 +38,85 @@ export default function CostumeDetails() {
     return diff > 0 ? diff : 0;
   }, [from, to]);
 
+  // Load item and reviews
+  useEffect(() => {
+    async function load() {
+      try {
+        setLoading(true);
+        const data = await apiGet(`/api/costumes/${id}`);
+        setItem(data);
+
+        const reviewData = await apiGet(`/api/costumes/${id}/reviews`);
+        setReviews(reviewData);
+      } catch (e) {
+        console.error(e);
+        setError("Nepavyko gauti kostiumo duomenų.");
+      } finally {
+        setLoading(false);
+      }
+    }
+    load();
+  }, [id]);
+
+  const rentTotal = days * (item?.rentalPrice || 0);
+  const buyTotal = qty * (item?.price || 0);
+
+  const isRentValid = mode === "rent" ? size && from && to && days > 0 : true;
+  const isBuyValid = mode === "buy" ? size && qty >= 1 : true;
+  const canSubmit = isRentValid && isBuyValid;
+
+  async function handleReserve() {
+    setError("");
+    try {
+      if (mode === "rent") {
+        if (!canSubmit) return setError("Įveskite visus reikalingus duomenis.");
+        const res = await apiPost("/api/reservations", {
+          costumeId: id,
+          from,
+          to,
+          size,
+        });
+        alert(`Rezervacija #${res.id}\n${res.from} → ${res.to}\nSuma: $${res.total}`);
+      } else {
+        const order = await apiPost("/api/purchase", {
+          costumeId: id,
+          qty,
+          size,
+        });
+        alert(`Užsakymas #${order.id}\nKiekis: ${order.qty}\nSuma: $${order.total}`);
+      }
+    } catch (e) {
+      setError(e.message || "Užklausa nepavyko");
+    }
+  }
+
+  async function submitReview(e) {
+    e.preventDefault();
+    setReviewError("");
+    if (!newReview.text) return setReviewError("Komentaras privalomas.");
+    try {
+      const res = await apiPost(`/api/costumes/${id}/reviews`, {
+        text: newReview.text,
+        costumeId: id,
+      });
+      setReviews((prev) => [...prev, res]);
+      setNewReview({ text: "" });
+    } catch (e) {
+      setReviewError(e.message || "Nepavyko pridėti atsiliepimo.");
+    }
+  }
+
+  function prevImage() {
+    setCurrentImage((prev) =>
+      prev === 0 ? item.imageUrls.length - 1 : prev - 1
+    );
+  }
+  function nextImage() {
+    setCurrentImage((prev) =>
+      prev === item.imageUrls.length - 1 ? 0 : prev + 1
+    );
+  }
+
   if (loading)
     return (
       <div className="container">
@@ -64,70 +129,15 @@ export default function CostumeDetails() {
       <div className="container">
         <p>{error || "Not found."}</p>
         <Link className="btn btn--ghost" to="/costumes">
-          {t("details.back")}
+          Atgal
         </Link>
       </div>
     );
 
-  const rentTotal = days * item.rentalPrice;
-  const buyTotal = qty * item.price;
-
-  const isRentValid = mode === "rent" ? size && from && to && days > 0 : true;
-  const isBuyValid = mode === "buy" ? size && qty >= 1 : true;
-  const canSubmit = isRentValid && isBuyValid;
-
-  async function handleReserve() {
-    setError("");
-    try {
-      if (mode === "rent") {
-        if (!canSubmit)
-          return setError(
-            t("details.reservedMsg", item.name, from, to, days)
-          );
-        const res = await apiPost("/api/reservations", {
-          costumeId: item.id,
-          from,
-          to,
-          size,
-        });
-        alert(
-          `🎉 Reservation #${res.id}\n${res.from} → ${res.to}\n${t(
-            "details.total"
-          )}: $${res.total}`
-        );
-      } else {
-        const order = await apiPost("/api/purchase", {
-          costumeId: item.id,
-          qty,
-          size,
-        });
-        alert(
-          `🧾 Order #${order.id}\nQty: ${order.qty}\n${t(
-            "details.total"
-          )}: $${order.total}`
-        );
-      }
-    } catch (e) {
-      setError(e.message || "Request failed");
-    }
-  }
-
-  // Carousel navigation
-  function prevImage() {
-    setCurrentImage((prev) =>
-      prev === 0 ? item.imageUrls.length - 1 : prev - 1
-    );
-  }
-  function nextImage() {
-    setCurrentImage((prev) =>
-      prev === item.imageUrls.length - 1 ? 0 : prev + 1
-    );
-  }
-
   return (
     <div className="container">
       <Link to="/costumes" className="btn btn--ghost back-btn">
-        ← {t("details.back")}
+        ← Atgal
       </Link>
 
       <div className="costume-grid">
@@ -149,7 +159,7 @@ export default function CostumeDetails() {
         <div className="details">
           <h1>{item.name}</h1>
           <p className="price-line">
-            {t("details.priceLine", item.rentalPrice, item.price)}
+            {`${item.rentalPrice} €/diena · Pirkti: ${item.price} €`}
           </p>
 
           <div className="tabs">
@@ -157,19 +167,19 @@ export default function CostumeDetails() {
               onClick={() => setMode("rent")}
               className={`btn ${mode === "rent" ? "btn--primary" : "btn--ghost"}`}
             >
-              {t("details.rent")}
+              Nuoma
             </button>
             <button
               onClick={() => setMode("buy")}
               className={`btn ${mode === "buy" ? "btn--primary" : "btn--ghost"}`}
             >
-              {t("details.buy")}
+              Pirkimas
             </button>
           </div>
 
           {item.size?.length > 0 && (
             <div className="sizes-section">
-              <div className="sizes-title">{t("details.sizes")}:</div>
+              <div className="sizes-title">Dydžiai:</div>
               <div className="sizes-list">
                 {item.size.map((s) => (
                   <button
@@ -188,7 +198,7 @@ export default function CostumeDetails() {
           {mode === "rent" ? (
             <div className="rent-section">
               <label>
-                {t("details.from")}:
+                Nuo:
                 <input
                   type="date"
                   min={today}
@@ -198,7 +208,7 @@ export default function CostumeDetails() {
                 />
               </label>
               <label>
-                {t("details.to")}:
+                Iki:
                 <input
                   type="date"
                   min={from || today}
@@ -208,14 +218,13 @@ export default function CostumeDetails() {
                 />
               </label>
               <div className="total-line">
-                {t("details.total")}: <strong>${rentTotal || 0}</strong>{" "}
-                {days ? `(${days} ${t("details.days")})` : ""}
+                Suma: <strong>${rentTotal || 0}</strong> {days ? `(${days} d.)` : ""}
               </div>
             </div>
           ) : (
             <div className="rent-section">
               <label>
-                {t("details.qty")}:
+                Kiekis:
                 <input
                   type="number"
                   min={1}
@@ -227,7 +236,7 @@ export default function CostumeDetails() {
                 />
               </label>
               <div className="total-line">
-                {t("details.total")}: <strong>${buyTotal}</strong>
+                Suma: <strong>${buyTotal}</strong>
               </div>
             </div>
           )}
@@ -239,14 +248,44 @@ export default function CostumeDetails() {
             onClick={handleReserve}
             disabled={!canSubmit}
           >
-            {mode === "rent" ? t("details.reserve") : t("details.addToCart")}
+            {mode === "rent" ? "Rezervuoti" : "Į krepšelį"}
           </button>
         </div>
 
         {/* Description */}
         <div className="product-description">
-          <h2>{t("Aprašymas")}</h2>
+          <h2>Aprašymas</h2>
           <p>{item.description}</p>
+        </div>
+
+        {/* Reviews */}
+        <div className="reviews-section">
+          <h2>Atsiliepimai</h2>
+          {reviews.length === 0 ? (
+            <p>Šiuo metu nėra atsiliepimų.</p>
+          ) : (
+            reviews.map((r) => (
+              <div key={r._id} className="review-card">
+                <p>{r.text}</p>
+                <small>{new Date(r.createdAt).toLocaleDateString()}</small>
+              </div>
+            ))
+          )}
+
+          <form onSubmit={submitReview} className="review-form">
+            <h3>Palikite atsiliepimą</h3>
+            <textarea
+              placeholder="Komentaras"
+              value={newReview.text}
+              onChange={(e) =>
+                setNewReview({ ...newReview, text: e.target.value })
+              }
+            />
+            {reviewError && <div className="error-text">{reviewError}</div>}
+            <button type="submit" className="btn btn--primary">
+              Siųsti
+            </button>
+          </form>
         </div>
       </div>
     </div>
