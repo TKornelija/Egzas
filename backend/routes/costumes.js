@@ -4,7 +4,7 @@ import Review from "../models/Review.js";
 
 const router = express.Router();
 
-
+// GET all costumes
 router.get("/", async (req, res) => {
   try {
     const q = (req.query.q || "").toLowerCase();
@@ -16,7 +16,7 @@ router.get("/", async (req, res) => {
   }
 });
 
-
+// GET costume by ID
 router.get("/:id", async (req, res) => {
   try {
     const costume = await Costume.findOne({ id: Number(req.params.id) });
@@ -27,10 +27,10 @@ router.get("/:id", async (req, res) => {
   }
 });
 
-
+// GET reviews for costume
 router.get("/:id/reviews", async (req, res) => {
   try {
-    const costumeId = req.params.id; 
+    const costumeId = Number(req.params.id);
     const reviews = await Review.find({ costumeId });
     res.json(reviews);
   } catch (err) {
@@ -38,10 +38,10 @@ router.get("/:id/reviews", async (req, res) => {
   }
 });
 
-
+// POST review for costume
 router.post("/:id/reviews", async (req, res) => {
   try {
-    const costumeId = req.params.id;
+    const costumeId = Number(req.params.id);
     const { text } = req.body;
     if (!text) return res.status(400).json({ message: "Text is required" });
 
