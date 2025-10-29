@@ -18,21 +18,18 @@ export default function App() {
       <main className="main">
        
         <Routes>
-  <Route path="/" element={<Home />} />
+          <Route path="/" element={<Home />} />
+          <Route path="/costumes" element={<CostumesList />} />
+          <Route path="/how-it-works" element={<Placeholder title="How it works" />} />
+          <Route path="/faq" element={<Placeholder title="FAQ" />} />
+          <Route path="/contact" element={<Placeholder title="Contact" />} />
 
   {/* Collection list */}
   <Route path="/costumes" element={<CostumesList />} />
 
-  {/* Single costume details */}
-  <Route path="/costumes/:id" element={<CostumeDetails />} />
-
-  <Route path="/how-it-works" element={<Placeholder title="How it works" />} />
-  <Route path="/faq" element={<Placeholder title="FAQ" />} />
-  <Route path="/contact" element={<Placeholder title="Contact" />} />
-
-  <Route path="/cart" element={<Cart />} />
-  <Route path="/login" element={<Login />} />
-</Routes>
+          {/* kostiumo detalės */}
+          <Route path="/costumes/:id" element={<CostumeDetails />} />
+        </Routes>
       </main>
       <Footer />
     </div>
