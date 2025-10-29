@@ -1,6 +1,8 @@
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useI18n } from "../lib/i18n";
+import FeaturedCostumes from "../components/FeaturedCostumes";
+import HalloweenCountdown from "../components/CountdownTillHeloween";
 
 export default function Home() {
   const { t } = useI18n();
@@ -49,33 +51,18 @@ export default function Home() {
           ))}
         </div>
       </section>
+{/*HALLOWEEN COUNTDOWN*/}
+      <section>
+        <div className="container">
+          <HalloweenCountdown />
+        </div>
+      </section>
 
-      {/* FEATURED */}
+          {/* FEATURED COSTUMES*/}
       <section className="featured">
         <div className="container">
-          <h2 className="section-title">{t("list.title")}</h2>
-        </div>
-
-        <div className="container cards">
-          {Array.from({ length: 3 }).map((_, i) => (
-            <article className="card" key={i}>
-              <div className="card__media" />
-              <div className="card__body">
-                <h3 className="card__title">Item Title</h3>
-                <div className="card__actions">
-                  {i === 2 ? (
-                    <Link to="/costumes" className="btn btn--primary">
-                      {t("home.rentNow")}
-                    </Link>
-                  ) : (
-                    <Link to="/costumes/c1" className="btn btn--ghost">
-                      {t("list.view")}
-                    </Link> 
-                  )}
-                </div>
-              </div>
-            </article>
-          ))}
+          
+          <FeaturedCostumes />
         </div>
       </section>
     </div>

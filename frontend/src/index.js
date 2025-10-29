@@ -4,6 +4,7 @@ import { BrowserRouter } from "react-router-dom";
 import App from "./App";
 import "./index.css";
 import { I18nProvider } from "./lib/i18n";
+import "./assets/fonts/fonts.css";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(

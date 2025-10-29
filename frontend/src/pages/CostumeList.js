@@ -4,7 +4,7 @@ import { apiGet } from "../lib/api";
 import { useI18n } from "../lib/i18n";
 import { COSTUME_FILTERS } from "../components/costumeFilter";
 import { filterBySearch } from "../components/Search";
-
+import Card from "../components/CostumeCard";
 export default function CostumesList() {
   const { t } = useI18n();
 
@@ -107,79 +107,7 @@ export default function CostumesList() {
       >
         {currentItems.length > 0 ? (
           currentItems.map((it) => (
-            <article
-              key={it.id}
-              className="card"
-              style={{
-                width: 270,
-                background: "#131313",
-                border: "1px solid #1f1f1f",
-                borderRadius: 14,
-                overflow: "hidden",
-              }}
-            >
-              {/* Paveikslėlis */}
-              <div
-                className="card__media"
-                style={{
-                  width: "100%",
-                  height: 240,
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  backgroundColor: "#0d0d0d",
-                  overflow: "hidden",
-                }}
-              >
-                {it.imageUrls?.[0] ? (
-                  <img
-                    src={it.imageUrls[0]}
-                    alt={it.name}
-                    style={{
-                      width: "100%",
-                      height: "auto",
-                      objectFit: "contain",
-                      display: "block",
-                    }}
-                  />
-                ) : (
-                  <div
-                    style={{
-                      color: "#777",
-                      fontSize: 14,
-                      textAlign: "center",
-                      padding: "40px 0",
-                    }}
-                  >
-                    Nėra nuotraukos
-                  </div>
-                )}
-              </div>
-
-              {/* Kortelės turinys */}
-              <div className="card__body" style={{ padding: 16 }}>
-                <h3 className="card__title" style={{ marginBottom: 8 }}>
-                  {it.name}
-                </h3>
-                <p style={{ opacity: 0.8, marginBottom: 6 }}>
-                  {it.rentalPrice} € / {t("list.perDay")}
-                </p>
-                <p style={{ opacity: 0.8, marginBottom: 12 }}>
-                  {t("list.buy")}: {it.price} €
-                </p>
-                <div className="card__actions" style={{ display: "flex", gap: 10 }}>
-                  <Link className="btn btn--ghost" to={`/costumes/${it.id}`}>
-                    {t("list.view")}
-                  </Link>
-                  <Link
-                    className="btn btn--primary"
-                    to={`/costumes/${it.id}?mode=buy`}
-                  >
-                    {t("list.buyNow")}
-                  </Link>
-                </div>
-              </div>
-            </article>
+            <Card key={it.id} costume={it} />
           ))
         ) : (
           <p>Nerasta kostiumų pagal pasirinktą filtrą arba paiešką.</p>
