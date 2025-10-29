@@ -70,7 +70,7 @@ export default function Home() {
                   ) : (
                     <Link to="/costumes/c1" className="btn btn--ghost">
                       {t("list.view")}
-                    </Link>
+                    </Link> 
                   )}
                 </div>
               </div>

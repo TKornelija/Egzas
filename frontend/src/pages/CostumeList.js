@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { apiGet } from "../lib/api";
 import { useI18n } from "../lib/i18n";
-//import "../styles/costumeList.css"; // pridėk savo stilius
+import { COSTUME_FILTERS } from "../components/costumeFilter";
 
 export default function CostumesList() {
   const { t } = useI18n();
@@ -10,12 +10,15 @@ export default function CostumesList() {
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [filter, setFilter] = useState("all");
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 4; // kiek rodome puslapyje
 
   useEffect(() => {
     async function load() {
       try {
         setLoading(true);
-        const data = await apiGet("/api/costumes"); // traukia visus kostiumus iš MongoDB
+        const data = await apiGet("/api/costumes");
         setItems(data);
       } catch (e) {
         console.error(e);
@@ -27,6 +30,16 @@ export default function CostumesList() {
     load();
   }, []);
 
+  // Filtravimas pagal category
+  const filteredItems =
+    filter === "all" ? items : items.filter((it) => it.category === filter);
+
+  // Puslapiavimo logika
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = filteredItems.slice(indexOfFirstItem, indexOfLastItem);
+  const totalPages = Math.ceil(filteredItems.length / itemsPerPage);
+
   if (loading) return <p>Kraunama...</p>;
   if (error) return <p>{error}</p>;
   if (!items.length) return <p>Nėra kostiumų.</p>;
@@ -37,62 +50,146 @@ export default function CostumesList() {
         {t("list.title")}
       </h1>
 
+      {/* Filtrų mygtukai */}
+      <div
+        style={{
+          display: "flex",
+          gap: 12,
+          marginBottom: 24,
+          flexWrap: "wrap",
+        }}
+      >
+        {COSTUME_FILTERS.map(({ key, label }) => (
+          <button
+            key={key}
+            onClick={() => { setFilter(key); setCurrentPage(1); }} // grįžta į pirmą puslapį
+            style={{
+              padding: "8px 16px",
+              borderRadius: 8,
+              border: "1px solid #444",
+              background: filter === key ? "#444" : "transparent",
+              color: "white",
+              cursor: "pointer",
+            }}
+          >
+            {label}
+          </button>
+        ))}
+      </div>
+
+      {/* Kortelių sąrašas */}
       <div
         className="cards"
         style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))",
+          display: "flex",
+          flexWrap: "wrap",
           gap: 24,
+          justifyContent:
+            currentItems.length === 1 ? "center" : "flex-start",
         }}
       >
-        {items.map((it) => (
-          <article
-            key={it.id}
-            className="card"
-            style={{
-              background: "#131313",
-              border: "1px solid #1f1f1f",
-              borderRadius: 14,
-              overflow: "hidden",
-            }}
-          >
-            <div
-              className="card__media"
+        {currentItems.length > 0 ? (
+          currentItems.map((it) => (
+            <article
+              key={it.id}
+              className="card"
               style={{
-                height: 240,
-                backgroundImage: `url(${it.imageUrls?.[0] || ""})`,
-                backgroundSize: "cover",
-                backgroundPosition: "center",
+                width: 270,
+                background: "#131313",
+                border: "1px solid #1f1f1f",
+                borderRadius: 14,
+                overflow: "hidden",
               }}
-            />
-            <div className="card__body" style={{ padding: 16 }}>
-              <h3 className="card__title" style={{ marginBottom: 8 }}>
-                {it.name}
-              </h3>
-              <p style={{ opacity: 0.8, marginBottom: 6 }}>
-                {it.rentalPrice} € / {t("list.perDay")}
-              </p>
-              <p style={{ opacity: 0.8, marginBottom: 12 }}>
-                {t("list.buy")}: {it.price} €
-              </p>
+            >
+              {/* Paveikslėlis */}
               <div
-                className="card__actions"
-                style={{ display: "flex", gap: 10 }}
+                className="card__media"
+                style={{
+                  width: "100%",
+                  height: 240,
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  backgroundColor: "#0d0d0d",
+                  overflow: "hidden",
+                }}
               >
-                <Link className="btn btn--ghost" to={`/costumes/${it.id}`}>
-                  {t("list.view")}
-                </Link>
-                <Link
-                  className="btn btn--primary"
-                  to={`/costumes/${it.id}?mode=buy`}
-                >
-                  {t("list.buyNow")}
-                </Link>
+                {it.imageUrls?.[0] ? (
+                  <img
+                    src={it.imageUrls[0]}
+                    alt={it.name}
+                    style={{
+                      width: "100%",
+                      height: "auto",
+                      objectFit: "contain",
+                      display: "block",
+                    }}
+                  />
+                ) : (
+                  <div
+                    style={{
+                      color: "#777",
+                      fontSize: 14,
+                      textAlign: "center",
+                      padding: "40px 0",
+                    }}
+                  >
+                    📷 Nėra nuotraukos
+                  </div>
+                )}
               </div>
-            </div>
-          </article>
-        ))}
+
+              {/* Kortelės turinys */}
+              <div className="card__body" style={{ padding: 16 }}>
+                <h3 className="card__title" style={{ marginBottom: 8 }}>
+                  {it.name}
+                </h3>
+                <p style={{ opacity: 0.8, marginBottom: 6 }}>
+                  {it.rentalPrice} € / {t("list.perDay")}
+                </p>
+                <p style={{ opacity: 0.8, marginBottom: 12 }}>
+                  {t("list.buy")}: {it.price} €
+                </p>
+                <div className="card__actions" style={{ display: "flex", gap: 10 }}>
+                  <Link className="btn btn--ghost" to={`/costumes/${it.id}`}>
+                    {t("list.view")}
+                  </Link>
+                  <Link
+                    className="btn btn--primary"
+                    to={`/costumes/${it.id}?mode=buy`}
+                  >
+                    {t("list.buyNow")}
+                  </Link>
+                </div>
+              </div>
+            </article>
+          ))
+        ) : (
+          <p>Nerasta kostiumų pagal pasirinktą filtrą.</p>
+        )}
       </div>
+
+      {/*Puslapiavimo mygtukai */}
+      {totalPages > 1 && (
+        <div style={{ marginTop: 24, display: "flex", gap: 8, justifyContent: "center" }}>
+          {Array.from({ length: totalPages }, (_, i) => (
+            <button
+              key={i + 1}
+              onClick={() => setCurrentPage(i + 1)}
+              style={{
+                padding: "6px 12px",
+                background: currentPage === i + 1 ? "#444" : "transparent",
+                color: "white",
+                border: "1px solid #444",
+                borderRadius: 6,
+                cursor: "pointer",
+              }}
+            >
+              {i + 1}
+            </button>
+          ))}
+        </div>
+      )}
     </div>
   );
 }
