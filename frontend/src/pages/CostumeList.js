@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { apiGet } from "../lib/api";
 import { useI18n } from "../lib/i18n";
 import { COSTUME_FILTERS } from "../components/costumeFilter";
+import { filterBySearch } from "../components/Search";
 
 export default function CostumesList() {
   const { t } = useI18n();
@@ -11,6 +12,7 @@ export default function CostumesList() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [filter, setFilter] = useState("all");
+  const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 4; // kiek rodome puslapyje
 
@@ -30,9 +32,13 @@ export default function CostumesList() {
     load();
   }, []);
 
-  // Filtravimas pagal category
-  const filteredItems =
-    filter === "all" ? items : items.filter((it) => it.category === filter);
+  // Filtravimas pagal kategoriją
+  const categoryFiltered = filter === "all"
+    ? items
+    : items.filter(it => it.category === filter);
+
+  // Filtravimas pagal paiešką
+  const filteredItems = filterBySearch(categoryFiltered, searchTerm, ["name"]);
 
   // Puslapiavimo logika
   const indexOfLastItem = currentPage * itemsPerPage;
@@ -51,18 +57,11 @@ export default function CostumesList() {
       </h1>
 
       {/* Filtrų mygtukai */}
-      <div
-        style={{
-          display: "flex",
-          gap: 12,
-          marginBottom: 24,
-          flexWrap: "wrap",
-        }}
-      >
+      <div style={{ display: "flex", gap: 12, marginBottom: 24, flexWrap: "wrap" }}>
         {COSTUME_FILTERS.map(({ key, label }) => (
           <button
             key={key}
-            onClick={() => { setFilter(key); setCurrentPage(1); }} // grįžta į pirmą puslapį
+            onClick={() => { setFilter(key); setCurrentPage(1); }}
             style={{
               padding: "8px 16px",
               borderRadius: 8,
@@ -77,15 +76,33 @@ export default function CostumesList() {
         ))}
       </div>
 
-      {/* Kortelių sąrašas */}
+      {/* Paieškos laukelis */}
+      <div style={{ marginBottom: 24 }}>
+        <input
+          type="text"
+          placeholder="Ieškoti kostiumų..."
+          value={searchTerm}
+          onChange={(e) => { setSearchTerm(e.target.value); setCurrentPage(1); }}
+          style={{
+            padding: "8px 12px",
+            borderRadius: 6,
+            border: "1px solid #444",
+            width: "100%",
+            maxWidth: 400,
+            background: "#131313",
+            color: "white",
+          }}
+        />
+      </div>
+
+      {/*Kortelių sąrašas */}
       <div
         className="cards"
         style={{
           display: "flex",
           flexWrap: "wrap",
           gap: 24,
-          justifyContent:
-            currentItems.length === 1 ? "center" : "flex-start",
+          justifyContent: currentItems.length === 1 ? "center" : "flex-start",
         }}
       >
         {currentItems.length > 0 ? (
@@ -134,7 +151,7 @@ export default function CostumesList() {
                       padding: "40px 0",
                     }}
                   >
-                    📷 Nėra nuotraukos
+                    Nėra nuotraukos
                   </div>
                 )}
               </div>
@@ -165,11 +182,11 @@ export default function CostumesList() {
             </article>
           ))
         ) : (
-          <p>Nerasta kostiumų pagal pasirinktą filtrą.</p>
+          <p>Nerasta kostiumų pagal pasirinktą filtrą arba paiešką.</p>
         )}
       </div>
 
-      {/*Puslapiavimo mygtukai */}
+      {/* gPuslapiavimo mygtukai */}
       {totalPages > 1 && (
         <div style={{ marginTop: 24, display: "flex", gap: 8, justifyContent: "center" }}>
           {Array.from({ length: totalPages }, (_, i) => (
