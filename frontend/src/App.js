@@ -6,6 +6,7 @@ import CostumesList from "./pages/CostumeList";
 import CostumeDetails from "./pages/CostumeDetails";
 import Cart from "./pages/Cart";
 import Login from "./pages/Login";
+import Signup from "./pages/Signup"
 
 function Placeholder({ title }) {
   return <div className="container" style={{ padding: "48px 0" }}>{title}</div>;
@@ -28,6 +29,7 @@ export default function App() {
         
           <Route path="/cart" element={<Cart />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
 
         </Routes>
       </main>

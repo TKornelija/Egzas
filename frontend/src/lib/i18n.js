@@ -12,6 +12,7 @@ const translations = {
       contact: "Kontaktai",
       cart: "Krepšelis",
       login: "Prisijungti",
+      signup: "Registruotis",
     },
     home: {
       title: "Išlaisvink savo alter ego šį Heloviną",
@@ -61,6 +62,7 @@ const translations = {
       contact: "Contact",
       cart: "Cart",
       login: "Login",
+      signup: "Sign up",
     },
     home: {
       title: "Unleash Your Alter Ego This Halloween",
@@ -109,6 +111,7 @@ const translations = {
       contact: "Контакты",
       cart: "Корзина",
       login: "Войти",
+      signup: "Регистрация",
     },
     home: {
       title: "Освободи своё альтер-эго на Хэллоуин",

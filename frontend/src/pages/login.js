@@ -77,7 +77,7 @@ export default function Login() {
       </form>
 
       <div style={{ marginTop:14, fontSize:14, opacity:.8 }}>
-        No account? <Link to="/register" className="footer__link">Create one</Link>
+        No account? <Link to="/signup" className="footer__link">Create one</Link>
       </div>
     </div>
   );
