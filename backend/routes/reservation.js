@@ -1,39 +1,81 @@
-import express from 'express';
-import { readFile } from 'fs/promises';
+import express from "express";
+import Reservation from "../models/reservationModel.js";
+import { readFile } from "fs/promises";
 
 const router = express.Router();
-let reservations = [];
 
-function overlaps(aFrom,aTo,bFrom,bTo){
-  const A1=+new Date(aFrom), A2=+new Date(aTo), B1=+new Date(bFrom), B2=+new Date(bTo);
-  return !(A2<=B1 || A1>=B2);
+function overlaps(aFrom, aTo, bFrom, bTo) {
+  const A1 = +new Date(aFrom),
+    A2 = +new Date(aTo),
+    B1 = +new Date(bFrom),
+    B2 = +new Date(bTo);
+  return !(A2 <= B1 || A1 >= B2);
 }
 
-async function loadCostumes(){
-  const raw = await readFile(new URL('../../data/products.json', import.meta.url));
+async function loadCostumes() {
+  const raw = await readFile(new URL("../../data/products.json", import.meta.url));
   return JSON.parse(raw.toString());
 }
 
-router.get('/', (_,res)=> res.json(reservations));
+// Gauti visas rezervacijas
+router.get("/", async (req, res) => {
+  try {
+    const reservations = await Reservation.find().populate("user", "email");
+    res.json(reservations);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
 
-router.post('/', async (req,res)=>{
-  const { costumeId, from, to, size="M", user="u1" } = req.body||{};
-  if(!costumeId||!from||!to) return res.status(400).json({message:"costumeId/from/to required"});
+// Sukurti naują rezervaciją
+router.post("/", async (req, res) => {
+  const { costumeId, from, to, size = "M", user } = req.body || {};
 
-  const costumes = await loadCostumes();
-  const item = costumes.find(c=>c.id===Number(costumeId));
-  if(!item) return res.status(404).json({message:"Costume not found"});
+  if (!costumeId || !from || !to || !user) {
+    return res.status(400).json({ message: "Trūksta privalomų laukų." });
+  }
 
-  const conflict = reservations.some(r=>r.costumeId===Number(costumeId) && overlaps(from,to,r.from,r.to) && r.status!=='cancelled');
-  if(conflict) return res.status(409).json({message:"Dates not available"});
+  try {
+    const costumes = await loadCostumes();
+    const item = costumes.find((c) => c.id === Number(costumeId));
+    if (!item) return res.status(404).json({ message: "Kostiumas nerastas." });
 
-  const days = Math.ceil((+new Date(to) - +new Date(from)) / (1000*60*60*24));
-  if(days<=0) return res.status(400).json({message:"Invalid dates"});
-  const total = days * (item.rentalPrice ?? item.price ?? 0);
+    // Patikrinti ar nėra datos konflikto
+    const existing = await Reservation.find({ costumeId });
+    const conflict = existing.some((r) => overlaps(from, to, r.from, r.to) && r.status !== "cancelled");
+    if (conflict) return res.status(409).json({ message: "Datos jau užimtos." });
 
-  const newRes = { id:`r${reservations.length+1}`, user, costumeId: Number(costumeId), from, to, size, total, status:"pending" };
-  reservations.push(newRes);
-  res.status(201).json(newRes);
+    const days = Math.ceil((+new Date(to) - +new Date(from)) / (1000 * 60 * 60 * 24));
+    if (days <= 0) return res.status(400).json({ message: "Netinkamos datos." });
+
+    const total = days * (item.rentalPrice ?? item.price ?? 0);
+
+    const newRes = await Reservation.create({
+      user,
+      costumeId: Number(costumeId),
+      from,
+      to,
+      size,
+      total,
+      status: "pending",
+    });
+
+    res.status(201).json(newRes);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Nepavyko sukurti rezervacijos." });
+  }
+});
+
+// Pašalinti rezervaciją
+router.delete("/:id", async (req, res) => {
+  try {
+    const result = await Reservation.findByIdAndDelete(req.params.id);
+    if (!result) return res.status(404).json({ message: "Rezervacija nerasta." });
+    res.json({ message: "Rezervacija pašalinta." });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
 });
 
 export default router;
