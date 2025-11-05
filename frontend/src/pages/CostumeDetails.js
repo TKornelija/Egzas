@@ -41,7 +41,10 @@ export default function CostumeDetails() {
     return diff > 0 ? diff : 0;
   }, [from, to]);
 
-  // Load item and reviews
+ 
+  const formatCurrency = (amount) =>
+    new Intl.NumberFormat("lt-LT", { style: "currency", currency: "EUR" }).format(amount);
+
   useEffect(() => {
     async function load() {
       try {
@@ -73,23 +76,25 @@ export default function CostumeDetails() {
     try {
       if (mode === "rent") {
         if (!canSubmit)
-          return setError(t("details.fillAll") || "Įveskite visus reikalingus duomenis.");
-        const res = await apiPost("/api/reservations", {
+          return setError(
+            t("details.fillAll") || "Įveskite visus reikalingus duomenis."
+          );
+
+        const reservation = await apiPost("/api/reservations", {
           costumeId: id,
           from,
           to,
           size,
         });
-        alert(
-          t("details.reservedMsg", res.id, from, to, days)
-        );
+
+        alert(`Rezervacija sėkmingai sukurta!\nID: ${reservation._id}`);
       } else {
         const order = await apiPost("/api/purchase", {
           costumeId: id,
           qty,
           size,
         });
-        alert(t("details.orderedMsg", order.id, qty));
+        alert(`Užsakymas sėkmingai pateiktas!\nID: ${order._id}`);
       }
     } catch (e) {
       setError(e.message || t("details.requestError"));
@@ -165,7 +170,7 @@ export default function CostumeDetails() {
         <div className="details">
           <h1>{item.name}</h1>
           <p className="price-line">
-            {t("details.priceLine", item.rentalPrice, item.price)}
+            {t("details.priceLine", formatCurrency(item.rentalPrice), formatCurrency(item.price))}
           </p>
 
           <div className="tabs">
@@ -209,7 +214,11 @@ export default function CostumeDetails() {
                   type="date"
                   min={today}
                   value={from}
-                  onChange={(e) => setFrom(e.target.value)}
+                  onChange={(e) => {
+                    const selected = e.target.value;
+                    if (selected < today) return;
+                    setFrom(selected);
+                  }}
                   className="input-date"
                 />
               </label>
@@ -224,8 +233,7 @@ export default function CostumeDetails() {
                 />
               </label>
               <div className="total-line">
-                {t("details.total")}:{" "}
-                <strong>${rentTotal || 0}</strong>{" "}
+                {t("details.total")}: <strong>{formatCurrency(rentTotal)}</strong>{" "}
                 {days ? `(${days} ${t("details.days")})` : ""}
               </div>
             </div>
@@ -237,14 +245,12 @@ export default function CostumeDetails() {
                   type="number"
                   min={1}
                   value={qty}
-                  onChange={(e) =>
-                    setQty(Math.max(1, Number(e.target.value) || 1))
-                  }
+                  onChange={(e) => setQty(Math.max(1, Number(e.target.value) || 1))}
                   className="input-date"
                 />
               </label>
               <div className="total-line">
-                {t("details.total")}: <strong>${buyTotal}</strong>
+                {t("details.total")}: <strong>{formatCurrency(buyTotal)}</strong>
               </div>
             </div>
           )}
@@ -285,9 +291,7 @@ export default function CostumeDetails() {
             <textarea
               placeholder={t("details.commentPlaceholder")}
               value={newReview.text}
-              onChange={(e) =>
-                setNewReview({ ...newReview, text: e.target.value })
-              }
+              onChange={(e) => setNewReview({ ...newReview, text: e.target.value })}
             />
             {reviewError && <div className="error-text">{reviewError}</div>}
             <button type="submit" className="btn btn--primary">

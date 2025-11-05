@@ -1,27 +1,32 @@
 import mongoose from "mongoose";
 
-const reservationSchema = new mongoose.Schema({
-    user: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
+const reservationSchema = new mongoose.Schema(
+  {
+    costumeId: {
+      type: Number,
       required: true,
     },
-    costume: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Costume",
-        required: true,
+    from: {
+      type: Date,
+      required: true,
     },
-    date: {
-        type: Date,
-        required: true,
+    to: {
+      type: Date,
+      required: true,
     },
-    confirmed: {
-        type: Boolean,
-        default: false,
+    size: {
+      type: String,
     },
-},
-{timestamps: true}
-
+    total: {
+      type: Number,
+      default: 0,
+    },
+    status: {
+      type: String,
+      default: "pending",
+    },
+  },
+  { timestamps: true }
 );
 
 export default mongoose.model("Reservation", reservationSchema);

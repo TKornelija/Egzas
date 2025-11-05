@@ -1,57 +1,72 @@
 import express from "express";
 import Reservation from "../models/reservationModel.js";
-import { readFile } from "fs/promises";
+import Costume from "../models/Costume.js";
 
 const router = express.Router();
 
+
 function overlaps(aFrom, aTo, bFrom, bTo) {
-  const A1 = +new Date(aFrom),
-    A2 = +new Date(aTo),
-    B1 = +new Date(bFrom),
-    B2 = +new Date(bTo);
+  const A1 = +new Date(aFrom);
+  const A2 = +new Date(aTo);
+  const B1 = +new Date(bFrom);
+  const B2 = +new Date(bTo);
   return !(A2 <= B1 || A1 >= B2);
 }
 
-async function loadCostumes() {
-  const raw = await readFile(new URL("../../data/products.json", import.meta.url));
-  return JSON.parse(raw.toString());
-}
 
-// Gauti visas rezervacijas
 router.get("/", async (req, res) => {
   try {
-    const reservations = await Reservation.find().populate("user", "email");
+    const reservations = await Reservation.find();
     res.json(reservations);
   } catch (err) {
+    console.error("Klaida GET /api/reservations:", err);
     res.status(500).json({ message: err.message });
   }
 });
 
-// Sukurti naują rezervaciją
+
 router.post("/", async (req, res) => {
-  const { costumeId, from, to, size = "M", user } = req.body || {};
-
-  if (!costumeId || !from || !to || !user) {
-    return res.status(400).json({ message: "Trūksta privalomų laukų." });
-  }
-
   try {
-    const costumes = await loadCostumes();
-    const item = costumes.find((c) => c.id === Number(costumeId));
-    if (!item) return res.status(404).json({ message: "Kostiumas nerastas." });
+    const { costumeId, from, to, size = "M" } = req.body || {};
 
-    // Patikrinti ar nėra datos konflikto
-    const existing = await Reservation.find({ costumeId });
-    const conflict = existing.some((r) => overlaps(from, to, r.from, r.to) && r.status !== "cancelled");
-    if (conflict) return res.status(409).json({ message: "Datos jau užimtos." });
+    if (!costumeId || !from || !to) {
+      return res.status(400).json({ message: "Trūksta privalomų laukų." });
+    }
 
-    const days = Math.ceil((+new Date(to) - +new Date(from)) / (1000 * 60 * 60 * 24));
-    if (days <= 0) return res.status(400).json({ message: "Netinkamos datos." });
+
+    const item = await Costume.findOne({ id: Number(costumeId) });
+    if (!item) {
+      console.log("Kostiumas nerastas MongoDB:", costumeId);
+      return res.status(404).json({ message: "Kostiumas nerastas." });
+    }
+
+
+    const existing = await Reservation.find({ costumeId: Number(costumeId) });
+
+
+    const overlapping = existing.filter((r) =>
+      overlaps(from, to, r.from, r.to)
+    );
+
+
+    if (overlapping.length >= (item.quantity || 1)) {
+      return res.status(409).json({
+        message: `Šiuo laikotarpiu visi ${item.quantity} "${item.name}" kostiumai rezervuoti.`,
+      });
+    }
+
+
+    const days = Math.ceil(
+      (+new Date(to) - +new Date(from)) / (1000 * 60 * 60 * 24)
+    );
+    if (days <= 0) {
+      return res.status(400).json({ message: "Netinkamos datos." });
+    }
 
     const total = days * (item.rentalPrice ?? item.price ?? 0);
 
+
     const newRes = await Reservation.create({
-      user,
       costumeId: Number(costumeId),
       from,
       to,
@@ -60,14 +75,15 @@ router.post("/", async (req, res) => {
       status: "pending",
     });
 
+    console.log("Nauja rezervacija sukurta:", newRes._id);
     res.status(201).json(newRes);
   } catch (err) {
-    console.error(err);
+    console.error("Klaida POST /api/reservations:", err);
     res.status(500).json({ message: "Nepavyko sukurti rezervacijos." });
   }
 });
 
-// Pašalinti rezervaciją
+
 router.delete("/:id", async (req, res) => {
   try {
     const result = await Reservation.findByIdAndDelete(req.params.id);
