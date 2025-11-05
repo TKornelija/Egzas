@@ -2,6 +2,7 @@ import dotenv from 'dotenv'; // leidzia naudoti .env failą
 import express from "express" // pagrindine serverio biblioteka, leidzianti kurti REST API
 import cors from "cors"; //mechanizmas, kuris leidžia serveriui priimti užklausas iš kitų duomenų, leidžia bendrauti su frontend'u.
 import mongoose from "mongoose";
+import userRoutes from "./routes/userRoutes.js";
 dotenv.config() //5krauna .env failo kintamuosius
 
 
@@ -42,6 +43,7 @@ app.get("/api/health", (_, res) => {
 app.use('/api/costumes', costumesRouter);
 app.use('/api/reservations', reservationsRouter);
 app.use('/api/orders', ordersRouter);
+app.use("/api/user", userRoutes);
 
 
 const PORT = process.env.PORT || 4000;

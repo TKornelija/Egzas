@@ -8,6 +8,8 @@ import Cart from "./pages/Cart";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup"
 
+
+
 function Placeholder({ title }) {
   return <div className="container" style={{ padding: "48px 0" }}>{title}</div>;
 }

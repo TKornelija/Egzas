@@ -22,9 +22,6 @@ userSchema.statics.signup = async function(email, password) {
     if(!validator.isEmail(email)) {
         throw Error('El. paštas nėra tinkamas.')
     }
-    if(!validator.isStrongPassword(password)) {
-        throw Error('Slaptažodis pernelyg silpnas.')
-    }
 
     const exists = await this.findOne({email})
     if(exists) {
@@ -52,4 +49,5 @@ userSchema.statics.login = async function(email, password) {
     return user
 }
 
-export default mongoose.model('User', userSchema)
+export default mongoose.model("User", userSchema, "Users");
+

@@ -1,30 +1,47 @@
-import User from '../models/userModel.js'
-import jwt from 'jsonwebtoken'
+import jwt from "jsonwebtoken";
+import User from "../models/userModel.js";
 
-const createToken = (_id) => {
-    return jwt.sign({_id}, process.env.SECRET, {expiresIn: '3d'})
+// Pagalbinė funkcija JWT kūrimui
+function sukurtiToken(_id) {
+  const slaptas = process.env.SECRET;
+  if (!slaptas) {
+    // jei nėra .env SECRET, aiškiai grąžinam klaidą
+    throw new Error("Serverio konfigūracija neteisinga: trūksta SECRET");
+  }
+  return jwt.sign({ _id }, slaptas, { expiresIn: "3d" });
 }
 
-// login user
-export const loginUser = async (req, res) => {
-    const {email, password} = req.body 
-    try {
-        const user = await User.login(email, password)
-        const token = createToken(user._id)
-        res.status(200).json({email, token})
-    } catch (error) {
-        res.status(400).json({error: error.message})
-    }
-}
-
-// signup user
 export const signupUser = async (req, res) => {
-    const {email, password} = req.body 
-    try {
-        const user = await User.signup(email, password)
-        const token = createToken(user._id)
-        res.status(200).json({email, token})
-    } catch (error) {
-        res.status(400).json({error: error.message})
-    }
-}
+  const { email, password } = req.body || {};
+
+  try {
+    const user = await User.signup(email, password); // hash daromas modelyje
+    const token = sukurtiToken(user._id);
+
+    return res.status(201).json({
+      email,
+      token,
+      // galima grąžinti ir id, jei prireiks fronte:
+      id: user._id,
+    });
+  } catch (error) {
+    return res.status(400).json({ error: error.message || "Registracijos klaida" });
+  }
+};
+
+export const loginUser = async (req, res) => {
+  const { email, password } = req.body || {};
+
+  try {
+    const user = await User.login(email, password);
+    const token = sukurtiToken(user._id);
+
+    return res.status(200).json({
+      email,
+      token,
+      id: user._id,
+    });
+  } catch (error) {
+    return res.status(400).json({ error: error.message || "Prisijungimo klaida" });
+  }
+};

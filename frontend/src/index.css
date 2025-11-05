@@ -184,6 +184,32 @@ body {
   margin-bottom: 16px;
 }
 
+/* dots */
+.dots {
+  position: absolute;
+  bottom: 14px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 8px;
+}
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  border: 1px solid #ff6a6a;
+  background: transparent;
+  opacity: .6;
+  cursor: pointer;
+}
+.dot--active {
+  background: #e04646;
+  opacity: 1;
+}
+.dot:hover {
+  opacity: 1;
+}
+
 
 /* FEATURED */
 .featured {

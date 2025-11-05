@@ -1,135 +1,71 @@
 import { useState } from "react";
-import { useSignup } from "../hooks/useSignup";
-import { useI18n } from "../lib/i18n";
 import { useNavigate, Link } from "react-router-dom";
 
 export default function Signup() {
-  const { t } = useI18n();
-  const nav = useNavigate();
+  const navigate = useNavigate();
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { signup, isLoading, error } = useSignup();
-  const [success, setSuccess] = useState(false);
+  const [klaida, setKlaida] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try {
-      const result = await signup(email, password);
-      
-      if (result && !result.error) {
-        setSuccess(true);
-        setTimeout(() => nav("/login"), 2000);
-      }
-    } catch (err) {
-      console.error("Signup error:", err);
-    }
-  };
+    setKlaida("");
 
-  const getMessage = () => {
-    const lang = t("nav.signup");
-    if (lang === "Sign up") return "Registration successful!";
-    if (lang === "Регистрация") return "Регистрация прошла успешно!";
-    return "Jūsų registracija sėkminga!";
+    const response = await fetch("/api/user/signup", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, password }),
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      setKlaida(data.error);
+      return;
+    }
+
+    // išsaugom user info localStorage
+    localStorage.setItem("user", JSON.stringify(data));
+
+    // persiunčia į Home
+    navigate("/");
   };
 
   return (
-    <div className="container" style={{ padding: "48px 0", maxWidth: 520 }}>
-      <h1 style={{ marginBottom: 8 }}>{t("nav.signup")}</h1>
-      <p style={{ opacity: 0.8, marginBottom: 18 }}>
-        {t("nav.signup") === "Sign up"
-          ? "Create a new account to start using the site."
-          : t("nav.signup") === "Регистрация"
-          ? "Создайте новый аккаунт, чтобы начать пользоваться сайтом."
-          : "Sukurkite naują paskyrą norėdami naudotis svetaine."}
-      </p>
+    <div className="signup-container">
+      <h1>Registruotis</h1>
 
-      <form onSubmit={handleSubmit} style={{ display: "grid", gap: 12 }}>
-        <label>
-          Email
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-            style={{
-              display: "block",
-              width: "100%",
-              marginTop: 6,
-              background: "#181818",
-              color: "#fff",
-              border: "1px solid #333",
-              borderRadius: 8,
-              padding: "10px 12px",
-            }}
-          />
-        </label>
+      <form onSubmit={handleSubmit} className="signup-form">
+        <label>El. paštas</label>
+        <input
+          type="email"
+          value={email}
+          placeholder="Įveskite el. paštą"
+          onChange={(e) => setEmail(e.target.value)}
+        />
 
-        <label>
-          Password
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-            style={{
-              display: "block",
-              width: "100%",
-              marginTop: 6,
-              background: "#181818",
-              color: "#fff",
-              border: "1px solid #333",
-              borderRadius: 8,
-              padding: "10px 12px",
-            }}
-          />
-        </label>
+        <label>Slaptažodis</label>
+        <input
+          type="password"
+          value={password}
+          placeholder="Įveskite slaptažodį"
+          onChange={(e) => setPassword(e.target.value)}
+        />
 
-        {error && (
-          <div style={{ color: "#ff6b6b" }}>
-            {t("nav.signup") === "Sign up"
-              ? "Error during registration."
-              : t("nav.signup") === "Регистрация"
-              ? "Ошибка при регистрации."
-              : "Klaida registruojantis."}
-          </div>
-        )}
-        {success && (
-          <div style={{ color: "#4ade80" }}>
-            {getMessage()}{" "}
-            {t("nav.signup") === "Sign up"
-              ? "Redirecting to login..."
-              : t("nav.signup") === "Регистрация"
-              ? "Переадресация на вход..."
-              : "Nukreipiama į prisijungimo puslapį..."}
-          </div>
-        )}
+        {klaida && <p className="error">{klaida}</p>}
 
-        <button
-          className="btn btn--primary"
-          type="submit"
-          disabled={isLoading}
-          style={{ padding: "12px 14px" }}
-        >
-          {isLoading
-            ? t("nav.signup") === "Sign up"
-              ? "Registering..."
-              : t("nav.signup") === "Регистрация"
-              ? "Регистрация..."
-              : "Registruojama..."
-            : t("nav.signup")}
+        <button type="submit" className="btn-primary">
+          Registruotis
         </button>
       </form>
 
-      <div style={{ marginTop: 14, fontSize: 14, opacity: 0.8 }}>
-        {t("nav.signup") === "Sign up"
-          ? "Already have an account?"
-          : t("nav.signup") === "Регистрация"
-          ? "Уже есть аккаунт?"
-          : "Jau turite paskyrą?"}{" "}
-        <Link to="/login" className="footer__link">
-          {t("nav.login")}
+      <p>
+        Jau turite paskyrą?{" "}
+        <Link to="/login" className="link">
+          Prisijungti
         </Link>
-      </div>
+      </p>
     </div>
   );
 }
