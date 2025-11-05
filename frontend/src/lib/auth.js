@@ -1,4 +1,4 @@
-const LS_KEY = "fot:user";
+const LS_KEY = "user";
 
 export function getUser() {
   try { return JSON.parse(localStorage.getItem(LS_KEY)) || null; }

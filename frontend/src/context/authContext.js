@@ -25,8 +25,18 @@ export const AuthContextProvider = ({children}) => {
         }
     }, [])
 
+    const login = (user) => {
+        localStorage.setItem('user', JSON.stringify(user))
+        dispatch({ type: 'LOGIN', payload: user })
+    }
+
+    const logout = () => {
+        localStorage.removeItem('user')
+        dispatch({ type: 'LOGOUT' })
+    }
+
     return (
-        <AuthContext.Provider value={{...state, dispatch}}>
+        <AuthContext.Provider value={{...state, dispatch, login, logout}}>
             {children}
         </AuthContext.Provider>
     )

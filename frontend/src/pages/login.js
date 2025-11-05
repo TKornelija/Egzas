@@ -1,32 +1,28 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { useI18n } from "../lib/i18n";
-import { getUser, login, logout, subscribeAuth, notifyAuth } from "../lib/auth";
+import { useAuthContext } from "../hooks/useAuthContext";
 
 export default function Login() {
   const { t } = useI18n();
   const nav = useNavigate();
-  const [user, setUser] = useState(getUser());
+  const { user, login: contextLogin, logout: contextLogout } = useAuthContext();
   const [email, setEmail] = useState("");
   const [pwd, setPwd] = useState("");
   const [err, setErr] = useState("");
-
-  useEffect(() => subscribeAuth(setUser), []);
 
   function handleLogin(e){
     e.preventDefault();
     setErr("");
     if(!email || !email.includes("@")) return setErr("Enter a valid email.");
     if(!pwd || pwd.length < 3)        return setErr("Password too short.");
-    const u = login({ email });
-    notifyAuth();
-    nav("/"); // grįžtam į pradžią po login
+    const u = { email, name: email.split("@")[0], ts: Date.now() };
+    contextLogin(u);
+    nav("/"); // navigate home after login
   }
 
   function handleLogout(){
-    logout();
-    notifyAuth();
-    setUser(null);
+    contextLogout();
   }
 
   if (user) {

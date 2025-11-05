@@ -1,9 +1,11 @@
 import { useState } from "react";
-import { getUser, login, notifyAuth } from "../lib/auth";
+import { useAuthContext } from "../hooks/useAuthContext";
 
 export function useSignup() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
+
+  const { login: contextLogin } = useAuthContext();
 
   const signup = async (email, password) => {
     setIsLoading(true);
@@ -15,9 +17,9 @@ export function useSignup() {
       }
 
     
-      const newUser = { email, name: email.split("@")[0] };
-      localStorage.setItem("user", JSON.stringify(newUser));
-      notifyAuth();
+  const newUser = { email, name: email.split("@")[0] };
+  // use auth context to store user and persist to localStorage
+  contextLogin(newUser);
 
       
       setIsLoading(false);

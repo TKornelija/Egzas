@@ -1,0 +1,63 @@
+.account {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 32px 16px;
+  color: #e9eaee;
+}
+
+.account h1 {
+  font-size: 28px;
+  font-weight: 800;
+  margin: 0 0 20px;
+}
+
+.account .card {
+  background: #121317;
+  border: 1px solid #2a2d36;
+  border-radius: 14px;
+  padding: 16px;
+}
+
+.account .row {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+@media (min-width: 860px) {
+  .account .row { grid-template-columns: 1fr 1fr; }
+}
+
+.account .avatar {
+  width: 56px; height: 56px; border-radius: 50%;
+  display: grid; place-items: center;
+  background: #1f2430; color: #eef0f6; font-weight: 700;
+}
+
+.account .muted { color: #9aa0ae; font-size: 14px; }
+.account .title { font-size: 18px; font-weight: 700; margin: 0 0 10px; }
+
+.account .actions { display: flex; gap: 8px; flex-wrap: wrap; }
+
+.btn {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 10px 14px; border-radius: 10px;
+  border: 1px solid #424654; background: transparent;
+  color: #e9eaee; text-decoration: none; cursor: pointer;
+  transition: background .15s ease, border-color .15s ease;
+  font-size: 14px;
+}
+.btn:hover { background: #1b1e27; border-color: #555a6b; }
+
+.btn--primary {
+  background: #e25555; border-color: #e25555; color: #fff;
+}
+.btn--primary:hover { background: #cf4747; border-color: #cf4747; }
+
+.account .section { padding: 16px; }
+.account .section + .section { margin-top: 8px; }
+.account .section p { margin: 4px 0 0; color: #a9afbe; }
+
+.account a.link { color: #c9d4ff; text-decoration: underline; }
+
+.account ul { margin: 8px 0 0 18px; }
+.account li { margin: 2px 0; }

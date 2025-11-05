@@ -1,8 +1,17 @@
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import { useI18n } from "../lib/i18n";
+import { useAuthContext } from "../hooks/useAuthContext";
 
 export default function Navbar() {
   const { t, lang, setLang } = useI18n();
+    const navigate = useNavigate();
+    const { user, logout: contextLogout } = useAuthContext();
+
+  // wrapper to navigate after logout
+  const logout = () => {
+    contextLogout();
+    navigate("/");
+  };
 
   const navItems = [
     { to: "/", label: t("nav.home") },
@@ -25,6 +34,7 @@ export default function Navbar() {
   return (
     <header className="navbar">
       <div className="container nav__inner">
+
         {/* Brand */}
         <Link to="/" className="brand" aria-label="Freak Or Treat home">
           Freak <span>Or</span> Treat
@@ -58,12 +68,41 @@ export default function Navbar() {
           </div>
 
           <div className="nav__actions">
-            <Link to="/cart" className="btn btn--ghost" style={{ fontSize: 14, padding: "8px 12px" }}>
+            <Link
+              to="/cart"
+              className="btn btn--ghost"
+              style={{ fontSize: 14, padding: "8px 12px" }}
+            >
               🛒 {t("nav.cart")}
             </Link>
-            <Link to="/login" className="btn btn--primary" style={{ fontSize: 14, padding: "8px 12px" }}>
-              👤 {t("nav.login")}
-            </Link>
+
+            {!user ? (
+              <Link
+                to="/login"
+                className="btn btn--primary"
+                style={{ fontSize: 14, padding: "8px 12px" }}
+              >
+                👤 {t("nav.login")}
+              </Link>
+            ) : (
+              <div className="flex gap-2 items-center">
+                <Link
+                  to="/account"
+                  className="btn btn--ghost"
+                  style={{ fontSize: 14, padding: "8px 12px" }}
+                >
+                  ✅ Sveikas, {user.email}
+                </Link>
+
+                <button
+                  className="btn btn--primary"
+                  style={{ fontSize: 14, padding: "8px 12px" }}
+                  onClick={logout}
+                >
+                  Atsijungti
+                </button>
+              </div>
+            )}
           </div>
         </div>
       </div>
