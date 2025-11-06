@@ -5,8 +5,10 @@ import { useEffect, useState } from "react";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Card from "../components/CostumeCard";
+import { useI18n } from "../lib/i18n";
 
 export default function FeaturedCostumes() {
+  const { t } = useI18n();
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
  
@@ -69,7 +71,7 @@ export default function FeaturedCostumes() {
           className="btn btn--primary"
           style={{ padding: "12px 24px", fontSize: 16}}
         >
-          Pamatyti visus kostiumus
+          {t("featuredcostumes.button")}
         </Link>
       </div>
     </section>

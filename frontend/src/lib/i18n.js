@@ -67,6 +67,9 @@ const translations = {
 
     
     },
+    countdown:{
+    name: "Iki Hellovyno liko visai nedaug!"
+    },
     form:{
     succes: "Žinutė sėkmingai išsiųsta!",
     error: "Įvyko klaida, pabandykite vėliau.",
@@ -75,6 +78,9 @@ const translations = {
     question: "Įveskite klausimą",
     send: "Siųsti"
 
+    },
+    featuredcostumes:{
+    button: "Pamatyti visus kostiumus",
     },
     footer: {
       returns: "Grąžinimai",
@@ -149,6 +155,9 @@ const translations = {
     answerTwo: "Yes, please contact us by email and we will change the date if possible.",
 
     },
+    countdown:{
+    name: "There's not much left until Halloween!"
+    },
     form:{
     succes: "Message sent successfully!",
     error: "An error occurred, please try again later.",
@@ -157,6 +166,9 @@ const translations = {
     question: "Enter a question",
     send: "Send"
 
+    },
+    featuredcostumes:{
+    button: "See all costumes",
     },
     footer: {
       returns: "Returns",
@@ -239,6 +251,12 @@ const translations = {
     question: "Введите вопрос",
     send: "Отправлять"
 
+    },
+    countdown:{
+    name: "До Хэллоуина осталось совсем немного!"
+    },
+    featuredcostumes:{
+    button: "Посмотреть все костюмы",
     },
     footer: {
       returns: "Возвраты",

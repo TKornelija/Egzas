@@ -41,7 +41,7 @@ export default function HalloweenCountdown() {
         {timeLeft.days}d {timeLeft.hours}h {timeLeft.minutes}m {timeLeft.seconds}s
       </p>
       <h2 style={{ fontFamily: "SpookyFont", fontSize: "48px", color: "orange" }}>
-  Iki Helovyno liko visai nedaug!
+  {t("countdown.name")}
 </h2>
       
     </div>
