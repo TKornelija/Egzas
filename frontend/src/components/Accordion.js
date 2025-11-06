@@ -1,11 +1,13 @@
 import { useEffect, useState, useRef } from "react";
 import { apiGet } from "../lib/api";
+import { useI18n } from "../lib/i18n";
 import "../styles/Accordion.css";
 
 export default function Accordion() {
   const [faqItems, setFaqItems] = useState([]);
   const [activeIndex, setActiveIndex] = useState(null);
   const panelRefs = useRef([]);
+  const { t } = useI18n();
 
   useEffect(() => {
     const fetchFaq = async () => {
@@ -18,15 +20,15 @@ export default function Accordion() {
           setFaqItems([
             {
               _id: "test1",
-              question: "Kaip galiu užsisakyti kostiumą?",
+              question: (t("accordion.testOne")),
               answer:
-                "Pasirink kostiumą, spausk „Rezervuoti“ ir užpildyk formą.",
+              (t("accordion.answerOne")),
             },
             {
               _id: "test2",
-              question: "Ar galiu pakeisti užsakymo datą?",
+              question: (t("accordion.testTwo")),
               answer:
-                "Taip, susisiek su mumis el. paštu ir pakeisime datą, jei įmanoma.",
+                (t("accordion.answerTwo")),
             },
           ]);
         }
@@ -36,16 +38,16 @@ export default function Accordion() {
         setFaqItems([
           {
             _id: "test1",
-            question: "Kaip galiu užsisakyti kostiumą?",
-            answer:
-              "Pasirink kostiumą, spausk „Rezervuoti“ ir užpildyk formą.",
-          },
-          {
-            _id: "test2",
-            question: "Ar galiu pakeisti užsakymo datą?",
-            answer:
-              "Taip, susisiek su mumis el. paštu ir pakeisime datą, jei įmanoma.",
-          },
+              question: (t("accordion.testOne")),
+              answer:
+              (t("accordion.answerOne")),
+            },
+            {
+              _id: "test2",
+              question: (t("accordion.testTwo")),
+              answer:
+                (t("accordion.answerTwo")),
+            },
         ]);
       }
     };

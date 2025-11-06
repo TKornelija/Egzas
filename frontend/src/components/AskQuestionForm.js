@@ -14,33 +14,33 @@ export default function AskQuestionForm() {
     e.preventDefault();
     try {
       await apiPost("/api/question", { question, askedBy: email });
-      setStatus("Žinutė sėkmingai išsiųsta!");
+      setStatus(t("form.succes"));
       setQuestion("");
       setEmail("");
     } catch (err) {
-      setStatus("Įvyko klaida, pabandykite vėliau.");
+      setStatus(t("form.error"));
       console.error(err);
     }
   };
 
   return (
     <div className="ask-question-container">
-      <h3>Neradai atsakymo? Užduok klausimą:</h3>
+      <h3>{t("form.name")}</h3>
       <form onSubmit={handleSubmit} className="ask-question-form">
         <input
           type="email"
-          placeholder="Jūsų el. paštas"
+          placeholder={t("form.email")}
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
         />
         <textarea
-          placeholder="Įveskite klausimą"
+          placeholder={t("form.question")}
           value={question}
           onChange={(e) => setQuestion(e.target.value)}
           required
         ></textarea>
-        <button type="submit">Siųsti</button>
+        <button type="submit">{t("form.send")}</button>
       </form>
       {status && <p className="ask-question-status">{status}</p>}
     </div>

@@ -55,6 +55,27 @@ const translations = {
       loading: "Kraunama...",
       notFound: "Kostiumas nerastas.",
     },
+    faq:{
+    name: "Dažniausiai užduodami klausimai",
+    },
+    accordion:{
+    testOne: "Kaip galiu užsisakyti kostiumą?",
+    answerOne: "Pasirink kostiumą, spausk „Rezervuoti“ ir užpildyk formą.",
+ 
+    testTwo: "Ar galiu pakeisti užsakymo datą?",
+    answerTwo: "Taip, susisiek su mumis el. paštu ir pakeisime datą, jei įmanoma.",
+
+    
+    },
+    form:{
+    succes: "Žinutė sėkmingai išsiųsta!",
+    error: "Įvyko klaida, pabandykite vėliau.",
+    name: "Neradai atsakymo? Užduok klausimą:",
+    email: "Jūsų el. paštas",
+    question: "Įveskite klausimą",
+    send: "Siųsti"
+
+    },
     footer: {
       returns: "Grąžinimai",
       shipping: "Pristatymas",
@@ -117,6 +138,26 @@ const translations = {
       loading: "Loading...",
       notFound: "Costume not found.",
     },
+    faq:{
+    name: "Frequently asked questions",
+    },
+    accordion:{
+    testOne: "How can I order a suit?",
+    answerOne: "Choose a costume, click Book and fill out the form.",
+ 
+    testTwo: "Can I change the date of my order?",
+    answerTwo: "Yes, please contact us by email and we will change the date if possible.",
+
+    },
+    form:{
+    succes: "Message sent successfully!",
+    error: "An error occurred, please try again later.",
+    name: "Didn't find the answer? Ask a question:",
+    email: "Your email",
+    question: "Enter a question",
+    send: "Send"
+
+    },
     footer: {
       returns: "Returns",
       shipping: "Shipping",
@@ -178,6 +219,26 @@ const translations = {
       fillAll: "Заполните все обязательные поля.",
       loading: "Загрузка...",
       notFound: "Костюм не найден.",
+    },
+    faq:{
+    name: "Часто задаваемые вопросы",
+    },
+    accordion:{
+    testOne: "Как я могу заказать костюм?",
+    answerOne: "Выберите костюм, нажмите «Забронировать» и заполните форму.",
+ 
+    testTwo: "Могу ли я изменить дату заказа?",
+    answerTwo: "Да, пожалуйста, свяжитесь с нами по электронной почте, и мы изменим дату, если это возможно.",
+
+    },
+    form:{
+    succes: "Сообщение успешно отправлено!",
+    error: "Произошла ошибка, повторите попытку позже.",
+    name: "Не нашли ответ? Задайте вопрос:",
+    email: "Ваш адрес электронной почты",
+    question: "Введите вопрос",
+    send: "Отправлять"
+
     },
     footer: {
       returns: "Возвраты",
