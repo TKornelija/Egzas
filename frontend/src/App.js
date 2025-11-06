@@ -8,6 +8,7 @@ import Cart from "./pages/Cart";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup"
 import Account from "./pages/Account";
+import FAQ from "./pages/FAQ";
 
 
 
@@ -26,7 +27,7 @@ export default function App() {
           <Route path="/costumes" element={<CostumesList />} />
           <Route path="/costumes/:id" element={<CostumeDetails />} />
           <Route path="/how-it-works" element={<Placeholder title="How it works" />} />
-          <Route path="/faq" element={<Placeholder title="FAQ" />} />
+          <Route path="/faq" element={<FAQ/>} />
           <Route path="/contact" element={<Placeholder title="Contact" />} />
 
         
