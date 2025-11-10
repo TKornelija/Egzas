@@ -1,7 +1,7 @@
 import { Routes, Route, Navigate } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
-import AdminDashboard from "./pages/Admin/AdminDashboard"; // <-- не забудь импорт
+import AdminDashboard from "./pages/Admin/AdminDashboard"; 
 import AdminLogin from "./pages/Admin/AdminLogin";
 import "./styles/admin.css";
 
