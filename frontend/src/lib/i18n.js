@@ -1,4 +1,3 @@
-// src/lib/i18n.js
 import React, { createContext, useContext, useMemo, useState } from "react";
 
 const translations = {
@@ -54,33 +53,39 @@ const translations = {
       fillAll: "Įveskite visus reikalingus duomenis.",
       loading: "Kraunama...",
       notFound: "Kostiumas nerastas.",
+      size: "Dydis",
     },
-    faq:{
-    name: "Dažniausiai užduodami klausimai",
+    faq: {
+      name: "Dažniausiai užduodami klausimai",
     },
-    accordion:{
-    testOne: "Kaip galiu užsisakyti kostiumą?",
-    answerOne: "Pasirink kostiumą, spausk „Rezervuoti“ ir užpildyk formą.",
- 
-    testTwo: "Ar galiu pakeisti užsakymo datą?",
-    answerTwo: "Taip, susisiek su mumis el. paštu ir pakeisime datą, jei įmanoma.",
-
-    
+    accordion: {
+      testOne: "Kaip galiu užsisakyti kostiumą?",
+      answerOne: "Pasirink kostiumą, spausk „Rezervuoti“ ir užpildyk formą.",
+      testTwo: "Ar galiu pakeisti užsakymo datą?",
+      answerTwo:
+        "Taip, susisiek su mumis el. paštu ir pakeisime datą, jei įmanoma.",
     },
-    countdown:{
-    name: "Iki Hellovyno liko visai nedaug!"
+    countdown: {
+      name: "Iki Hellovyno liko visai nedaug!",
     },
-    form:{
-    succes: "Žinutė sėkmingai išsiųsta!",
-    error: "Įvyko klaida, pabandykite vėliau.",
-    name: "Neradai atsakymo? Užduok klausimą:",
-    email: "Jūsų el. paštas",
-    question: "Įveskite klausimą",
-    send: "Siųsti"
-
+    form: {
+      succes: "Žinutė sėkmingai išsiųsta!",
+      error: "Įvyko klaida, pabandykite vėliau.",
+      name: "Neradai atsakymo? Užduok klausimą:",
+      email: "Jūsų el. paštas",
+      question: "Įveskite klausimą",
+      send: "Siųsti",
     },
-    featuredcostumes:{
-    button: "Pamatyti visus kostiumus",
+    featuredcostumes: {
+      button: "Pamatyti visus kostiumus",
+    },
+    cart: {
+      empty: "Jūsų krepšelis tuščias.",
+      browse: "Naršyti kostiumus",
+      remove: "Pašalinti",
+      clear: "Išvalyti krepšelį",
+      total: "Iš viso",
+      checkout: "Tęsti pirkimą",
     },
     filter:{
       visi: "Visi",
@@ -153,32 +158,39 @@ const translations = {
       fillAll: "Please fill in all required fields.",
       loading: "Loading...",
       notFound: "Costume not found.",
+      size: "Size",
     },
-    faq:{
-    name: "Frequently asked questions",
+    faq: {
+      name: "Frequently asked questions",
     },
-    accordion:{
-    testOne: "How can I order a suit?",
-    answerOne: "Choose a costume, click Book and fill out the form.",
- 
-    testTwo: "Can I change the date of my order?",
-    answerTwo: "Yes, please contact us by email and we will change the date if possible.",
-
+    accordion: {
+      testOne: "How can I order a suit?",
+      answerOne: "Choose a costume, click Book and fill out the form.",
+      testTwo: "Can I change the date of my order?",
+      answerTwo:
+        "Yes, please contact us by email and we will change the date if possible.",
     },
-    countdown:{
-    name: "There's not much left until Halloween!"
+    countdown: {
+      name: "There's not much left until Halloween!",
     },
-    form:{
-    succes: "Message sent successfully!",
-    error: "An error occurred, please try again later.",
-    name: "Didn't find the answer? Ask a question:",
-    email: "Your email",
-    question: "Enter a question",
-    send: "Send"
-
+    form: {
+      succes: "Message sent successfully!",
+      error: "An error occurred, please try again later.",
+      name: "Didn't find the answer? Ask a question:",
+      email: "Your email",
+      question: "Enter a question",
+      send: "Send",
     },
-    featuredcostumes:{
-    button: "See all costumes",
+    featuredcostumes: {
+      button: "See all costumes",
+    },
+    cart: {
+      empty: "Your cart is empty.",
+      browse: "Browse costumes",
+      remove: "Remove",
+      clear: "Clear cart",
+      total: "Total",
+      checkout: "Proceed to checkout",
     },
     filter:{
       visi: "All",
@@ -251,32 +263,39 @@ const translations = {
       fillAll: "Заполните все обязательные поля.",
       loading: "Загрузка...",
       notFound: "Костюм не найден.",
+      size: "Размер",
     },
-    faq:{
-    name: "Часто задаваемые вопросы",
+    faq: {
+      name: "Часто задаваемые вопросы",
     },
-    accordion:{
-    testOne: "Как я могу заказать костюм?",
-    answerOne: "Выберите костюм, нажмите «Забронировать» и заполните форму.",
- 
-    testTwo: "Могу ли я изменить дату заказа?",
-    answerTwo: "Да, пожалуйста, свяжитесь с нами по электронной почте, и мы изменим дату, если это возможно.",
-
+    accordion: {
+      testOne: "Как я могу заказать костюм?",
+      answerOne: "Выберите костюм, нажмите «Забронировать» и заполните форму.",
+      testTwo: "Могу ли я изменить дату заказа?",
+      answerTwo:
+        "Да, пожалуйста, свяжитесь с нами по электронной почте, и мы изменим дату, если это возможно.",
     },
-    form:{
-    succes: "Сообщение успешно отправлено!",
-    error: "Произошла ошибка, повторите попытку позже.",
-    name: "Не нашли ответ? Задайте вопрос:",
-    email: "Ваш адрес электронной почты",
-    question: "Введите вопрос",
-    send: "Отправлять"
-
+    countdown: {
+      name: "До Хэллоуина осталось совсем немного!",
     },
-    countdown:{
-    name: "До Хэллоуина осталось совсем немного!"
+    form: {
+      succes: "Сообщение успешно отправлено!",
+      error: "Произошла ошибка, повторите попытку позже.",
+      name: "Не нашли ответ? Задайте вопрос:",
+      email: "Ваш адрес электронной почты",
+      question: "Введите вопрос",
+      send: "Отправлять",
     },
-    featuredcostumes:{
-    button: "Посмотреть все костюмы",
+    featuredcostumes: {
+      button: "Посмотреть все костюмы",
+    },
+    cart: {
+      empty: "Корзина пуста.",
+      browse: "Посмотреть костюмы",
+      remove: "Удалить",
+      clear: "Очистить корзину",
+      total: "Итого",
+      checkout: "Оформить заказ",
     },
     filter:{
       visi: "Все",
@@ -299,7 +318,6 @@ const translations = {
   },
 };
 
-
 const I18nCtx = createContext({
   lang: "en",
   setLang: () => {},
@@ -307,14 +325,11 @@ const I18nCtx = createContext({
 });
 
 export function I18nProvider({ children }) {
-  // auto-detect first time, else use saved
   const saved =
     typeof window !== "undefined" ? localStorage.getItem("lang") : null;
-  const browser = (
-    typeof navigator !== "undefined" ? navigator.language : "en"
-  ).slice(0, 2);
-  const initial =
-    saved || (["lt", "en", "ru"].includes(browser) ? browser : "en");
+  const browser =
+    typeof navigator !== "undefined" ? navigator.language.slice(0, 2) : "en";
+  const initial = saved || (["lt", "en", "ru"].includes(browser) ? browser : "en");
 
   const [lang, setLang] = useState(initial);
   const dict = translations[lang] || translations.en;
@@ -326,13 +341,12 @@ export function I18nProvider({ children }) {
         localStorage.setItem("lang", l);
         setLang(l);
       },
-      // very simple "a.b.c" path resolver
       t: (path, ...args) => {
         const parts = path.split(".");
         let cur = dict;
         for (const p of parts) {
           if (cur && Object.prototype.hasOwnProperty.call(cur, p)) cur = cur[p];
-          else return path; // fallback: return key
+          else return path; // fallback
         }
         return typeof cur === "function" ? cur(...args) : cur;
       },
