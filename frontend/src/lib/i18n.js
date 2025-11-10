@@ -20,7 +20,7 @@ const translations = {
     list: {
       title: "Helovino kolekcija",
       buy: "Pirkti",
-      perDay: "/diena",
+      perDay: "diena",
       buyNow: "Pirkti dabar",
       view: "Peržiūrėti",
     },
@@ -126,7 +126,7 @@ const translations = {
     list: {
       title: "Halloween Collection",
       buy: "Buy",
-      perDay: "/day",
+      perDay: "day",
       buyNow: "Buy Now",
       view: "View Details",
     },
@@ -231,7 +231,7 @@ const translations = {
     list: {
       title: "Хэллоуин коллекция",
       buy: "Купить",
-      perDay: "/день",
+      perDay: "день",
       buyNow: "Купить сейчас",
       view: "Подробнее",
     },
