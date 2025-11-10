@@ -3,6 +3,7 @@ import express from "express"
 import cors from "cors"; 
 import mongoose from "mongoose";
 import userRoutes from "./routes/userRoutes.js";
+
 // import adminAuthRoutes from "./routes/adminAuth.routes.js";
 // import adminRoutes from "./routes/admin.routes.js";
 dotenv.config() 

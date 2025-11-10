@@ -1,0 +1,106 @@
+:root{
+  --adm-bg: #0f0f0f;
+  --adm-bg-2:#141414;
+  --adm-text:#e9e9e9;
+  --adm-dim:#bdbdbd;
+  --adm-line:#262626;
+  --adm-accent:#e24848;   /* красный из темы */
+  --adm-accent-2:#2b7de9; /* для фокусов */
+  --adm-radius:10px;
+}
+
+.admin { color: var(--adm-text); }
+
+.admin__header{
+  padding: 24px 0 12px;
+}
+.admin__title{
+  font-size: 32px;
+  line-height: 1.2;
+  font-weight: 800;
+  margin: 0 0 12px;
+}
+
+.admin__tabs{
+  display: flex;
+  gap: 10px;
+  margin: 8px 0 20px;
+}
+.adm-tab{
+  border: 1px solid var(--adm-line);
+  background: var(--adm-bg-2);
+  color: var(--adm-text);
+  padding: 8px 14px;
+  border-radius: var(--adm-radius);
+  font-size: 14px;
+  text-decoration: none;
+  transition: border-color .15s ease, background .15s ease, color .15s ease;
+}
+.adm-tab:hover{ border-color: var(--adm-dim); }
+.adm-tab.is-active{
+  background: #1a1a1a;
+  border-color: var(--adm-accent);
+}
+
+.admin__card{
+  background: var(--adm-bg-2);
+  border: 1px solid var(--adm-line);
+  border-radius: var(--adm-radius);
+  padding: 16px;
+}
+
+.admin__toolbar{
+  display: flex; gap: 10px; flex-wrap: wrap;
+  margin-bottom: 12px;
+}
+.admin__toolbar input,
+.admin__toolbar select,
+.admin__toolbar textarea{
+  background:#111; color:var(--adm-text);
+  border:1px solid var(--adm-line);
+  border-radius:8px; padding:8px 10px;
+  outline:none;
+}
+.admin__toolbar input:focus,
+.admin__toolbar select:focus,
+.admin__toolbar textarea:focus{
+  border-color: var(--adm-accent-2);
+  box-shadow: 0 0 0 3px rgba(43,125,233,.15);
+}
+
+/* Кнопки */
+.btn{ cursor:pointer; border-radius:8px; padding:8px 12px; font-size:14px; }
+.btn--ghost{ background:transparent; border:1px solid var(--adm-line); color:var(--adm-text); }
+.btn--ghost:hover{ border-color:var(--adm-dim); }
+.btn--primary{ background:var(--adm-accent); border:1px solid var(--adm-accent); color:#fff; }
+.btn--primary:hover{ filter:brightness(1.05); }
+
+/* Таблицы (строго, без иконок) */
+.adm-table{
+  width:100%; border-collapse:collapse; font-size:14px;
+  border:1px solid var(--adm-line);
+  border-radius: var(--adm-radius);
+  overflow:hidden;
+}
+.adm-table th, .adm-table td{
+  border-bottom:1px solid var(--adm-line);
+  padding:10px 12px; text-align:left;
+}
+.adm-table thead th{
+  background:#121212; color:var(--adm-dim); font-weight:600; letter-spacing:.02em;
+}
+.adm-table tbody tr:hover{ background:#111; }
+.adm-table .col-actions{ width:220px; }
+
+/* Пустые состояния */
+.admin__empty{
+  border:1px dashed var(--adm-line);
+  border-radius: var(--adm-radius);
+  padding:18px; color:var(--adm-dim); text-align:center;
+}
+
+/* Адаптив */
+@media (max-width: 768px){
+  .admin__tabs{ flex-wrap: wrap; }
+  .adm-table th, .adm-table td{ padding:8px; }
+}

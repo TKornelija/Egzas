@@ -1,7 +1,10 @@
 import { Routes, Route, Navigate } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
-import AdminDashboard from "./pages/AdminDashboard"; // <-- не забудь импорт
+import AdminDashboard from "./pages/Admin/AdminDashboard"; // <-- не забудь импорт
+import AdminLogin from "./pages/Admin/AdminLogin";
+import "./styles/admin.css";
+
 
 import Home from "./pages/Home";
 import CostumesList from "./pages/CostumeList";
@@ -43,11 +46,8 @@ export default function App() {
           <Route path="/account" element={<Account />} />
 
           {/* Admin */}
-          {/* legacy redirect — можно удалить позже */}
-          <Route
-            path="/admin/login"
-            element={<Navigate to="/login" replace />}
-          />
+          {/* Admin login */}
+          <Route path="/admin/login" element={<AdminLogin />} />
           <Route element={<AdminRoute />}>
             <Route path="/admin" element={<AdminDashboard />} />
           </Route>
