@@ -3,7 +3,9 @@ import express from "express" // pagrindine serverio biblioteka, leidzianti kurt
 import cors from "cors"; //mechanizmas, kuris leidžia serveriui priimti užklausas iš kitų duomenų, leidžia bendrauti su frontend'u.
 import mongoose from "mongoose";
 import userRoutes from "./routes/userRoutes.js";
-dotenv.config() //5krauna .env failo kintamuosius
+// import adminAuthRoutes from "./routes/adminAuth.routes.js";
+// import adminRoutes from "./routes/admin.routes.js";
+dotenv.config() 
 
 
 
@@ -44,6 +46,9 @@ app.use('/api/costumes', costumesRouter);
 app.use('/api/reservations', reservationsRouter);
 app.use('/api/orders', ordersRouter);
 app.use("/api/user", userRoutes);
+// // Keep admin auth and admin api under the project's preferred path
+// app.use("/api/admin_users/auth", adminAuthRoutes);
+// app.use("/api/admin_users", adminRoutes);
 
 
 const PORT = process.env.PORT || 4000;

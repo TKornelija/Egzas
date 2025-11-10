@@ -3,7 +3,7 @@ import User from "../models/userModel.js";
 
 // Pagalbinė funkcija JWT kūrimui
 function sukurtiToken(_id) {
-  const slaptas = process.env.SECRET;
+  const slaptas = process.env.JWT_SECRET;
   if (!slaptas) {
     // jei nėra .env SECRET, aiškiai grąžinam klaidą
     throw new Error("Serverio konfigūracija neteisinga: trūksta SECRET");
@@ -23,6 +23,7 @@ export const signupUser = async (req, res) => {
       token,
       // galima grąžinti ir id, jei prireiks fronte:
       id: user._id,
+      admin: !!user.admin,
     });
   } catch (error) {
     return res.status(400).json({ error: error.message || "Registracijos klaida" });
@@ -40,6 +41,7 @@ export const loginUser = async (req, res) => {
       email,
       token,
       id: user._id,
+      admin: !!user.admin,
     });
   } catch (error) {
     return res.status(400).json({ error: error.message || "Prisijungimo klaida" });

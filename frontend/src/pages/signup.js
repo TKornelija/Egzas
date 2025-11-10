@@ -1,8 +1,10 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
+import { useAuthContext } from "../hooks/useAuthContext";
 
 export default function Signup() {
   const navigate = useNavigate();
+  const { login: contextLogin } = useAuthContext();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -26,7 +28,8 @@ export default function Signup() {
     }
 
     // išsaugom user info localStorage
-    localStorage.setItem("user", JSON.stringify(data));
+  // store into context (also stores to localStorage via context)
+  contextLogin(data);
 
     // persiunčia į Home
     navigate("/");

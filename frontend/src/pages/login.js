@@ -11,14 +11,29 @@ export default function Login() {
   const [pwd, setPwd] = useState("");
   const [err, setErr] = useState("");
 
-  function handleLogin(e){
+  async function handleLogin(e){
     e.preventDefault();
     setErr("");
     if(!email || !email.includes("@")) return setErr("Enter a valid email.");
     if(!pwd || pwd.length < 3)        return setErr("Password too short.");
-    const u = { email, name: email.split("@")[0], ts: Date.now() };
-    contextLogin(u);
-    nav("/"); // navigate home after login
+
+    // call backend login
+    try {
+      const res = await fetch('/api/user/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password: pwd })
+      });
+      const data = await res.json();
+      if(!res.ok) return setErr(data.error || 'Login failed');
+
+      // store in context (and localStorage via context)
+      contextLogin(data);
+      nav('/');
+    } catch (err) {
+      console.error(err);
+      setErr('Network error');
+    }
   }
 
   function handleLogout(){

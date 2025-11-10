@@ -5,6 +5,7 @@ import App from "./App";
 import "./index.css";
 import { I18nProvider } from "./lib/i18n";
 import { AuthContextProvider } from "./context/authContext";
+import { AdminAuthProvider } from "./context/AdminAuthContext";
 import "./assets/fonts/fonts.css";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
@@ -12,9 +13,11 @@ root.render(
   <React.StrictMode>
     <I18nProvider>
       <BrowserRouter>
-        <AuthContextProvider>
-          <App />
-        </AuthContextProvider>
+        <AdminAuthProvider>
+          <AuthContextProvider>
+            <App />
+          </AuthContextProvider>
+        </AdminAuthProvider>
       </BrowserRouter>
     </I18nProvider>
   </React.StrictMode>

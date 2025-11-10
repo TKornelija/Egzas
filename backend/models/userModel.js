@@ -13,6 +13,12 @@ const userSchema = new Schema({
         type: String,
         required:true
     }
+    ,
+    // admin flag - set true for admin users
+    admin: {
+        type: Boolean,
+        default: false
+    }
 })
 
 userSchema.statics.signup = async function(email, password) {
