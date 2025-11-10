@@ -82,6 +82,16 @@ const translations = {
     featuredcostumes:{
     button: "Pamatyti visus kostiumus",
     },
+    filter:{
+      visi: "Visi",
+      moterims: "Moterims",
+      vyrams: "Vyrams",
+      mergaitems: "Mergaitėms",
+      berniukams: "Berniukams"
+    },
+    costumes:{
+      paieska: "Ieškoti kostiumų"
+    },
     footer: {
       returns: "Grąžinimai",
       shipping: "Pristatymas",
@@ -170,6 +180,16 @@ const translations = {
     featuredcostumes:{
     button: "See all costumes",
     },
+    filter:{
+      visi: "All",
+      moterims: "For women",
+      vyrams: "For men",
+      mergaitems: "For girls",
+      berniukams: "For boys"
+    },
+    costumes:{
+      paieska: "Search for costumes"
+    },
     footer: {
       returns: "Returns",
       shipping: "Shipping",
@@ -257,6 +277,16 @@ const translations = {
     },
     featuredcostumes:{
     button: "Посмотреть все костюмы",
+    },
+    filter:{
+      visi: "Все",
+      moterims: "Для женщин",
+      vyrams: "Для мужчин",
+      mergaitems: "Для девочек",
+      berniukams: "Для мальчиков"
+    },
+    costumes:{
+      paieska: "Поиск костюмов"
     },
     footer: {
       returns: "Возвраты",
