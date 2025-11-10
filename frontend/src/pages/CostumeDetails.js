@@ -1,13 +1,15 @@
-import { useParams, Link, useSearchParams } from "react-router-dom";
+import { useParams, Link, useSearchParams, useNavigate } from "react-router-dom";
 import { useMemo, useState, useEffect } from "react";
 import { apiGet, apiPost } from "../lib/api";
 import { useI18n } from "../lib/i18n";
+import { addItem } from "../lib/cart";
 import "../styles/costumeDetails.css";
 
 export default function CostumeDetails() {
   const { id } = useParams();
   const [params] = useSearchParams();
   const { t } = useI18n();
+  const navigate = useNavigate();
 
   const initialMode = params.get("mode") === "buy" ? "buy" : "rent";
 
@@ -25,6 +27,7 @@ export default function CostumeDetails() {
   const [from, setFrom] = useState("");
   const [to, setTo] = useState("");
   const [qty, setQty] = useState(1);
+  const [showAddedModal, setShowAddedModal] = useState(false);
 
   const today = useMemo(() => {
     const d = new Date();
@@ -41,7 +44,6 @@ export default function CostumeDetails() {
     return diff > 0 ? diff : 0;
   }, [from, to]);
 
- 
   const formatCurrency = (amount) =>
     new Intl.NumberFormat("lt-LT", { style: "currency", currency: "EUR" }).format(amount);
 
@@ -89,12 +91,18 @@ export default function CostumeDetails() {
 
         alert(`Rezervacija sėkmingai sukurta!\nID: ${reservation._id}`);
       } else {
-        const order = await apiPost("/api/purchase", {
-          costumeId: id,
-          qty,
+        if (!size)
+          return setError(t("details.sizeRequired") || "Pasirinkite dydį.");
+
+        addItem({
+          id,
+          name: item.name,
           size,
+          qty,
+          price: item.price,
+          imageUrl: item.imageUrls?.[0] || "/images/no-image.png",
         });
-        alert(`Užsakymas sėkmingai pateiktas!\nID: ${order._id}`);
+        setShowAddedModal(true);
       }
     } catch (e) {
       setError(e.message || t("details.requestError"));
@@ -245,7 +253,9 @@ export default function CostumeDetails() {
                   type="number"
                   min={1}
                   value={qty}
-                  onChange={(e) => setQty(Math.max(1, Number(e.target.value) || 1))}
+                  onChange={(e) =>
+                    setQty(Math.max(1, Number(e.target.value) || 1))
+                  }
                   className="input-date"
                 />
               </label>
@@ -291,7 +301,9 @@ export default function CostumeDetails() {
             <textarea
               placeholder={t("details.commentPlaceholder")}
               value={newReview.text}
-              onChange={(e) => setNewReview({ ...newReview, text: e.target.value })}
+              onChange={(e) =>
+                setNewReview({ ...newReview, text: e.target.value })
+              }
             />
             {reviewError && <div className="error-text">{reviewError}</div>}
             <button type="submit" className="btn btn--primary">
@@ -300,6 +312,54 @@ export default function CostumeDetails() {
           </form>
         </div>
       </div>
+
+      {showAddedModal && (
+        <div
+          style={{
+            position: "fixed",
+            top: 0,
+            left: 0,
+            width: "100%",
+            height: "100%",
+            background: "rgba(0,0,0,0.6)",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            zIndex: 1000,
+          }}
+        >
+          <div
+            style={{
+              background: "#181818",
+              padding: 32,
+              borderRadius: 16,
+              textAlign: "center",
+              width: "90%",
+              maxWidth: 420,
+              boxShadow: "0 4px 12px rgba(0,0,0,0.3)",
+            }}
+          >
+            <h2 style={{ marginBottom: 12 }}>Prekė įdėta į krepšelį!</h2>
+            <p style={{ opacity: 0.85, marginBottom: 24 }}>
+              Ką norėtumėte daryti toliau?
+            </p>
+            <div style={{ display: "flex", justifyContent: "center", gap: 12 }}>
+              <button
+                className="btn btn--primary"
+                onClick={() => navigate("/cart")}
+              >
+                Peržiūrėti krepšelį
+              </button>
+              <button
+                className="btn btn--ghost"
+                onClick={() => setShowAddedModal(false)}
+              >
+                Tęsti apsipirkimą
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

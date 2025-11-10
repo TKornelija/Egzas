@@ -1,15 +1,19 @@
-import dotenv from 'dotenv'; // leidzia naudoti .env failą
-import express from "express" // pagrindine serverio biblioteka, leidzianti kurti REST API
-import cors from "cors"; //mechanizmas, kuris leidžia serveriui priimti užklausas iš kitų duomenų, leidžia bendrauti su frontend'u.
+import dotenv from 'dotenv'; 
+import express from "express" 
+import cors from "cors"; 
 import mongoose from "mongoose";
 import userRoutes from "./routes/userRoutes.js";
+<<<<<<< HEAD
 // import adminAuthRoutes from "./routes/adminAuth.routes.js";
 // import adminRoutes from "./routes/admin.routes.js";
+=======
+>>>>>>> 87dd7619a7127300b22fc139244bac6d79884d30
 dotenv.config() 
 
 
 
 //routerių importavimas
+import questionRouter from './routes/question.js';
 import costumesRouter from './routes/costumes.js';
 import reservationsRouter from './routes/reservation.js';
 import ordersRouter from './routes/orders.js';
@@ -46,9 +50,13 @@ app.use('/api/costumes', costumesRouter);
 app.use('/api/reservations', reservationsRouter);
 app.use('/api/orders', ordersRouter);
 app.use("/api/user", userRoutes);
+<<<<<<< HEAD
 // // Keep admin auth and admin api under the project's preferred path
 // app.use("/api/admin_users/auth", adminAuthRoutes);
 // app.use("/api/admin_users", adminRoutes);
+=======
+app.use('/api/question', questionRouter);
+>>>>>>> 87dd7619a7127300b22fc139244bac6d79884d30
 
 
 const PORT = process.env.PORT || 4000;

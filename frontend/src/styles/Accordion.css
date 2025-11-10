@@ -1,0 +1,66 @@
+.accordion-container {
+ border: 1px;
+ gap: 20px;
+}
+
+.accordion-item {
+ padding: 10px;
+border-bottom: none;
+gap: 20px;
+  
+}
+
+.accordion-button {
+  width: 100%;
+  border-radius: 20px;
+  text-align: left;
+  padding: 10px;
+  background: #cf524c;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  transition: background 0.3s;
+  font-size: medium;
+  font-weight: bolder;
+ 
+}
+
+.accordion-button.active {
+  background: #3b3b3b;
+
+}
+
+.accordion-panel {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+  padding: 0 10px;
+}
+.accordion-panel.open {
+  padding: 10px;
+}
+
+.ask-question-container {
+  margin-top: 30px;
+}
+
+.ask-question-form input,
+.ask-question-form textarea {
+  width: 100%;
+  margin-bottom: 10px;
+  padding: 8px;
+}
+
+.ask-question-form button {
+  padding: 8px 15px;
+  cursor: pointer;
+  background-color: #cf524c;
+  border-radius: 20px;
+  border-color: #cf524c;
+
+}
+
+.ask-question-status {
+  margin-top: 10px;
+  font-weight: bold;
+}

@@ -2,12 +2,12 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { apiGet } from "../lib/api";
 import { useI18n } from "../lib/i18n";
-import { COSTUME_FILTERS } from "../components/costumeFilter";
+import { useCostumeFilters } from "../components/costumeFilter";
 import { filterBySearch } from "../components/Search";
 import Card from "../components/CostumeCard";
 export default function CostumesList() {
   const { t } = useI18n();
-
+  const COSTUME_FILTERS = useCostumeFilters();
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -80,7 +80,7 @@ export default function CostumesList() {
       <div style={{ marginBottom: 24 }}>
         <input
           type="text"
-          placeholder="Ieškoti kostiumų..."
+          placeholder= {t("costumes.paieska")}
           value={searchTerm}
           onChange={(e) => { setSearchTerm(e.target.value); setCurrentPage(1); }}
           style={{
@@ -114,7 +114,7 @@ export default function CostumesList() {
         )}
       </div>
 
-      {/* gPuslapiavimo mygtukai */}
+      {/* Puslapiavimo mygtukai */}
       {totalPages > 1 && (
         <div style={{ marginTop: 24, display: "flex", gap: 8, justifyContent: "center" }}>
           {Array.from({ length: totalPages }, (_, i) => (

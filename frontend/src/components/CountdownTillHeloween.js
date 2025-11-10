@@ -4,7 +4,7 @@ import { useI18n } from "../lib/i18n";
 
 export default function HalloweenCountdown() {
     const { t } = useI18n();
-  const targetDate = new Date("2025-10-31T00:00:00").getTime();
+  const targetDate = new Date("2026-10-31T00:00:00").getTime();
   const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
 
   useEffect(() => {
@@ -41,7 +41,7 @@ export default function HalloweenCountdown() {
         {timeLeft.days}d {timeLeft.hours}h {timeLeft.minutes}m {timeLeft.seconds}s
       </p>
       <h2 style={{ fontFamily: "SpookyFont", fontSize: "48px", color: "orange" }}>
-  Iki Helovyno liko visai nedaug!
+  {t("countdown.name")}
 </h2>
       
     </div>
