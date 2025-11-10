@@ -87,6 +87,16 @@ const translations = {
       total: "Iš viso",
       checkout: "Tęsti pirkimą",
     },
+    filter:{
+      visi: "Visi",
+      moterims: "Moterims",
+      vyrams: "Vyrams",
+      mergaitems: "Mergaitėms",
+      berniukams: "Berniukams"
+    },
+    costumes:{
+      paieska: "Ieškoti kostiumų"
+    },
     footer: {
       returns: "Grąžinimai",
       shipping: "Pristatymas",
@@ -182,6 +192,16 @@ const translations = {
       total: "Total",
       checkout: "Proceed to checkout",
     },
+    filter:{
+      visi: "All",
+      moterims: "For women",
+      vyrams: "For men",
+      mergaitems: "For girls",
+      berniukams: "For boys"
+    },
+    costumes:{
+      paieska: "Search for costumes"
+    },
     footer: {
       returns: "Returns",
       shipping: "Shipping",
@@ -276,6 +296,16 @@ const translations = {
       clear: "Очистить корзину",
       total: "Итого",
       checkout: "Оформить заказ",
+    },
+    filter:{
+      visi: "Все",
+      moterims: "Для женщин",
+      vyrams: "Для мужчин",
+      mergaitems: "Для девочек",
+      berniukams: "Для мальчиков"
+    },
+    costumes:{
+      paieska: "Поиск костюмов"
     },
     footer: {
       returns: "Возвраты",
