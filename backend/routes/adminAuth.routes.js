@@ -4,7 +4,7 @@ import { AdminUser } from "../models/AdminUser.js";
 
 const router = Router();
 
-// POST /api/admin/auth/seed — сделай один раз, потом SEED_ADMIN выключи
+
 router.post("/seed", async (req, res) => {
   try {
     if (process.env.SEED_ADMIN !== "true") return res.status(404).end();
@@ -26,7 +26,7 @@ router.post("/seed", async (req, res) => {
   }
 });
 
-// POST /api/admin/auth/login
+
 router.post("/login", async (req, res) => {
   try {
     const { email, password } = req.body || {};

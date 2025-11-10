@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 
 const costumeSchema = new mongoose.Schema(
   {
@@ -41,11 +41,11 @@ const costumeSchema = new mongoose.Schema(
       trim: true,
     },
     size: {
-      type: [String], 
+      type: [String],
       default: [],
     },
   },
   { timestamps: true }
 );
 
-export default mongoose.model('Costume', costumeSchema);
+export default mongoose.model("Costume", costumeSchema);

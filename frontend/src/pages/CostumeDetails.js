@@ -1,4 +1,9 @@
-import { useParams, Link, useSearchParams, useNavigate } from "react-router-dom";
+import {
+  useParams,
+  Link,
+  useSearchParams,
+  useNavigate,
+} from "react-router-dom";
 import { useMemo, useState, useEffect } from "react";
 import { apiGet, apiPost } from "../lib/api";
 import { useI18n } from "../lib/i18n";
@@ -45,7 +50,10 @@ export default function CostumeDetails() {
   }, [from, to]);
 
   const formatCurrency = (amount) =>
-    new Intl.NumberFormat("lt-LT", { style: "currency", currency: "EUR" }).format(amount);
+    new Intl.NumberFormat("lt-LT", {
+      style: "currency",
+      currency: "EUR",
+    }).format(amount);
 
   useEffect(() => {
     async function load() {
@@ -178,19 +186,27 @@ export default function CostumeDetails() {
         <div className="details">
           <h1>{item.name}</h1>
           <p className="price-line">
-            {t("details.priceLine", formatCurrency(item.rentalPrice), formatCurrency(item.price))}
+            {t(
+              "details.priceLine",
+              formatCurrency(item.rentalPrice),
+              formatCurrency(item.price)
+            )}
           </p>
 
           <div className="tabs">
             <button
               onClick={() => setMode("rent")}
-              className={`btn ${mode === "rent" ? "btn--primary" : "btn--ghost"}`}
+              className={`btn ${
+                mode === "rent" ? "btn--primary" : "btn--ghost"
+              }`}
             >
               {t("details.rent")}
             </button>
             <button
               onClick={() => setMode("buy")}
-              className={`btn ${mode === "buy" ? "btn--primary" : "btn--ghost"}`}
+              className={`btn ${
+                mode === "buy" ? "btn--primary" : "btn--ghost"
+              }`}
             >
               {t("details.buy")}
             </button>
@@ -203,7 +219,9 @@ export default function CostumeDetails() {
                 {item.size.map((s) => (
                   <button
                     key={s}
-                    className={`btn btn--ghost size-btn ${s === size ? "active" : ""}`}
+                    className={`btn btn--ghost size-btn ${
+                      s === size ? "active" : ""
+                    }`}
                     onClick={() => setSize(s)}
                     aria-pressed={s === size}
                   >
@@ -241,7 +259,8 @@ export default function CostumeDetails() {
                 />
               </label>
               <div className="total-line">
-                {t("details.total")}: <strong>{formatCurrency(rentTotal)}</strong>{" "}
+                {t("details.total")}:{" "}
+                <strong>{formatCurrency(rentTotal)}</strong>{" "}
                 {days ? `(${days} ${t("details.days")})` : ""}
               </div>
             </div>
@@ -260,7 +279,8 @@ export default function CostumeDetails() {
                 />
               </label>
               <div className="total-line">
-                {t("details.total")}: <strong>{formatCurrency(buyTotal)}</strong>
+                {t("details.total")}:{" "}
+                <strong>{formatCurrency(buyTotal)}</strong>
               </div>
             </div>
           )}

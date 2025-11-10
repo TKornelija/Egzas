@@ -5,13 +5,13 @@ import { useAuthContext } from "../hooks/useAuthContext";
 export default function Navbar() {
   const { t, lang, setLang } = useI18n();
   const navigate = useNavigate();
-  const { user, logout } = useAuthContext();  // один logout и точка
+  const { user, logout } = useAuthContext(); 
 
-  // админ определяется только через user.admin
+  // user.admin
   const adminOn = user?.admin === true;
 
   const logoutHandler = () => {
-    logout();           // чистит токены и user
+    logout(); 
     navigate("/", { replace: true });
   };
 
@@ -35,7 +35,6 @@ export default function Navbar() {
   return (
     <header className="navbar">
       <div className="container nav__inner">
-
         {/* Brand */}
         <Link to="/" className="brand" aria-label="Freak Or Treat home">
           Freak <span>Or</span> Treat
@@ -44,7 +43,7 @@ export default function Navbar() {
         {/* Main nav */}
         <nav className="nav">
           <ul className="nav__list">
-            {navItems.map(item => (
+            {navItems.map((item) => (
               <li key={item.to} className="nav__item">
                 <NavLink
                   to={item.to}
@@ -62,7 +61,6 @@ export default function Navbar() {
 
         {/* Right side */}
         <div className="nav__right">
-
           {/* Language selector */}
           <div className="lang">
             <LangBtn code="lt" />

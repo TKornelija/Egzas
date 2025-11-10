@@ -20,15 +20,13 @@ export default function Accordion() {
           setFaqItems([
             {
               _id: "test1",
-              question: (t("accordion.testOne")),
-              answer:
-              (t("accordion.answerOne")),
+              question: t("accordion.testOne"),
+              answer: t("accordion.answerOne"),
             },
             {
               _id: "test2",
-              question: (t("accordion.testTwo")),
-              answer:
-                (t("accordion.answerTwo")),
+              question: t("accordion.testTwo"),
+              answer: t("accordion.answerTwo"),
             },
           ]);
         }
@@ -38,16 +36,14 @@ export default function Accordion() {
         setFaqItems([
           {
             _id: "test1",
-              question: (t("accordion.testOne")),
-              answer:
-              (t("accordion.answerOne")),
-            },
-            {
-              _id: "test2",
-              question: (t("accordion.testTwo")),
-              answer:
-                (t("accordion.answerTwo")),
-            },
+            question: t("accordion.testOne"),
+            answer: t("accordion.answerOne"),
+          },
+          {
+            _id: "test2",
+            question: t("accordion.testTwo"),
+            answer: t("accordion.answerTwo"),
+          },
         ]);
       }
     };

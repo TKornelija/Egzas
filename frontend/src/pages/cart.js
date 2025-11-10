@@ -97,8 +97,7 @@ export default function Cart() {
               {t("cart.clear") || "Clear cart"}
             </button>
             <div className="cart-total">
-              {t("cart.total") || "Total"}:{" "}
-              <strong>{sum.toFixed(2)} €</strong>
+              {t("cart.total") || "Total"}: <strong>{sum.toFixed(2)} €</strong>
             </div>
           </div>
 
