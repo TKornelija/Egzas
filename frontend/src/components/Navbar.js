@@ -1,27 +1,18 @@
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { useI18n } from "../lib/i18n";
 import { useAuthContext } from "../hooks/useAuthContext";
-import { isAdminAuthed, adminLogout } from "../lib/adminAuth";
 
 export default function Navbar() {
   const { t, lang, setLang } = useI18n();
   const navigate = useNavigate();
-  const { user, logout: contextLogout } = useAuthContext();
+  const { user, logout } = useAuthContext();  // один logout и точка
 
-  console.log("Navbar render. User:", user);
-  // admin can be authenticated via admin token or via user object with admin=true
-  const adminOn = isAdminAuthed() || (!!user && !!user.admin);
+  // админ определяется только через user.admin
+  const adminOn = user?.admin === true;
 
-  // user logout 
-  const logoutUser = () => {
-    contextLogout();
+  const logoutHandler = () => {
+    logout();           // чистит токены и user
     navigate("/", { replace: true });
-  };
-
-  // admin logout 
-  const logoutAdmin = () => {
-    adminLogout();
-    navigate("/admin/login", { replace: true });
   };
 
   const navItems = [
@@ -36,7 +27,6 @@ export default function Navbar() {
     <button
       onClick={() => setLang(code)}
       className={`lang__btn ${lang === code ? "is-active" : ""}`}
-      aria-pressed={lang === code}
     >
       {code.toUpperCase()}
     </button>
@@ -54,7 +44,7 @@ export default function Navbar() {
         {/* Main nav */}
         <nav className="nav">
           <ul className="nav__list">
-            {navItems.map((item) => (
+            {navItems.map(item => (
               <li key={item.to} className="nav__item">
                 <NavLink
                   to={item.to}
@@ -72,6 +62,8 @@ export default function Navbar() {
 
         {/* Right side */}
         <div className="nav__right">
+
+          {/* Language selector */}
           <div className="lang">
             <LangBtn code="lt" />
             <LangBtn code="en" />
@@ -79,6 +71,7 @@ export default function Navbar() {
           </div>
 
           <div className="nav__actions">
+            {/* Cart */}
             <Link
               to="/cart"
               className="btn btn--ghost"
@@ -87,52 +80,54 @@ export default function Navbar() {
               🛒 {t("nav.cart")}
             </Link>
 
-            {adminOn ? (
-              <div className="flex gap-2 items-center">
+            {/* ADMIN MODE */}
+            {adminOn && (
+              <>
                 <Link
                   to="/admin"
                   className="btn btn--ghost"
                   style={{ fontSize: 14, padding: "8px 12px" }}
-                  aria-label="Open admin panel"
                 >
                   🛡️ Admin panel
                 </Link>
                 <button
+                  onClick={logoutHandler}
                   className="btn btn--primary"
                   style={{ fontSize: 14, padding: "8px 12px" }}
-                  onClick={logoutAdmin}
                 >
                   Logout (admin)
                 </button>
-              </div>
-            ) : (
+              </>
+            )}
 
-              !user ? (
+            {/* NORMAL USER */}
+            {!adminOn && !user && (
+              <Link
+                to="/login"
+                className="btn btn--primary"
+                style={{ fontSize: 14, padding: "8px 12px" }}
+              >
+                👤 {t("nav.login")}
+              </Link>
+            )}
+
+            {!adminOn && user && (
+              <>
                 <Link
-                  to="/login"
+                  to="/account"
+                  className="btn btn--ghost"
+                  style={{ fontSize: 14, padding: "8px 12px" }}
+                >
+                  ✅ Sveikas, {user.email}
+                </Link>
+                <button
+                  onClick={logoutHandler}
                   className="btn btn--primary"
                   style={{ fontSize: 14, padding: "8px 12px" }}
                 >
-                  👤 {t("nav.login")}
-                </Link>
-              ) : (
-                <div className="flex gap-2 items-center">
-                  <Link
-                    to="/account"
-                    className="btn btn--ghost"
-                    style={{ fontSize: 14, padding: "8px 12px" }}
-                  >
-                    ✅ Sveikas, {user.email}
-                  </Link>
-                  <button
-                    className="btn btn--primary"
-                    style={{ fontSize: 14, padding: "8px 12px" }}
-                    onClick={logoutUser}
-                  >
-                    Atsijungti
-                  </button>
-                </div>
-              )
+                  Atsijungti
+                </button>
+              </>
             )}
           </div>
         </div>

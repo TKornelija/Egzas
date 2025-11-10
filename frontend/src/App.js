@@ -1,6 +1,7 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
+import AdminDashboard from "./pages/AdminDashboard"; // <-- не забудь импорт
 
 import Home from "./pages/Home";
 import CostumesList from "./pages/CostumeList";
@@ -10,13 +11,14 @@ import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Account from "./pages/Account";
 import FAQ from "./pages/FAQ";
-
-import AdminLogin from "./pages/AdminLogin";
-import AdminEmpty from "./pages/AdminEmpty";
 import AdminRoute from "./routes/AdminRoute";
 
 function Placeholder({ title }) {
-  return <div className="container" style={{ padding: "48px 0" }}>{title}</div>;
+  return (
+    <div className="container" style={{ padding: "48px 0" }}>
+      {title}
+    </div>
+  );
 }
 
 export default function App() {
@@ -29,8 +31,11 @@ export default function App() {
           <Route path="/" element={<Home />} />
           <Route path="/costumes" element={<CostumesList />} />
           <Route path="/costumes/:id" element={<CostumeDetails />} />
-          <Route path="/how-it-works" element={<Placeholder title="How it works" />} />
-          <Route path="/faq" element={<FAQ/>} />
+          <Route
+            path="/how-it-works"
+            element={<Placeholder title="How it works" />}
+          />
+          <Route path="/faq" element={<FAQ />} />
           <Route path="/contact" element={<Placeholder title="Contact" />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/login" element={<Login />} />
@@ -38,9 +43,13 @@ export default function App() {
           <Route path="/account" element={<Account />} />
 
           {/* Admin */}
-          <Route path="/admin/login" element={<AdminLogin />} />
+          {/* legacy redirect — можно удалить позже */}
+          <Route
+            path="/admin/login"
+            element={<Navigate to="/login" replace />}
+          />
           <Route element={<AdminRoute />}>
-            <Route path="/admin" element={<AdminEmpty />} />
+            <Route path="/admin" element={<AdminDashboard />} />
           </Route>
 
           {/* 404 */}
