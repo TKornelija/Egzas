@@ -2,7 +2,7 @@ import { useParams, Link, useSearchParams, useNavigate } from "react-router-dom"
 import { useMemo, useState, useEffect } from "react";
 import { apiGet, apiPost } from "../lib/api";
 import { useI18n } from "../lib/i18n";
-import { addItem } from "../lib/cart";
+import { addItem } from "../lib/Cart";
 import "../styles/costumeDetails.css";
 
 export default function CostumeDetails() {

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useI18n } from "../lib/i18n";
-import { getItems, setQty, removeItem, total, clearCart } from "../lib/cart";
+import { getItems, setQty, removeItem, total, clearCart } from "../lib/Cart";
 import "../styles/cart.css";
 
 export default function Cart() {
