@@ -68,12 +68,14 @@ export default function Card({ costume, compact = false }) {
           <Link className="btn btn--ghost" to={`/costumes/${costume.id}`}>
             {t("list.view")}
           </Link>
-          <Link
-            className="btn btn--primary"
-            to={`/costumes/${costume.id}?mode=buy`}
-          >
-            {t("list.buyNow")}
-          </Link>
+  {/* 
+<Link
+  className="btn btn--primary"
+  to={`/costumes/${costume.id}?mode=buy`}
+>
+  {t("list.buyNow")}
+</Link>
+*/}     
         </div>
       </div>
     </article>

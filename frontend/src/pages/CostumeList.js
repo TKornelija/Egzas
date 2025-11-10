@@ -114,7 +114,7 @@ export default function CostumesList() {
         )}
       </div>
 
-      {/* gPuslapiavimo mygtukai */}
+      {/* Puslapiavimo mygtukai */}
       {totalPages > 1 && (
         <div style={{ marginTop: 24, display: "flex", gap: 8, justifyContent: "center" }}>
           {Array.from({ length: totalPages }, (_, i) => (
