@@ -7,7 +7,7 @@ import {
 import { useMemo, useState, useEffect } from "react";
 import { apiGet, apiPost } from "../lib/api";
 import { useI18n } from "../lib/i18n";
-import { addItem } from "../lib/Cart";
+import { addItem } from "../lib/cart";
 import "../styles/costumeDetails.css";
 
 export default function CostumeDetails() {
@@ -96,6 +96,18 @@ export default function CostumeDetails() {
           to,
           size,
         });
+
+        addItem({
+    id,
+    name: item.name,
+    size,
+    qty: 1,
+    price: (item.rentalPrice || 0) * Math.max(1, days),
+    imageUrl: item.imageUrls?.[0] || "/images/no-image.png",
+    from,
+    to,
+    type: "reservation",
+  });
 
         alert(`Rezervacija sėkmingai sukurta!\nID: ${reservation._id}`);
       } else {

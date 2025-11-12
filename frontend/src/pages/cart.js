@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useI18n } from "../lib/i18n";
-import { getItems, setQty, removeItem, total, clearCart } from "../lib/Cart";
+import { getItems, setQty, removeItem, total, clearCart } from "../lib/cart";
 import "../styles/cart.css";
 
 export default function Cart() {
@@ -49,11 +49,26 @@ export default function Cart() {
                 <div className="cart-item-info">
                   <div className="cart-item-name">
                     {it.title || it.name || it.id}
+                     {it.type === "reservation" && (
+                   <span style={{ fontSize: "0.85em", opacity: 0.7 }}> (rezervacija)</span>
+                   )}
                   </div>
                   <div className="cart-item-size">
                     {t("details.size") || "Size"}: {it.size || "-"}
                   </div>
+                  
                 </div>
+
+
+               {/* Jei tai rezervacija, rodome datų intervalą */}
+               {it.type === "reservation" && (
+               <div className="cart-item-dates">
+               Nuo {new Date(it.from).toLocaleDateString("lt-LT")} iki{" "}
+               {new Date(it.to).toLocaleDateString("lt-LT")}
+               </div>
+                )}
+
+
 
                 <div className="cart-item-price">
                   {(it.price ?? 0).toFixed(2)} €

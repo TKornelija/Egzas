@@ -92,6 +92,31 @@ router.delete("/:id", async (req, res) => {
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
+  });
+
+  router.put("/:id/status", async (req, res) => {
+  try {
+    const { status } = req.body;
+    if (!["pending", "approved", "rejected"].includes(status)) {
+      return res.status(400).json({ message: "Neteisingas statusas." });
+    }
+
+    const updated = await Reservation.findByIdAndUpdate(
+      req.params.id,
+      { status },
+      { new: true }
+    );
+
+    if (!updated) {
+      return res.status(404).json({ message: "Rezervacija nerasta." });
+    }
+
+    res.json(updated);
+  } catch (err) {
+    console.error("Klaida PUT /api/reservations/:id/status:", err);
+    res.status(500).json({ message: "Nepavyko atnaujinti būsenos." });
+  }
 });
+
 
 export default router;

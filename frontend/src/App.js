@@ -9,12 +9,13 @@ import "./styles/admin.css";
 import Home from "./pages/Home";
 import CostumesList from "./pages/CostumeList";
 import CostumeDetails from "./pages/CostumeDetails";
-import Cart from "./pages/Cart";
+import Cart from "./pages/cart";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Account from "./pages/Account";
 import FAQ from "./pages/FAQ";
 import AdminRoute from "./routes/AdminRoute";
+import Checkout from "./pages/checkout";
 
 function Placeholder({ title }) {
   return (
@@ -44,6 +45,7 @@ export default function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/account" element={<Account />} />
+          <Route path="/checkout" element={<Checkout />} />
 
           {/* Admin */}
           {/* Admin login */}
