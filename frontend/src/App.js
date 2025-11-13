@@ -16,6 +16,7 @@ import Account from "./pages/Account";
 import FAQ from "./pages/FAQ";
 import AdminRoute from "./routes/AdminRoute";
 import Checkout from "./pages/checkout";
+import Contact from "./pages/Contact";
 
 function Placeholder({ title }) {
   return (
@@ -40,12 +41,13 @@ export default function App() {
             element={<Placeholder title="How it works" />}
           />
           <Route path="/faq" element={<FAQ />} />
-          <Route path="/contact" element={<Placeholder title="Contact" />} />
+          <Route path="/contact" element={<Contact />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/account" element={<Account />} />
           <Route path="/checkout" element={<Checkout />} />
+        
 
           {/* Admin */}
           {/* Admin login */}

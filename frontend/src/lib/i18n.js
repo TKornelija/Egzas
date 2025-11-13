@@ -66,7 +66,7 @@ const translations = {
         "Taip, susisiek su mumis el. paštu ir pakeisime datą, jei įmanoma.",
     },
     countdown: {
-      name: "Iki Hellovyno liko visai nedaug!",
+      name: "Iki Helovyno liko visai nedaug!",
     },
     form: {
       succes: "Žinutė sėkmingai išsiųsta!",
@@ -87,15 +87,15 @@ const translations = {
       total: "Iš viso",
       checkout: "Tęsti pirkimą",
     },
-    filter:{
+    filter: {
       visi: "Visi",
       moterims: "Moterims",
       vyrams: "Vyrams",
       mergaitems: "Mergaitėms",
-      berniukams: "Berniukams"
+      berniukams: "Berniukams",
     },
-    costumes:{
-      paieska: "Ieškoti kostiumų"
+    costumes: {
+      paieska: "Ieškoti kostiumų",
     },
     footer: {
       returns: "Grąžinimai",
@@ -104,6 +104,16 @@ const translations = {
       privacy: "Privatumo politika",
       terms: "Taisyklės",
       contact: "Kontaktai",
+    },
+    contact: {
+      title: "Kontaktai",
+      company: "Freak Or Treat, MB",
+      code: "Įmonės kodas",
+      vat: "PVM kodas",
+      phone: "Tel.",
+      email: "El. paštas",
+      address: "Adresas",
+      note: "Dirbame I–V: 10:00–18:00",
     },
   },
 
@@ -143,7 +153,8 @@ const translations = {
       reserve: "Reserve",
       addToCart: "Add to Cart",
       priceLine: (pDay, pBuy) => `${pDay}/day · Buy: ${pBuy}`,
-      reservedMsg: (t, f, to, d) => `Reservation #${t}\n${f} → ${to}\nDays: ${d}`,
+      reservedMsg: (t, f, to, d) =>
+        `Reservation #${t}\n${f} → ${to}\nDays: ${d}`,
       orderedMsg: (t, q) => `Order #${t}\nQuantity: ${q}`,
       description: "Description",
       reviews: "Reviews",
@@ -164,8 +175,8 @@ const translations = {
       name: "Frequently asked questions",
     },
     accordion: {
-      testOne: "How can I order a suit?",
-      answerOne: "Choose a costume, click Book and fill out the form.",
+      testOne: "How can I order a costume?",
+      answerOne: "Choose a costume, click 'Reserve' and fill out the form.",
       testTwo: "Can I change the date of my order?",
       answerTwo:
         "Yes, please contact us by email and we will change the date if possible.",
@@ -178,7 +189,7 @@ const translations = {
       error: "An error occurred, please try again later.",
       name: "Didn't find the answer? Ask a question:",
       email: "Your email",
-      question: "Enter a question",
+      question: "Enter your question",
       send: "Send",
     },
     featuredcostumes: {
@@ -192,15 +203,15 @@ const translations = {
       total: "Total",
       checkout: "Proceed to checkout",
     },
-    filter:{
+    filter: {
       visi: "All",
       moterims: "For women",
       vyrams: "For men",
       mergaitems: "For girls",
-      berniukams: "For boys"
+      berniukams: "For boys",
     },
-    costumes:{
-      paieska: "Search for costumes"
+    costumes: {
+      paieska: "Search costumes",
     },
     footer: {
       returns: "Returns",
@@ -209,6 +220,16 @@ const translations = {
       privacy: "Privacy Policy",
       terms: "Terms",
       contact: "Contact",
+    },
+    contact: {
+      title: "Contact",
+      company: "Freak Or Treat, MB",
+      code: "Company code",
+      vat: "VAT code",
+      phone: "Phone",
+      email: "Email",
+      address: "Address",
+      note: "We work Mon–Fri: 10:00–18:00.",
     },
   },
 
@@ -284,7 +305,7 @@ const translations = {
       name: "Не нашли ответ? Задайте вопрос:",
       email: "Ваш адрес электронной почты",
       question: "Введите вопрос",
-      send: "Отправлять",
+      send: "Отправить",
     },
     featuredcostumes: {
       button: "Посмотреть все костюмы",
@@ -297,15 +318,15 @@ const translations = {
       total: "Итого",
       checkout: "Оформить заказ",
     },
-    filter:{
+    filter: {
       visi: "Все",
       moterims: "Для женщин",
       vyrams: "Для мужчин",
       mergaitems: "Для девочек",
-      berniukams: "Для мальчиков"
+      berniukams: "Для мальчиков",
     },
-    costumes:{
-      paieska: "Поиск костюмов"
+    costumes: {
+      paieska: "Поиск костюмов",
     },
     footer: {
       returns: "Возвраты",
@@ -314,6 +335,16 @@ const translations = {
       privacy: "Политика конфиденциальности",
       terms: "Условия",
       contact: "Контакты",
+    },
+    contact: {
+      title: "Контакты",
+      company: "Freak Or Treat, MB",
+      code: "Код компании",
+      vat: "ИНН / НДС код",
+      phone: "Тел.",
+      email: "Эл. почта",
+      address: "Адрес",
+      note: "Мы работаем Пн–Пт с 10:00 до 18:00.",
     },
   },
 };
@@ -346,7 +377,7 @@ export function I18nProvider({ children }) {
         let cur = dict;
         for (const p of parts) {
           if (cur && Object.prototype.hasOwnProperty.call(cur, p)) cur = cur[p];
-          else return path; // fallback
+          else return path;
         }
         return typeof cur === "function" ? cur(...args) : cur;
       },
