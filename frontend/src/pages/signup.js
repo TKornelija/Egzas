@@ -1,11 +1,11 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { useAuthContext } from "../hooks/useAuthContext";
+import "../styles/auth.css";
 
 export default function Signup() {
   const navigate = useNavigate();
   const { login: contextLogin } = useAuthContext();
-
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [klaida, setKlaida] = useState("");
@@ -21,25 +21,21 @@ export default function Signup() {
     });
 
     const data = await response.json();
-
     if (!response.ok) {
       setKlaida(data.error);
       return;
     }
 
-    // išsaugom user info localStorage
-  // store into context (also stores to localStorage via context)
-  contextLogin(data);
-
-    // persiunčia į Home
+    contextLogin(data);
     navigate("/");
   };
 
   return (
-    <div className="signup-container">
+    <div className="auth-container">
       <h1>Registruotis</h1>
+      <p className="subtext">Sukurkite naują paskyrą norėdami tęsti.</p>
 
-      <form onSubmit={handleSubmit} className="signup-form">
+      <form onSubmit={handleSubmit} className="auth-form">
         <label>El. paštas</label>
         <input
           type="email"
@@ -63,12 +59,13 @@ export default function Signup() {
         </button>
       </form>
 
-      <p>
+      <div className="auth-footer">
         Jau turite paskyrą?{" "}
         <Link to="/login" className="link">
           Prisijungti
         </Link>
-      </p>
+      </div>
     </div>
   );
 }
+

@@ -1,0 +1,86 @@
+.auth-container {
+  max-width: 520px;
+  margin: 0 auto;
+  padding: 48px 0;
+  color: #fff;
+}
+
+.auth-container h1 {
+  margin-bottom: 8px;
+  font-size: 1.8rem;
+}
+
+.auth-container p.subtext {
+  opacity: 0.8;
+  margin-bottom: 18px;
+}
+
+.auth-form {
+  display: grid;
+  gap: 12px;
+}
+
+.auth-form label {
+  display: block;
+  font-weight: 500;
+}
+
+.auth-form input {
+  display: block;
+  width: 100%;
+  margin-top: 6px;
+  background: #181818;
+  color: #fff;
+  border: 1px solid #333;
+  border-radius: 8px;
+  padding: 10px 12px;
+}
+
+.auth-form .error {
+  color: #ff6b6b;
+  font-size: 0.95rem;
+}
+
+.btn-primary {
+  background: #e04646;
+  border: none;
+  color: white;
+  border-radius: 8px;
+  padding: 12px 14px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.btn-primary:hover {
+  background: #e04646;
+}
+
+.btn-ghost {
+  background: transparent;
+  border: 1px solid #555;
+  color: #fff;
+  border-radius: 8px;
+  padding: 10px 14px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.btn-ghost:hover {
+  background: #222;
+}
+
+.auth-footer {
+  margin-top: 14px;
+  font-size: 14px;
+  opacity: 0.8;
+  text-align: center;
+}
+
+.auth-footer .link {
+  color: #e04646;
+  text-decoration: none;
+}
+
+.auth-footer .link:hover {
+  text-decoration: underline;
+}
