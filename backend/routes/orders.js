@@ -1,39 +1,43 @@
 import express from 'express';
-import { readFile } from 'fs/promises';
+import Order from "../models/Orders.js";
+import User from '../models/userModel.js';
+import requireAuth from "../middleware/requireAuth.js";
 
 const router = express.Router();
-let orders = [];
 
-async function loadCostumes(){
-  const raw = await readFile(new URL('../../data/products.json', import.meta.url));
-  return JSON.parse(raw.toString());
-}
+router.post("/", requireAuth, async (req, res) => {
+  try {
+    const order = await Order.create({
+      userId: req.user._id,
+      items: req.body.items || [],
+      reservations: req.body.reservations || [],
+      deliveryMethod: req.body.deliveryMethod,
+      storeLocation: req.body.storeLocation || null,
+      paymentMethod: req.body.paymentMethod,
+      totalAmount: req.body.totalAmount,
+    });
 
-router.get('/', (_,res)=> res.json(orders));
+    await User.findByIdAndUpdate(req.user._id, {
+      $push: { orders: order._id }
+    });
 
-router.post('/', async (req,res)=>{
-  const { costumeId, qty=1, size="M", user="u1" } = req.body||{};
-  if(!costumeId) return res.status(400).json({message:"costumeId required"});
-
-  const costumes = await loadCostumes();
-  const item = costumes.find(c=>c.id===Number(costumeId));
-  if(!item) return res.status(404).json({message:"Costume not found"});
-
-  const q = Math.max(1, Number(qty)||1);
-  const total = q * (item.price ?? 0);
-
-  const order = {
-    id: `o${orders.length+1}`,
-    user,
-    costumeId: Number(costumeId),
-    size,
-    qty: q,
-    unitPrice: item.price ?? 0,
-    total,
-    createdAt: new Date().toISOString()
-  };
-  orders.push(order);
-  res.status(201).json(order);
+    res.status(201).json(order);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Nepavyko sukurti užsakymo" });
+  }
 });
+// GAUTI VARTOTOJO UŽSAKYMUS SU POPULATED REZERVACIJOM
+router.get("/", requireAuth, async (req, res) => {
+  try {
+    const orders = await Order.find({ user: req.user._id })
+      .populate("reservations")
+      .sort({ createdAt: -1 });
 
+    res.json(orders);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Nepavyko gauti užsakymų" });
+  }
+});
 export default router;

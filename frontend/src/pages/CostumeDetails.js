@@ -108,6 +108,25 @@ export default function CostumeDetails() {
     to,
     type: "reservation",
   });
+  // IŠSAUGOM REZERVACIJĄ ORDER'IAMS
+  const saved = JSON.parse(localStorage.getItem("reservations") || "[]");
+
+  saved.push({
+    // čia – jungtis su DB Reservation dokumentu
+    reservationId: reservation._id,
+
+    
+    costumeId: reservation.costumeId,
+    from: reservation.from,
+    to: reservation.to,
+    size: reservation.size,
+    total: reservation.total,
+    status: reservation.status,
+  });
+
+  localStorage.setItem("reservations", JSON.stringify(saved));
+
+
 
         alert(`Rezervacija sėkmingai sukurta!\nID: ${reservation._id}`);
       } else {
