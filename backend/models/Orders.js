@@ -14,14 +14,22 @@ const OrdersSchema = new mongoose.Schema({
       quantity: Number,
     }
   ],
+  customer: {
+    firstName: String,
+    lastName: String,
+    email: String,
+    adress: String,
+    postalCode: String,
+    
+  },
 
   // TIK RESERVATION ID (OBJECT ID), JOKIOS KOPIJOS
-  reservations: [
+ /*reservations: [
     {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Reservation",
     }
-  ],
+  ],*/
 
   deliveryMethod: String,
   storeLocation: String,

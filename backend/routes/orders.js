@@ -10,16 +10,14 @@ router.post("/", requireAuth, async (req, res) => {
     const order = await Order.create({
       userId: req.user._id,
       items: req.body.items || [],
-      reservations: req.body.reservations || [],
+      /*reservations: req.body.reservations || [],*/
+      customer: req.body.customer || {},
       deliveryMethod: req.body.deliveryMethod,
       storeLocation: req.body.storeLocation || null,
       paymentMethod: req.body.paymentMethod,
       totalAmount: req.body.totalAmount,
     });
 
-    await User.findByIdAndUpdate(req.user._id, {
-      $push: { orders: order._id }
-    });
 
     res.status(201).json(order);
   } catch (error) {
@@ -27,8 +25,20 @@ router.post("/", requireAuth, async (req, res) => {
     res.status(500).json({ error: "Nepavyko sukurti užsakymo" });
   }
 });
-// GAUTI VARTOTOJO UŽSAKYMUS SU POPULATED REZERVACIJOM
+
 router.get("/", requireAuth, async (req, res) => {
+  try {
+    const orders = await Order.find({ userId: req.user._id })
+      .sort({ createdAt: -1 });
+
+    res.json(orders);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Nepavyko gauti užsakymų" });
+  }
+});
+// GAUTI VARTOTOJO UŽSAKYMUS SU POPULATED REZERVACIJOM
+/*router.get("/", requireAuth, async (req, res) => {
   try {
     const orders = await Order.find({ user: req.user._id })
       .populate("reservations")
@@ -38,6 +48,6 @@ router.get("/", requireAuth, async (req, res) => {
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Nepavyko gauti užsakymų" });
-  }
-});
+  
+});*/
 export default router;
