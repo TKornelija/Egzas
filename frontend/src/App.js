@@ -1,10 +1,10 @@
 import { Routes, Route, Navigate } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
-import AdminDashboard from "./pages/Admin/AdminDashboard"; 
+import AdminDashboard from "./pages/Admin/AdminDashboard";
 import AdminLogin from "./pages/Admin/AdminLogin";
 import "./styles/admin.css";
-
+import AdminOrders from "./pages/Admin/AdminOrders";
 
 import Home from "./pages/Home";
 import CostumesList from "./pages/CostumeList";
@@ -47,13 +47,12 @@ export default function App() {
           <Route path="/signup" element={<Signup />} />
           <Route path="/account" element={<Account />} />
           <Route path="/checkout" element={<Checkout />} />
-        
-
-          {/* Admin */}
-          {/* Admin login */}
           <Route path="/admin/login" element={<AdminLogin />} />
           <Route element={<AdminRoute />}>
-            <Route path="/admin" element={<AdminDashboard />} />
+            <Route path="/admin" element={<AdminDashboard />}>
+              <Route path="orders" element={<AdminOrders />} />
+              
+            </Route>
           </Route>
 
           {/* 404 */}
@@ -64,3 +63,4 @@ export default function App() {
     </div>
   );
 }
+

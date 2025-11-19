@@ -37,17 +37,17 @@ router.get("/", requireAuth, async (req, res) => {
     res.status(500).json({ error: "Nepavyko gauti užsakymų" });
   }
 });
-// GAUTI VARTOTOJO UŽSAKYMUS SU POPULATED REZERVACIJOM
-/*router.get("/", requireAuth, async (req, res) => {
+router.get("/all", async (req, res) => {
   try {
-    const orders = await Order.find({ user: req.user._id })
-      .populate("reservations")
-      .sort({ createdAt: -1 });
+    const list = await Order.find()
+      .populate("userId")        
+      .sort({ createdAt: -1 })
+      .lean();
 
-    res.json(orders);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: "Nepavyko gauti užsakymų" });
-  
-});*/
+    res.json(list);
+  } catch (err) {
+    console.error("Failed to load orders:", err);
+    res.status(500).json({ error: "Failed to load orders" });
+  }
+});
 export default router;

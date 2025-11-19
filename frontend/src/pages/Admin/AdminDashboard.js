@@ -13,6 +13,7 @@ export default function AdminDashboard() {
           <NavLink to="/admin/faq" className={`adm-tab ${is("/admin/faq") ? "is-active" : ""}`}>FAQ</NavLink>
           <NavLink to="/admin/users" className={`adm-tab ${is("/admin/users") ? "is-active" : ""}`}>Users</NavLink>
           <NavLink to="/admin/reservations" className={`adm-tab ${is("/admin/reservations") ? "is-active" : ""}`}>Reservations</NavLink>
+          <NavLink to="/admin/orders" className={`adm-tab ${is("/admin/orders") ? "is-active" : ""}`}>Orders</NavLink>
         </nav>
       </header>
 
