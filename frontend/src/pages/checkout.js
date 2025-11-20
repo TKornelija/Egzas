@@ -2,9 +2,11 @@ import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useAuthContext } from "../hooks/useAuthContext";
 import  { getItems, total, clearCart } from "../lib/cart";
+import { useI18n } from "../lib/i18n";
 import "../styles/Checkout.css";
 
 export default function Checkout() {
+  const { t } = useI18n();
   const { user } = useAuthContext();
   const navigate = useNavigate();
   const location = useLocation();
@@ -30,9 +32,9 @@ export default function Checkout() {
   console.log("User:", user);
   console.log("Token:", user?.token);
 
-  const deliveryOptions = ["DPD kurjeris", "DPD paštomatas", "Atsiėmimas parduotuvėje"];
-  const paymentOptions = ["PayPal", "Mastercard", "Apple Pay", "Mokėjimas parduotuvėje"];
-  const storeOptions = ["Siaubo g. 12", "Košmarų g. 45"];
+  const deliveryOptions = [t("checkout.checkoutMethodOne"), t("checkout.checkoutMethodSecond"), t("checkout.checkoutMethodThird")];
+  const paymentOptions = [t("checkout.paymentOne"), t("checkout.paymentTwo"), t("checkout.paymentThree"), t("checkout.paymentFour")];
+  const storeOptions = [t("checkout.storeOne"), t("checkout.storeSecond")];
 
   // Peradresavimas į login, jei neprisijungęs
   useEffect(() => {
@@ -55,56 +57,14 @@ const reservationItems = cartItems.filter(i => i.type === "reservation");
 const purchaseItems = cartItems.filter(i => i.type !== "reservation");
 
   async function submitOrder() {
-    /*if (!user?.token) {
-      const stored = JSON.parse(localStorage.getItem("user"));
-      if (stored?.token) {
-        user.token = stored.token;
-      } else {
-        alert("Jūsų sesija baigėsi. Prisijunkite iš naujo.");
-        navigate("/login");
-        return;
-      }
-    }
-
-    const reservationsRaw = JSON.parse(localStorage.getItem("reservations")) || [];
-    const reservationIds = reservationsRaw.map(r => r.reservationId);
-
-    const orderData = {
-      items,
-      reservations: reservationIds,
-      deliveryMethod,
-      storeLocation,
-      paymentMethod,
-      totalAmount: sum + reservationsRaw.reduce((a, r) => a + (r.total || 0), 0),
-    };
-
-    const response = await fetch("/api/orders", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${user.token}`,
-      },
-      body: JSON.stringify(orderData),
-    });
-
-    const data = await response.json();
-
-    if (response.ok) {
-      localStorage.removeItem("cart");
-      localStorage.removeItem("reservations");
-
-      setSuccess(true);
-    } else {
-      alert(data.error || "Įvyko klaida");
-    }
-  }*/
+    
  // Patikrinam, ar turim vartotoją ir tokeną
   if (!user?.token) {
     const stored = JSON.parse(localStorage.getItem("user"));
     if (stored?.token) {
       user.token = stored.token;
     } else {
-      alert("Jūsų sesija baigėsi. Prisijunkite iš naujo.");
+      alert(t("checkout.alert"));
       navigate("/login");
       return;
     }
@@ -197,63 +157,63 @@ const purchaseItems = cartItems.filter(i => i.type !== "reservation");
 
   return (
     <div className="checkout-container">
-      <h1 className="checkout-title">Apmokėjimas</h1>
+      <h1 className="checkout-title">{t("checkout.payment")}</h1>
       
     {/*Pirkejo duomenys*/}
   <section className="checkout-section">
-  <h2 className="section-title">Pirkėjo duomenys</h2>
+  <h2 className="section-title">{t("checkout.buyer")}</h2>
 
-  <h2 className="form-title">Vardas</h2>
+  <h2 className="form-title">{t("checkout.name")}</h2>
   <div className="form-group">
     <input
       type="text"
       value={firstName}
       onChange={(e) => setFirstName(e.target.value)}
-      placeholder="Įveskite vardą"
+      placeholder={t("checkout.nameForm")}
       required
     />
   </div>
 
-  <h2 className="form-title">Pavardė</h2>
+  <h2 className="form-title">{t("checkout.surname")}</h2>
   <div className="form-group">
     <input
       type="text"
       value={lastName}
       onChange={(e) => setLastName(e.target.value)}
-      placeholder="Įveskite pavardę"
+      placeholder={t("checkout.surnameForm")}
       required
     />
   </div>
 
-  <h2 className="form-title">El. paštas</h2>
+  <h2 className="form-title">{t("checkout.mail")}</h2>
   <div className="form-group">
     <input
       type="email"
       value={email}
       onChange={(e) => setEmail(e.target.value)}
-      placeholder="Įveskite el. paštą"
+      placeholder={t("checkout.mailForm")}
       required
     />
   </div>
 
-  <h2 className="form-title">Adresas</h2>
+  <h2 className="form-title">{t("checkout.adress")}</h2>
   <div className="form-group">
     <input
       type="text"
       value={adress}
       onChange={(e) => setAdress(e.target.value)}
-      placeholder="Įveskite adresą"
+      placeholder={t("checkout.adressForm")}
       required
     />
   </div>
   
-    <h2 className="form-title">Pašto kodas</h2>
+    <h2 className="form-title">{t("checkout.postCode")}</h2>
     <div className="form-group">
     <input
       type="text"
       value={postalCode}
       onChange={(e) => setPostalCode(e.target.value)}
-      placeholder="pvz. 01234"
+      placeholder={t("checkout.postCodeForm")}
       required
     />
   </div>
@@ -262,7 +222,7 @@ const purchaseItems = cartItems.filter(i => i.type !== "reservation");
 
       {/* Pristatymo būdas */}
       <section className="checkout-section">
-        <h2 className="section-title">Pasirinkite pristatymo būdą</h2>
+        <h2 className="section-title">{t("checkout.deliveringMethod")}</h2>
         <div className="options-group">
           {deliveryOptions.map((method) => (
             <label
@@ -280,15 +240,15 @@ const purchaseItems = cartItems.filter(i => i.type !== "reservation");
             </label>
           ))}
 
-          {deliveryMethod === "Atsiėmimas parduotuvėje" && (
+          {deliveryMethod === t("checkout.checkoutMethodThird") && (
             <div className="store-selector">
-              <label htmlFor="store">Pasirinkite parduotuvę:</label>
+              <label htmlFor="store">{t("checkout.shop")}</label>
               <select
                 id="store"
                 value={storeLocation}
                 onChange={(e) => setStoreLocation(e.target.value)}
               >
-                <option value="">-- Pasirinkite adresą --</option>
+                <option value="">{t("checkout.shopAdress")}</option>
                 {storeOptions.map((address) => (
                   <option key={address} value={address}>
                     {address}
@@ -302,7 +262,7 @@ const purchaseItems = cartItems.filter(i => i.type !== "reservation");
 
       {/* Mokėjimo būdas */}
       <section className="checkout-section">
-        <h2 className="section-title">Pasirinkite mokėjimo būdą</h2>
+        <h2 className="section-title">{t("checkout.paymentMethod")}</h2>
         <div className="options-group">
           {paymentOptions.map((method) => (
             <label
@@ -324,22 +284,22 @@ const purchaseItems = cartItems.filter(i => i.type !== "reservation");
 
       {/* Užsakymo santrauka */}
       <section className="checkout-summary">
-        <h2 className="section-title">Užsakymo santrauka</h2>
-        <p><strong>Pristatymas:</strong> {deliveryMethod || "Nepasirinkta"}</p>
-        {deliveryMethod === "Atsiėmimas parduotuvėje" && storeLocation && (
-          <p><strong>Parduotuvė:</strong> {storeLocation}</p>
+        <h2 className="section-title">{t("checkout.orderSummary")}</h2>
+        <p><strong>{t("checkout.shipment")}</strong> {deliveryMethod || t("checkout.notChosen")}</p>
+        {deliveryMethod === t("checkout.checkoutMethodThird") && storeLocation && (
+          <p><strong>{t("checkout.shopOne")}</strong> {storeLocation}</p>
         )}
-        <p><strong>Mokėjimas:</strong> {paymentMethod || "Nepasirinkta"}</p>
+        <p><strong>{t("checkout.paymentSummary")}</strong> {paymentMethod || t("checkout.notChosen")}</p>
 
         <div className="checkout-total">
-          <strong>Mokėtina suma:</strong> {sum.toFixed(2)} €  
+          <strong>{t("checkout.sumSummary")}</strong> {sum.toFixed(2)} €  
         </div>
 
         <button
           disabled={
             !deliveryMethod ||
             !paymentMethod ||
-            (deliveryMethod === "Atsiėmimas parduotuvėje" && !storeLocation) ||
+            (deliveryMethod === t("checkout.checkoutMethodThird") && !storeLocation) ||
             !firstName ||
             !lastName ||
             !email ||
@@ -349,7 +309,7 @@ const purchaseItems = cartItems.filter(i => i.type !== "reservation");
           className="checkout-button"
           onClick={submitOrder}
         >
-          Tęsti apmokėjimą
+          {t("checkout.continue")}
         </button>
       </section>
 
@@ -380,9 +340,9 @@ const purchaseItems = cartItems.filter(i => i.type !== "reservation");
               boxShadow: "0 4px 12px rgba(0,0,0,0.3)",
             }}
           >
-            <h2 style={{ marginBottom: 12 }}>Užsakymas pavyko!</h2>
+            <h2 style={{ marginBottom: 12 }}>{t("checkout.succes")}</h2>
             <p style={{ opacity: 0.85, marginBottom: 24 }}>
-              Ačiū, kad apsipirkote FreakOrTreat 🎃
+              {t("checkout.thanks")}
             </p>
 
             <div style={{ display: "flex", justifyContent: "center", gap: 12 }}>
@@ -390,14 +350,14 @@ const purchaseItems = cartItems.filter(i => i.type !== "reservation");
                 className="btn btn--primary"
                 onClick={() => navigate("/")}
               >
-                Grįžti į pradžią
+                {t("checkout.home")}
               </button>
 
               <button
                 className="btn btn--ghost"
                 onClick={() => setSuccess(false)}
               >
-                Uždaryti
+                {t("checkout.close")}
               </button>
             </div>
           </div>
