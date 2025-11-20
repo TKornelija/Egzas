@@ -13,12 +13,10 @@ const translations = {
       login: "Prisijungti",
       signup: "Registruotis",
     },
-
     home: {
       title: "Išlaisvink savo alter ego šį Heloviną",
       rentNow: "Nuomotis",
     },
-
     adminOrders: {
       title: "Užsakymai",
       id: "Užsakymo ID",
@@ -32,60 +30,6 @@ const translations = {
       empty: "Dar nėra pateiktų užsakymų.",
       loading: "Kraunama...",
     },
-
-    adminOrderDetails: {
-      title: "Užsakymo informacija",
-      status: "Užsakymo būsena",
-      save: "Išsaugoti",
-      saving: "Saugoma...",
-      back: "Grįžti į sąrašą",
-      customer: "Klientas",
-      customerAddress: "Kliento adresas",
-      items: "Užsakytos prekės",
-      total: "Iš viso",
-      created: "Sukurtas",
-    },
-
-    checkout: {
-      checkoutMethodOne: "DPD kurjeris",
-      checkoutMethodSecond: "DPD paštomatas",
-      checkoutMethodThird: "Atsiėmimas parduotuvėje",
-      paymentOne: "PayPal",
-      paymentTwo: "Mastercard",
-      paymentThree: "Apple Pay",
-      paymentFour: "Mokėjimas parduotuvėje",
-      storeOne: "Siaubo g. 12",
-      storeSecond: "Košmarų g. 45",
-      alert: "Jūsų sesija baigėsi. Prisijunkite iš naujo.",
-      nameForm: "Įveskite vardą",
-      surnameForm: "Įveskite pavardę",
-      surname: "Pavardė",
-      name: "Vardas",
-      mail: "El. paštas",
-      mailForm: "Įveskite el. paštą",
-      adress: "Adresas",
-      adressForm: "Įveskite adresą",
-      postCode: "Pašto kodas",
-      postCodeForm: "pvz. 01234",
-      deliveringMethod: "Pasirinkite pristatymo būdą",
-      shop: "Pasirinkite parduotuvę:",
-      shopAdress: "-- Pasirinkite adresą --",
-      paymentMethod: "Pasirinkite mokėjimo būdą",
-      orderSummary: "Užsakymo santrauka",
-      shipment: "Pristatymas:",
-      shopOne: "Parduotuvė:",
-      paymentSummary: "Mokėjimas:",
-      sumSummary: "Mokėtina suma:",
-      succes: "Užsakymas pavyko!",
-      thanks: "Ačiū, kad apsipirkote FreakOrTreat 🎃",
-      payment: "Apmokėjimas",
-      buyer: "Pirkėjo duomenys",
-      continue: "Tęsti apmokėjimą",
-      notChosen: "Nepasirinkta",
-      home: "Grįžti į pradžią",
-      close: "Uždaryti",
-    },
-
     list: {
       title: "Helovino kolekcija",
       buy: "Pirkti",
@@ -93,7 +37,6 @@ const translations = {
       buyNow: "Pirkti dabar",
       view: "Peržiūrėti",
     },
-
     details: {
       back: "Atgal",
       sizes: "Dydžiai",
@@ -106,18 +49,49 @@ const translations = {
       days: "d.",
       reserve: "Rezervuoti",
       addToCart: "Į krepšelį",
+      priceLine: (pDay, pBuy) => `${pDay} /diena · Pirkti: ${pBuy}`,
+      reservedMsg: (t, f, to, d) =>
+        `Rezervacija #${t}\n${f} → ${to}\nDienos: ${d}`,
+      orderedMsg: (t, q) => `Užsakymas #${t}\nKiekis: ${q}`,
       description: "Aprašymas",
       reviews: "Atsiliepimai",
-      noReviews: "Šiuo metu nėra atsiliepimų.",
-      send: "Siųsti",
+      leaveReview: "Palikite atsiliepimą",
       commentPlaceholder: "Komentaras",
+      send: "Siųsti",
+      noReviews: "Šiuo metu nėra atsiliepimų.",
+      commentRequired: "Komentaras privalomas.",
+      reviewError: "Nepavyko pridėti atsiliepimo.",
+      errorLoad: "Nepavyko gauti kostiumo duomenų.",
+      requestError: "Užklausa nepavyko.",
+      fillAll: "Įveskite visus reikalingus duomenis.",
       loading: "Kraunama...",
       notFound: "Kostiumas nerastas.",
       size: "Dydis",
     },
-
-    faq: { name: "Dažniausiai užduodami klausimai" },
-
+    faq: {
+      name: "Dažniausiai užduodami klausimai",
+    },
+    accordion: {
+      testOne: "Kaip galiu užsisakyti kostiumą?",
+      answerOne: "Pasirink kostiumą, spausk „Rezervuoti“ ir užpildyk formą.",
+      testTwo: "Ar galiu pakeisti užsakymo datą?",
+      answerTwo:
+        "Taip, susisiek su mumis el. paštu ir pakeisime datą, jei įmanoma.",
+    },
+    countdown: {
+      name: "Iki Helovyno liko visai nedaug!",
+    },
+    form: {
+      succes: "Žinutė sėkmingai išsiųsta!",
+      error: "Įvyko klaida, pabandykite vėliau.",
+      name: "Neradai atsakymo? Užduok klausimą:",
+      email: "Jūsų el. paštas",
+      question: "Įveskite klausimą",
+      send: "Siųsti",
+    },
+    featuredcostumes: {
+      button: "Pamatyti visus kostiumus",
+    },
     cart: {
       empty: "Jūsų krepšelis tuščias.",
       browse: "Naršyti kostiumus",
@@ -126,7 +100,16 @@ const translations = {
       total: "Iš viso",
       checkout: "Tęsti pirkimą",
     },
-
+    filter: {
+      visi: "Visi",
+      moterims: "Moterims",
+      vyrams: "Vyrams",
+      mergaitems: "Mergaitėms",
+      berniukams: "Berniukams",
+    },
+    costumes: {
+      paieska: "Ieškoti kostiumų",
+    },
     footer: {
       returns: "Grąžinimai",
       shipping: "Pristatymas",
@@ -135,7 +118,6 @@ const translations = {
       terms: "Taisyklės",
       contact: "Kontaktai",
     },
-
     contact: {
       title: "Kontaktai",
       company: "Freak Or Treat, MB",
@@ -144,11 +126,9 @@ const translations = {
       phone: "Tel.",
       email: "El. paštas",
       address: "Adresas",
-      note: "Dirbame I–V: 10:00–18:00",
+      note: "Dirbame I–V: 10:00–18:00. Laukiame jūsų klausimų ir užklausų!",
     },
   },
-
-  /* ---------------------- ENGLISH ---------------------- */
 
   en: {
     brand: "Freak Or Treat",
@@ -162,76 +142,22 @@ const translations = {
       login: "Login",
       signup: "Sign up",
     },
-
     home: {
       title: "Unleash Your Alter Ego This Halloween",
       rentNow: "Rent Now",
     },
-
     adminOrders: {
       title: "Orders",
       id: "Order ID",
-      customer: "Customer",
-      address: "Address",
+      customer: "Client",
+      address: "Adress",
       items: "Items",
       delivery: "Delivery",
       payment: "Payment",
       status: "Status",
       created: "Created",
-      empty: "No orders yet.",
+      empty: "There's no orders placed yet.",
       loading: "Loading...",
-    },
-
-    adminOrderDetails: {
-      title: "Order details",
-      status: "Order status",
-      save: "Save",
-      saving: "Saving...",
-      back: "Back to list",
-      customer: "Customer",
-      customerAddress: "Customer address",
-      items: "Ordered items",
-      total: "Total",
-      created: "Created",
-    },
-
-    checkout: {
-      checkoutMethodOne: "DPD courier",
-      checkoutMethodSecond: "DPD parcel machine",
-      checkoutMethodThird: "In-store pickup",
-      paymentOne: "PayPal",
-      paymentTwo: "Mastercard",
-      paymentThree: "Apple Pay",
-      paymentFour: "Payment in store",
-      storeOne: "Horror Street 12",
-      storeSecond: "Nightmares St. 45",
-      alert: "Your session has expired. Please log in again.",
-      nameForm: "Enter a name",
-      surnameForm: "Enter last name",
-      surname: "Last name",
-      name: "Name",
-      mail: "Email",
-      mailForm: "Enter email",
-      adress: "Address",
-      adressForm: "Enter address",
-      postCode: "Postal code",
-      postCodeForm: "e.g. 01234",
-      deliveringMethod: "Choose delivery method",
-      shop: "Select a store:",
-      shopAdress: "-- Select an address --",
-      paymentMethod: "Select payment method",
-      orderSummary: "Order summary",
-      shipment: "Delivery:",
-      paymentSummary: "Payment:",
-      sumSummary: "Amount payable:",
-      succes: "The order was successful!",
-      thanks: "Thank you for shopping at FreakOrTreat 🎃",
-      payment: "Payment",
-      buyer: "Buyer details",
-      continue: "Continue payment",
-      notChosen: "Not selected",
-      home: "Back to home",
-      close: "Close",
     },
 
     list: {
@@ -241,7 +167,6 @@ const translations = {
       buyNow: "Buy Now",
       view: "View Details",
     },
-
     details: {
       back: "Back",
       sizes: "Sizes",
@@ -254,18 +179,49 @@ const translations = {
       days: "day(s)",
       reserve: "Reserve",
       addToCart: "Add to Cart",
+      priceLine: (pDay, pBuy) => `${pDay}/day · Buy: ${pBuy}`,
+      reservedMsg: (t, f, to, d) =>
+        `Reservation #${t}\n${f} → ${to}\nDays: ${d}`,
+      orderedMsg: (t, q) => `Order #${t}\nQuantity: ${q}`,
       description: "Description",
       reviews: "Reviews",
-      noReviews: "No reviews yet.",
-      send: "Send",
+      leaveReview: "Leave a Review",
       commentPlaceholder: "Your comment",
+      send: "Send",
+      noReviews: "No reviews yet.",
+      commentRequired: "Comment is required.",
+      reviewError: "Failed to add review.",
+      errorLoad: "Failed to fetch costume details.",
+      requestError: "Request failed.",
+      fillAll: "Please fill in all required fields.",
       loading: "Loading...",
       notFound: "Costume not found.",
       size: "Size",
     },
-
-    faq: { name: "Frequently asked questions" },
-
+    faq: {
+      name: "Frequently asked questions",
+    },
+    accordion: {
+      testOne: "How can I order a costume?",
+      answerOne: "Choose a costume, click 'Reserve' and fill out the form.",
+      testTwo: "Can I change the date of my order?",
+      answerTwo:
+        "Yes, please contact us by email and we will change the date if possible.",
+    },
+    countdown: {
+      name: "There's not much left until Halloween!",
+    },
+    form: {
+      succes: "Message sent successfully!",
+      error: "An error occurred, please try again later.",
+      name: "Didn't find the answer? Ask a question:",
+      email: "Your email",
+      question: "Enter your question",
+      send: "Send",
+    },
+    featuredcostumes: {
+      button: "See all costumes",
+    },
     cart: {
       empty: "Your cart is empty.",
       browse: "Browse costumes",
@@ -274,7 +230,16 @@ const translations = {
       total: "Total",
       checkout: "Proceed to checkout",
     },
-
+    filter: {
+      visi: "All",
+      moterims: "For women",
+      vyrams: "For men",
+      mergaitems: "For girls",
+      berniukams: "For boys",
+    },
+    costumes: {
+      paieska: "Search costumes",
+    },
     footer: {
       returns: "Returns",
       shipping: "Shipping",
@@ -283,7 +248,6 @@ const translations = {
       terms: "Terms",
       contact: "Contact",
     },
-
     contact: {
       title: "Contact",
       company: "Freak Or Treat, MB",
@@ -295,8 +259,6 @@ const translations = {
       note: "We work Mon–Fri: 10:00–18:00.",
     },
   },
-
-  /* ---------------------- RUSSIAN ---------------------- */
 
   ru: {
     brand: "Freak Or Treat",
@@ -310,15 +272,13 @@ const translations = {
       login: "Войти",
       signup: "Регистрация",
     },
-
     home: {
       title: "Освободи своё альтер-эго на Хэллоуин",
       rentNow: "Арендовать",
     },
-
-    adminOrders: {
+     adminOrders: {
       title: "Заказы",
-      id: "ID заказа",
+      id: "Идентификатор заказа",
       customer: "Клиент",
       address: "Адрес",
       items: "Товары",
@@ -326,62 +286,9 @@ const translations = {
       payment: "Оплата",
       status: "Статус",
       created: "Создано",
-      empty: "Заказов пока нет.",
+      empty: "Заказы еще не размещены.",
       loading: "Загрузка...",
     },
-
-    adminOrderDetails: {
-      title: "Информация о заказе",
-      status: "Статус заказа",
-      save: "Сохранить",
-      saving: "Сохранение...",
-      back: "Назад к списку",
-      customer: "Клиент",
-      customerAddress: "Адрес клиента",
-      items: "Товары",
-      total: "Итого",
-      created: "Создано",
-    },
-
-    checkout: {
-      checkoutMethodOne: "курьер DPD",
-      checkoutMethodSecond: "посылочный автомат DPD",
-      checkoutMethodThird: "Самовывоз",
-      paymentOne: "PayPal",
-      paymentTwo: "Mastercard",
-      paymentThree: "Apple Pay",
-      paymentFour: "Оплата в магазине",
-      storeOne: "Улица ужасов 12",
-      storeSecond: "Кошмары ул. 45",
-      alert: "Ваш сеанс истёк. Пожалуйста, войдите снова.",
-      nameForm: "Введите имя",
-      surnameForm: "Введите фамилию",
-      surname: "Фамилия",
-      name: "Имя",
-      mail: "Электронная почта",
-      mailForm: "Введите email",
-      adress: "Адрес",
-      adressForm: "Введите адрес",
-      postCode: "Почтовый индекс",
-      postCodeForm: "например 01234",
-      deliveringMethod: "Выберите способ доставки",
-      shop: "Выберите магазин:",
-      shopAdress: "-- Выберите адрес --",
-      paymentMethod: "Выберите способ оплаты",
-      orderSummary: "Сводка заказа",
-      shipment: "Доставка:",
-      paymentSummary: "Оплата:",
-      sumSummary: "К оплате:",
-      succes: "Заказ успешно оформлен!",
-      thanks: "Спасибо за покупку в FreakOrTreat 🎃",
-      payment: "Оплата",
-      buyer: "Данные покупателя",
-      continue: "Продолжить оплату",
-      notChosen: "Не выбрано",
-      home: "Домой",
-      close: "Закрыть",
-    },
-
     list: {
       title: "Хэллоуин коллекция",
       buy: "Купить",
@@ -389,7 +296,6 @@ const translations = {
       buyNow: "Купить сейчас",
       view: "Подробнее",
     },
-
     details: {
       back: "Назад",
       sizes: "Размеры",
@@ -402,18 +308,48 @@ const translations = {
       days: "дн.",
       reserve: "Забронировать",
       addToCart: "В корзину",
+      priceLine: (pDay, pBuy) => `${pDay} /день · Купить: ${pBuy}`,
+      reservedMsg: (t, f, to, d) => `Бронь #${t}\n${f} → ${to}\nДней: ${d}`,
+      orderedMsg: (t, q) => `Заказ #${t}\nКол-во: ${q}`,
       description: "Описание",
       reviews: "Отзывы",
-      noReviews: "Нет отзывов.",
-      send: "Отправить",
+      leaveReview: "Оставьте отзыв",
       commentPlaceholder: "Комментарий",
+      send: "Отправить",
+      noReviews: "Пока нет отзывов.",
+      commentRequired: "Комментарий обязателен.",
+      reviewError: "Не удалось добавить отзыв.",
+      errorLoad: "Не удалось получить данные костюма.",
+      requestError: "Ошибка запроса.",
+      fillAll: "Заполните все обязательные поля.",
       loading: "Загрузка...",
       notFound: "Костюм не найден.",
       size: "Размер",
     },
-
-    faq: { name: "Часто задаваемые вопросы" },
-
+    faq: {
+      name: "Часто задаваемые вопросы",
+    },
+    accordion: {
+      testOne: "Как я могу заказать костюм?",
+      answerOne: "Выберите костюм, нажмите «Забронировать» и заполните форму.",
+      testTwo: "Могу ли я изменить дату заказа?",
+      answerTwo:
+        "Да, пожалуйста, свяжитесь с нами по электронной почте, и мы изменим дату, если это возможно.",
+    },
+    countdown: {
+      name: "До Хэллоуина осталось совсем немного!",
+    },
+    form: {
+      succes: "Сообщение успешно отправлено!",
+      error: "Произошла ошибка, повторите попытку позже.",
+      name: "Не нашли ответ? Задайте вопрос:",
+      email: "Ваш адрес электронной почты",
+      question: "Введите вопрос",
+      send: "Отправить",
+    },
+    featuredcostumes: {
+      button: "Посмотреть все костюмы",
+    },
     cart: {
       empty: "Корзина пуста.",
       browse: "Посмотреть костюмы",
@@ -422,7 +358,16 @@ const translations = {
       total: "Итого",
       checkout: "Оформить заказ",
     },
-
+    filter: {
+      visi: "Все",
+      moterims: "Для женщин",
+      vyrams: "Для мужчин",
+      mergaitems: "Для девочек",
+      berniukams: "Для мальчиков",
+    },
+    costumes: {
+      paieska: "Поиск костюмов",
+    },
     footer: {
       returns: "Возвраты",
       shipping: "Доставка",
@@ -431,21 +376,18 @@ const translations = {
       terms: "Условия",
       contact: "Контакты",
     },
-
     contact: {
       title: "Контакты",
       company: "Freak Or Treat, MB",
       code: "Код компании",
-      vat: "ИНН",
+      vat: "ИНН / НДС код",
       phone: "Тел.",
-      email: "Email",
+      email: "Эл. почта",
       address: "Адрес",
-      note: "Работаем Пн–Пт: 10:00–18:00",
+      note: "Мы работаем Пн–Пт с 10:00 до 18:00.",
     },
   },
 };
-
-/* ------------------------------------------------------------------ */
 
 const I18nCtx = createContext({
   lang: "en",
@@ -456,17 +398,11 @@ const I18nCtx = createContext({
 export function I18nProvider({ children }) {
   const saved =
     typeof window !== "undefined" ? localStorage.getItem("lang") : null;
-
   const browser =
-    typeof navigator !== "undefined"
-      ? navigator.language.slice(0, 2)
-      : "en";
-
-  const initial =
-    saved || (["lt", "en", "ru"].includes(browser) ? browser : "en");
+    typeof navigator !== "undefined" ? navigator.language.slice(0, 2) : "en";
+  const initial = saved || (["lt", "en", "ru"].includes(browser) ? browser : "en");
 
   const [lang, setLang] = useState(initial);
-
   const dict = translations[lang] || translations.en;
 
   const value = useMemo(
@@ -479,15 +415,10 @@ export function I18nProvider({ children }) {
       t: (path, ...args) => {
         const parts = path.split(".");
         let cur = dict;
-
         for (const p of parts) {
-          if (cur && Object.prototype.hasOwnProperty.call(cur, p)) {
-            cur = cur[p];
-          } else {
-            return path;
-          }
+          if (cur && Object.prototype.hasOwnProperty.call(cur, p)) cur = cur[p];
+          else return path;
         }
-
         return typeof cur === "function" ? cur(...args) : cur;
       },
     }),
