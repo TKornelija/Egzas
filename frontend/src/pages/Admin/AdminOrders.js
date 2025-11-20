@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import "../../styles/Orders.css";
 
 export default function AdminOrders() {
   const [orders, setOrders] = useState([]);
@@ -21,17 +23,19 @@ export default function AdminOrders() {
     load();
   }, []);
 
-  if (loading) return <p>Loading orders...</p>;
-  if (error) return <p style={{ color: "red" }}>{error}</p>;
-  if (!orders.length) return <p>Dar nėra pateiktų užsakymų.</p>;
+  if (loading) return <p className="orders-loading">Loading orders...</p>;
+  if (error) return <p className="orders-error">{error}</p>;
+  if (!orders.length) return <p className="orders-empty">Dar nėra pateiktų užsakymų.</p>;
 
   return (
-    <div>
-      <h2>Orders</h2>
+    <div className="admin-orders-container">
+      <h2 className="admin-orders-title">Orders</h2>
+
       <table className="admin-table">
         <thead>
           <tr>
             <th>#</th>
+            <th>Order ID</th>
             <th>Customer</th>
             <th>Address</th>
             <th>Items</th>
@@ -47,6 +51,16 @@ export default function AdminOrders() {
             <tr key={o._id || idx}>
               <td>{idx + 1}</td>
               <td>
+                {o._id ? (
+                  <Link to={`/admin/orders/${o._id}`} className="order-link">
+                    {o._id}
+                  </Link>
+                ) : (
+                  "-"
+                )}
+              </td>
+
+              <td>
                 {o.customer
                   ? (
                       `${o.customer.firstName || ""} ${
@@ -57,37 +71,37 @@ export default function AdminOrders() {
                 {o.customer?.email && (
                   <>
                     <br />
-                    {o.customer.email}
+                    <span className="order-muted">{o.customer.email}</span>
                   </>
                 )}
               </td>
+
               <td>
                 {o.customer?.address && <div>{o.customer.address}</div>}
-                {o.customer?.postalCode && (
-                  <div>{o.customer.postalCode}</div>
-                )}
-
-                {!o.customer?.address &&
-                  !o.customer?.postalCode &&
-                  "-"}
+                {o.customer?.postalCode && <div>{o.customer.postalCode}</div>}
+                {!o.customer?.address && !o.customer?.postalCode && "-"}
               </td>
+
               <td>
                 {o.items?.length
                   ? o.items.map((it, i) => (
-                      <div key={i}>
+                      <div key={i} className="order-item-line">
                         {it.title} x{it.quantity} ({it.price} €)
                       </div>
                     ))
                   : "-"}
               </td>
+
               <td>{o.deliveryMethod || "-"}</td>
               <td>{o.paymentMethod || "-"}</td>
-              <td>
+
+              <td className="order-price">
                 {typeof o.totalAmount === "number"
                   ? o.totalAmount.toFixed(2) + " €"
                   : "-"}
               </td>
-              <td>
+
+              <td className="order-muted">
                 {o.createdAt
                   ? new Date(o.createdAt).toLocaleString()
                   : "-"}

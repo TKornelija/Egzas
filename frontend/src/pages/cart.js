@@ -59,8 +59,6 @@ export default function Cart() {
                   
                 </div>
 
-
-               {/* Jei tai rezervacija, rodome datų intervalą */}
                {it.type === "reservation" && (
                <div className="cart-item-dates">
                Nuo {new Date(it.from).toLocaleDateString("lt-LT")} iki{" "}
