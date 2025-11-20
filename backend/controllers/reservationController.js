@@ -12,7 +12,7 @@ export const getReservations = async (req, res) => {
 };
 
 export const createReservation = async (req, res) => {
-  const { user, costume, date } = req.body;
+  const { userId, costumeId, from, to, size } = req.body;
 
   try {
     const reservation = await Reservation.create({ user, costume, date });

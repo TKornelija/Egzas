@@ -1,6 +1,7 @@
 import express from "express";
 import Reservation from "../models/reservationModel.js";
 import Costume from "../models/Costume.js";
+import requireAuth from "../middleware/requireAuth.js";
 
 const router = express.Router();
 
@@ -25,7 +26,7 @@ router.get("/", async (req, res) => {
 });
 
 
-router.post("/", async (req, res) => {
+router.post("/", requireAuth, async (req, res) => {
   try {
     const { costumeId, from, to, size = "M" } = req.body || {};
 
@@ -34,7 +35,7 @@ router.post("/", async (req, res) => {
     }
 
 
-    const item = await Costume.findOne({ id: Number(costumeId) });
+    const item = await Costume.findOne({ id: Number(costumeId) || costumeId });
     if (!item) {
       console.log("Kostiumas nerastas MongoDB:", costumeId);
       return res.status(404).json({ message: "Kostiumas nerastas." });
@@ -67,6 +68,7 @@ router.post("/", async (req, res) => {
 
 
     const newRes = await Reservation.create({
+      userId: req.user._id,
       costumeId: Number(costumeId),
       from,
       to,
@@ -118,5 +120,35 @@ router.delete("/:id", async (req, res) => {
   }
 });
 
+router.get("/my", requireAuth, async (req, res) => {
+  try {
+    const reservations = await Reservation.find({ userId: req.user._id }).sort({ createdAt: -1 });
+
+    const detailed = [];
+
+    for (let r of reservations) {
+      const costume = await Costume.findOne({ id: r.costumeId });
+
+      detailed.push({
+        ...r.toObject(),
+        costume: costume ? {
+          id: costume.id,
+          name: costume.name,
+          image: costume.image,
+          price: costume.price,
+        } : null
+      });
+    }
+
+    res.json(detailed);
+
+  } catch (err) {
+    console.error("Klaida GET /api/reservations/my:", err);
+    res.status(500).json({ message: err.message });
+  }
+});
+
+
 
 export default router;
+

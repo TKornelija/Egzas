@@ -1,4 +1,12 @@
 const BASE = "http://localhost:4000";
+function getToken() {
+  try {
+    const user = JSON.parse(localStorage.getItem("user"));
+    return user?.token || null;
+  } catch {
+    return null;
+  }
+}
 
 export async function apiGet(path) {
   const res = await fetch(BASE + path);
@@ -8,9 +16,10 @@ export async function apiGet(path) {
 }
 
 export async function apiPost(path, body) {
+  const token = getToken();
   const res = await fetch(BASE + path, {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
+    headers: { "Content-Type": "application/json", ...(token ? { Authorization: `Bearer ${token}` } : {})},
     body: JSON.stringify(body),
   });
   const data = await res.json();
