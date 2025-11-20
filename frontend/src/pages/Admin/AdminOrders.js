@@ -1,8 +1,11 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { useI18n } from "../../lib/i18n";
 import "../../styles/Orders.css";
 
 export default function AdminOrders() {
+  const { t } = useI18n();
+
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -23,27 +26,27 @@ export default function AdminOrders() {
     load();
   }, []);
 
-  if (loading) return <p className="orders-loading">Loading orders...</p>;
+  if (loading) return <p className="orders-loading">{t("adminOrders.loading")}</p>;
   if (error) return <p className="orders-error">{error}</p>;
   if (!orders.length)
-    return <p className="orders-empty">Dar nėra pateiktų užsakymų.</p>;
+    return <p className="orders-empty">{t("adminOrders.empty")}</p>;
 
   return (
     <div className="admin-orders-container">
-      <h2 className="admin-orders-title">Orders</h2>
+      <h2 className="admin-orders-title">{t("adminOrders.title")}</h2>
 
       <table className="admin-table">
         <thead>
           <tr>
             <th>#</th>
-            <th>Order ID</th>
-            <th>Customer</th>
-            <th>Address</th>
-            <th>Items</th>
-            <th>Delivery</th>
-            <th>Payment</th>
-            <th>Statusas</th>
-            <th>Created</th>
+            <th>{t("adminOrders.id")}</th>
+            <th>{t("adminOrders.customer")}</th>
+            <th>{t("adminOrders.address")}</th>
+            <th>{t("adminOrders.items")}</th>
+            <th>{t("adminOrders.delivery")}</th>
+            <th>{t("adminOrders.payment")}</th>
+            <th>{t("adminOrders.status")}</th>
+            <th>{t("adminOrders.created")}</th>
           </tr>
         </thead>
 
@@ -87,15 +90,9 @@ export default function AdminOrders() {
                 </td>
 
                 <td>
-                  {o.customer?.address && (
-                    <div>{o.customer.address}</div>
-                  )}
-                  {o.customer?.postalCode && (
-                    <div>{o.customer.postalCode}</div>
-                  )}
-                  {!o.customer?.address &&
-                    !o.customer?.postalCode &&
-                    "-"}
+                  {o.customer?.address && <div>{o.customer.address}</div>}
+                  {o.customer?.postalCode && <div>{o.customer.postalCode}</div>}
+                  {!o.customer?.address && !o.customer?.postalCode && "-"}
                 </td>
 
                 <td>
