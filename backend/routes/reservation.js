@@ -128,14 +128,14 @@ router.get("/my", requireAuth, async (req, res) => {
     const detailed = [];
 
     for (let r of reservations) {
-      const costume = await Costume.findOne({ id: r.costumeId });
+      const costume = await Costume.findOne({ id: Number(r.costumeId) });
 
       detailed.push({
         ...r.toObject(),
         costume: costume ? {
           id: costume.id,
           name: costume.name,
-          image: costume.image,
+          imageUrls: costume.imageUrls,
           price: costume.price,
         } : null
       });

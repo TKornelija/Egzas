@@ -96,16 +96,6 @@ export default function Account() {
       <div className="row" style={{ marginTop: 16 }}>
         <section className="card section">
           <h2 className="title">Rezervacijos</h2>
-          <p>
-            Šiuo metu rezervacijų nėra.{" "}
-            <Link to="/costumes" className="link">
-              Peržiūrėti kostiumus
-            </Link>
-            .
-          </p>
-          {reservations.length === 0 && (
-    <p>Šiuo metu rezervacijų nėra.</p>
-  )}
 
   {reservations.length === 0 && (
     <p>Šiuo metu rezervacijų nėra.</p>
@@ -114,9 +104,9 @@ export default function Account() {
   {reservations.map(r => (
     <div key={r._id} className="reservation-box" style={{ display: "flex", gap: 12, marginBottom: 16 }}>
       
-      {/* NUOTRAUKA */}
+      
       <img 
-        src={r.costume?.image || "/no-image.png"} 
+        src={r.costume?.imageUrls?.[0]|| "/no-image.png"} 
         alt={r.costume?.name || "Kostiumas"} 
         style={{ width: 90, height: 90, borderRadius: 8, objectFit: "cover" }} 
       />
@@ -145,7 +135,7 @@ export default function Account() {
       <div><strong>Data:</strong> {new Date(order.createdAt).toLocaleDateString()}</div>
       <div><strong>Suma:</strong> {order.totalAmount} €</div>
       <div><strong>Mokėjimo būdas:</strong> {order.paymentMethod}</div>
-
+      
       <ul style={{ marginTop: 10 }}>
         {order.items.map((item, i) => (
           <li key={i}>
