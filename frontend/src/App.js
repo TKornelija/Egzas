@@ -8,6 +8,10 @@ import AdminOrders from "./pages/Admin/AdminOrders";
 import AdminOrderDetails from "./pages/Admin/AdminOrderDetails";
 import AdminReservations from "./pages/Admin/AdminReservations";
 import AdminReservationDetails from "./pages/Admin/AdminReservationDetails";
+import AdminQuestions from "./pages/Admin/AdminQuestions";
+import AdminFAQ from "./pages/Admin/AdminQuestions";
+import AdminFAQEdit from "./pages/AdminFAQEdit";
+import AdminFAQNew from "./pages/Admin/AdminFAQNew";
 
 import Home from "./pages/Home";
 import CostumesList from "./pages/CostumeList";
@@ -58,7 +62,10 @@ export default function App() {
               <Route path="orders" element={<AdminOrders />} />
               <Route path="orders/:id" element={<AdminOrderDetails />} />
               <Route path="/admin/reservations" element={<AdminReservations />} />
-<Route path="/admin/reservations/:id" element={<AdminReservationDetails />} />
+              <Route path="/admin/reservations/:id" element={<AdminReservationDetails />} />
+              <Route path="faq" element={<AdminQuestions/>} />
+              <Route path="faq/new" element={<AdminFAQNew />} />
+              <Route path="faq/:id" element={<AdminFAQEdit />} />
             </Route>
           </Route>
 

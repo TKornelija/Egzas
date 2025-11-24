@@ -1,0 +1,28 @@
+.admin-faq-container {
+    
+  padding: 60px 0;
+  color: #ddd;
+
+}
+.admin-faq-title{
+margin-bottom: 16px;
+font-size: 1.4rem;
+font-weight: 700;
+color: #fff;
+}
+.admin-faq-card {
+  background: #1a1a1a;
+  border: 1px solid #2a2a2a;
+  border-radius: 12px;
+  padding: 20px;
+  color: #ddd;
+}
+.faqform{
+    display: grid;
+}
+.input{
+    height: 70px;
+}
+.btn{
+    width: 100px;
+}

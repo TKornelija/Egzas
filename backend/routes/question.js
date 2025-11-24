@@ -1,10 +1,8 @@
 import express from "express";
 import Question from "../models/Question.js";
-/*import nodemailer from "nodemailer";*/
 
 const router = express.Router();
 
-// GET viešiems FAQ (tik public = true)
 router.get("/public", async (req, res) => {
   try {
     const qs = await Question.find({ public: true });
@@ -15,18 +13,15 @@ router.get("/public", async (req, res) => {
   }
 });
 
-// GET visiems klausimams (adminui)
 router.get("/", async (req, res) => {
   try {
-    const qs = await Question.find();
+    const qs = await Question.find().sort({ askedAt: -1 }); 
     res.json(qs);
   } catch (err) {
-    console.error("GET questions error:", err);
     res.status(500).json({ error: err.message });
   }
 });
 
-// POST naujas lankytojo klausimas
 router.post("/", async (req, res) => {
   const { question, askedBy } = req.body;
   if (!question) return res.status(400).json({ error: "Klausimas būtinas" });
@@ -41,9 +36,8 @@ router.post("/", async (req, res) => {
   }
 });
 
-// PUT atsakyti į klausimą (admin)
 router.put("/:id", async (req, res) => {
-  const { answer, makePublic } = req.body; // makePublic = boolean
+  const { answer, makePublic } = req.body; 
 
   if (!answer) return res.status(400).json({ error: "Atsakymas būtinas" });
 
@@ -53,32 +47,34 @@ router.put("/:id", async (req, res) => {
 
     q.answer = answer;
     q.answered = true;
-    if (makePublic) q.public = true; // admin gali padaryti klausimą viešą
+     q.public = makePublic; 
     await q.save();
-
-    // Siunčiam el. laišką lankytojui tik jei yra askedBy
-    /*if (q.askedBy) {
-      const transporter = nodemailer.createTransport({
-        host: process.env.SMTP_HOST,
-        port: process.env.SMTP_PORT,
-        secure: false,
-        auth: {
-          user: process.env.SMTP_USER,
-          pass: process.env.SMTP_PASS,
-        },
-      });
-
-      await transporter.sendMail({
-        from: `"FAQ Support" <${process.env.SMTP_USER}>`,
-        to: q.askedBy,
-        subject: "Jūsų klausimo atsakymas",
-        text: `Jūsų klausimas: ${q.question}\n\nAtsakymas: ${q.answer}`,
-      });
-    }*/
 
     res.json(q);
   } catch (err) {
     console.error("PUT question error:", err);
+    res.status(500).json({ error: err.message });
+  }
+});
+router.get("/:id", async (req, res) => {
+  try {
+    const q = await Question.findById(req.params.id);
+    if (!q) return res.status(404).json({ error: "Klausimas nerastas" });
+
+    res.json(q);
+  } catch (err) {
+    console.error("GET question by ID error:", err);
+    res.status(500).json({ error: err.message });
+  }
+});
+
+router.delete("/:id", async (req, res) => {
+  try {
+    const q = await Question.findByIdAndDelete(req.params.id);
+    if (!q) return res.status(404).json({ error: "Klausimas nerastas" });
+    res.json({ message: "Klausimas ištrintas" });
+  } catch (err) {
+    console.error("DELETE question error:", err);
     res.status(500).json({ error: err.message });
   }
 });

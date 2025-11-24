@@ -2,7 +2,7 @@ import React from "react";
 import AskQuestionForm from "../components/AskQuestionForm";
 import Accordion from "../components/Accordion";
 import { useI18n } from "../lib/i18n";
-import AdminQuestions from "../components/AdminQuestions";
+
 
 export default function FAQ() {
    const { t } = useI18n();
