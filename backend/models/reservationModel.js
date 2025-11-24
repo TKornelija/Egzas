@@ -28,8 +28,9 @@ const reservationSchema = new mongoose.Schema(
     },
     status: {
       type: String,
-      default: "pending",
+      default: "Laukiama patvirtinimo",
     },
+    
   },
   { timestamps: true }
 );

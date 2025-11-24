@@ -6,6 +6,8 @@ import AdminLogin from "./pages/Admin/AdminLogin";
 import "./styles/admin.css";
 import AdminOrders from "./pages/Admin/AdminOrders";
 import AdminOrderDetails from "./pages/Admin/AdminOrderDetails";
+import AdminReservations from "./pages/Admin/AdminReservations";
+import AdminReservationDetails from "./pages/Admin/AdminReservationDetails";
 
 import Home from "./pages/Home";
 import CostumesList from "./pages/CostumeList";
@@ -55,6 +57,8 @@ export default function App() {
             <Route path="/admin" element={<AdminDashboard />}>
               <Route path="orders" element={<AdminOrders />} />
               <Route path="orders/:id" element={<AdminOrderDetails />} />
+              <Route path="/admin/reservations" element={<AdminReservations />} />
+<Route path="/admin/reservations/:id" element={<AdminReservationDetails />} />
             </Route>
           </Route>
 

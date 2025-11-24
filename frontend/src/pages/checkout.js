@@ -85,9 +85,10 @@ const purchaseItems = cartItems.filter(i => i.type !== "reservation");
         },
         body: JSON.stringify({
           costumeId: r.id,
-          from: r.from,
-          to: r.to,
-          size: r.size,
+  from: r.from,
+  to: r.to,
+  size: r.size,
+
         }),
       });
 

@@ -8,6 +8,7 @@ function getToken() {
   }
 }
 
+
 export async function apiGet(path) {
   const res = await fetch(BASE + path);
   const data = await res.json();

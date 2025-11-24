@@ -1,4 +1,4 @@
-import Reservation from "../models/reservationModel.js";
+/*import Reservation from "../models/reservationModel.js";
 
 export const getReservations = async (req, res) => {
   try {
@@ -49,4 +49,4 @@ export const updateReservation = async (req, res) => {
   } catch (err) {
     res.status(400).json({ error: err.message });
   }
-};
+};*/

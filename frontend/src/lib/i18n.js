@@ -158,6 +158,39 @@ const translations = {
       terms: "Taisyklės",
       contact: "Kontaktai",
     },
+    reservations:{
+      tittle: "Kostiumų rezervacijos",
+      id: "Rezervacijos ID",
+      user: "Vartotojas",
+      costume: "Kostiumo ID",
+      size: "Dydis",
+      time: "Laikotarpis",
+      status: "Statusas",
+      created: "Sukurta",
+      none: "Nėra rezervacijų.",
+      loading: "Kraunama"
+    },
+    resDetails:{
+     waiting: "Laukiama patvirtinimo",
+     done: "Patvirtinta",
+     cancelled: "Atšaukta",
+     loading: "Kraunama",
+     none: "Rezervacija nerasta.",
+     status: "Būsena",
+     save: "Išsaugoti",
+     user: "Vartotojas",
+     email: "El. paštas: ",
+     data: "Rezervacijos duomenys",
+     id: "Kostiumo ID: ",
+     size: "Dydis: ",
+     from: "Nuo: ",
+     iki: "Iki: ",
+     sum: "Suma: ",
+     back: "← Grįžti"
+
+
+
+    },
     contact: {
       title: "Kontaktai",
       company: "Freak Or Treat, MB",
@@ -328,6 +361,39 @@ const translations = {
       terms: "Terms",
       contact: "Contact",
     },
+    reservations:{
+      tittle: "Costume reservations",
+      id: "Reservation ID",
+      user: "User",
+      costume: "Costume ID",
+      size: "Size",
+      time: "Period",
+      status: "Status",
+      created: "Created",
+      none: "No reservations.",
+      loading: "Loading"
+    },
+    resDetails:{
+     waiting: "Awaiting approval",
+     done: "Approved",
+     cancelled: "Cancelled",
+     loading: "Loading",
+     none: "Reservation not found.",
+     status: "Status",
+     save: "Save",
+     user: "User",
+     email: "Email: ",
+     data: "Reservation details",
+     id: "Costume ID: ",
+     size: "Size: ",
+     from: "From: ",
+     iki: "Till: ",
+     sum: "Amount: ",
+     back: "← Back"
+
+
+
+    },
     contact: {
       title: "Contact",
       company: "Freak Or Treat, MB",
@@ -495,6 +561,39 @@ const translations = {
       privacy: "Политика конфиденциальности",
       terms: "Условия",
       contact: "Контакты",
+    },
+    reservations:{
+      tittle: "Бронирование костюмов",
+      id: "Идентификатор бронирования",
+      user: "Пользователь",
+      costume: "Идентификатор костюма",
+      size: "Размер",
+      time: "Период",
+      status: "Статус",
+      created: "Созданный",
+      none: "Никаких оговорок.",
+      loading: "Загрузка"
+    },
+    resDetails:{
+     waiting: "Ожидает одобрения",
+     done: "Одобренный",
+     cancelled: "Отменено",
+     loading: "Загрузка",
+     none: "Бронирование не найдено.",
+     status: "Статус",
+     save: "Сохранять",
+     user: "Пользователь",
+     email: "Электронная почта: ",
+     data: "Детали бронирования",
+     id: "ID костюма: ",
+     size: "Размер: ",
+     from: "От: ",
+     iki: "До: ",
+     sum: "Количество: ",
+     back: "← Назад"
+
+
+
     },
     contact: {
       title: "Контакты",

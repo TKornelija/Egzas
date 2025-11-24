@@ -68,14 +68,15 @@ router.post("/", requireAuth, async (req, res) => {
 
 
     const newRes = await Reservation.create({
-      userId: req.user._id,
-      costumeId: Number(costumeId),
-      from,
-      to,
-      size,
-      total,
-      status: "pending",
-    });
+  userId: req.user._id,
+  costumeId: Number(costumeId),
+  from,
+  to,
+  size,
+  total,
+  status: "Laukiama patvirtinimo",
+});
+
 
     console.log("Nauja rezervacija sukurta:", newRes._id);
     res.status(201).json(newRes);
@@ -99,7 +100,7 @@ router.delete("/:id", async (req, res) => {
   router.put("/:id/status", async (req, res) => {
   try {
     const { status } = req.body;
-    if (!["pending", "approved", "rejected"].includes(status)) {
+    if (!["Laukiama patvirtinimo", "Patvirtinta", "Atšaukta"].includes(status)) {
       return res.status(400).json({ message: "Neteisingas statusas." });
     }
 
@@ -148,6 +149,37 @@ router.get("/my", requireAuth, async (req, res) => {
   }
 });
 
+router.get("/all", async (req, res) => {
+  try {
+    const list = await Reservation.find()
+      .populate("userId") 
+      .sort({ createdAt: -1 })
+      .lean();
+
+    res.json(list);
+  } catch (err) {
+    console.error("Failed to load reservations:", err);
+    res.status(500).json({ error: "Failed to load reservations" });
+  }
+});
+
+
+router.get("/:id", async (req, res) => {
+  try {
+    const reservation = await Reservation.findById(req.params.id)
+      .populate("userId")
+      .lean();
+
+    if (!reservation) {
+      return res.status(404).json({ error: "Rezervacija nerasta" });
+    }
+
+    res.json(reservation);
+  } catch (err) {
+    console.error("Failed to load reservation:", err);
+    res.status(500).json({ error: "Nepavyko gauti rezervacijos" });
+  }
+});
 
 
 export default router;

@@ -1,0 +1,370 @@
+.admin-reservations-container {
+  padding: 60px 0;
+  color: #ddd;
+}
+
+.admin-reservations-title {
+  margin-bottom: 16px;
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #fff;
+}
+
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  font-size: 0.95rem;
+}
+
+.admin-table thead th {
+  background: #1a1a1a;
+  border: 1px solid #2a2a2a;
+  padding: 12px;
+  text-align: left;
+  color: #fff;
+  font-weight: 700;
+}
+
+.admin-table tbody td {
+  background: #181818;
+  border: 1px solid #2a2a2a;
+  padding: 12px;
+  color: #ddd;
+}
+
+.admin-table tbody tr:nth-child(even) td {
+  background: #1f1f1f;
+}
+
+
+.reservation-item-line {
+  margin-bottom: 6px;
+}
+
+
+.reservation-price {
+  font-weight: 700;
+  color: #fff;
+}
+
+.reservation-muted {
+  opacity: 0.75;
+}
+
+@media (max-width: 800px) {
+  .admin-table {
+    font-size: 0.85rem;
+  }
+  .admin-table thead {
+    display: none;
+  }
+  .admin-table tr {
+    display: block;
+    margin-bottom: 16px;
+    border: 1px solid #2a2a2a;
+    border-radius: 12px;
+    overflow: hidden;
+  }
+  .admin-table td {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 14px;
+    border: none;
+    border-bottom: 1px solid #2a2a2a;
+  }
+  .admin-table td:last-child {
+    border-bottom: none;
+  }
+  .admin-table td::before {
+    content: attr(data-label);
+    font-weight: 700;
+    color: #fff;
+  }
+}
+.reservation-id-link {
+  color: #4da3ff;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.reservations-details-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.reservations-back-link {
+  font-size: 0.9rem;
+  opacity: 0.8;
+}
+.reservations-details-card {
+  background: #1a1a1a;
+  border: 1px solid #2a2a2a;
+  border-radius: 12px;
+  padding: 20px;
+  color: #ddd;
+}
+
+.reservations-details-section {
+  margin-top: 16px;
+}
+
+.reservations-details-section h3 {
+  margin-bottom: 8px;
+  font-size: 1rem;
+  color: #fff;
+}
+
+.reservations-details-row {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+
+.reservations-details-label {
+  width: 120px;
+  opacity: 0.8;
+}
+
+.reservations-details-items {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.reservations-details-items li {
+  margin-bottom: 4px;
+}
+
+.reservations-muted {
+  opacity: 0.7;
+}
+.admin-reservation-back {
+  margin-bottom: 16px;
+  background: #1a1a1a;
+  border: 1px solid #2a2a2a;
+  border-radius: 8px;
+  padding: 6px 12px;
+  color: #ddd;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.admin-reservation-back:hover {
+  border-color: #555;
+}
+
+.admin-reservation-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 24px;
+  margin-bottom: 20px;
+}
+
+.admin-reservation-sub {
+  font-size: 0.9rem;
+  opacity: 0.8;
+}
+
+.admin-reservation-sub span {
+  font-weight: 600;
+}
+
+.admin-reservation-badges {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: flex-end;
+}
+
+.admin-reservation-badge {
+  background: #1a1a1a;
+  border: 1px solid #2a2a2a;
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-size: 0.85rem;
+}
+
+.admin-reservation-badge .label {
+  opacity: 0.7;
+  margin-right: 4px;
+}
+
+.admin-order-badge .value {
+  font-weight: 600;
+}
+
+.admin-reservation-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.admin-reservation-card {
+  background: #181818;
+  border: 1px solid #2a2a2a;
+  border-radius: 12px;
+  padding: 16px;
+  margin: 5px;
+}
+
+.admin-reservation-card h3 {
+  margin-bottom: 12px;
+  font-size: 1rem;
+  color: #fff;
+}
+
+.admin-reservation-card-body .order-line {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 6px;
+  font-size: 0.9rem;
+}
+
+.reservation-label {
+  opacity: 0.8;
+}
+
+.reservation-value {
+  font-weight: 500;
+}
+
+.reservation-muted {
+  font-size: 0.85rem;
+  opacity: 0.7;
+}
+
+.admin-reservation-products {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+
+.admin-reservation-products th,
+.admin-reservation-products td {
+  border: 1px solid #2a2a2a;
+  padding: 10px;
+}
+
+.admin-reservation-summary {
+  margin-top: 16px;
+}
+
+.admin-reservation-summary-row {
+  display: flex;
+  justify-content: flex-end;
+  gap: 24px;
+  font-size: 1rem;
+}
+
+.admin-reservation-summary-total {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #fff;
+}
+
+@media (max-width: 900px) {
+  .admin-reservation-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .admin-reservation-badges {
+    align-items: flex-start;
+  }
+
+  .admin-reservation-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .admin-reservation-card-body .order-line {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+.admin-reservation-product-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.admin-reservation-product-image img {
+  width: 64px;
+  height: 64px;
+  object-fit: cover;
+  border-radius: 8px;
+  background: #222;
+}
+
+.admin-reservation-product-placeholder {
+  width: 64px;
+  height: 64px;
+  background: #222;
+  border-radius: 8px;
+  opacity: 0.4;
+}
+
+.admin-reservation-product-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.admin-reservation-product-text strong {
+  font-size: 0.95rem;
+  color: #fff;
+}
+.admin-reservation-status-row {
+  margin: 20px 0 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+
+.admin-reservation-status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
+  border-radius: 999px;
+  background: #111;
+  border: 1px solid #333;
+  font-size: 0.85rem;
+  color: #eee;
+}
+
+.admin-reservation-status-label {
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-size: 0.7rem;
+  opacity: 0.75;
+}
+
+.admin-reservation-status-value {
+  font-weight: 600;
+}
+
+.admin-reservation-status-select {
+  min-width: 220px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  border: 1px solid #333;
+  background: #151515;
+  color: #fff;
+  font-size: 0.85rem;
+  outline: none;
+}
+.admin-reservations-back {
+  margin-bottom: 16px;
+  background: #1a1a1a;
+  border: 1px solid #2a2a2a;
+  border-radius: 8px;
+  padding: 6px 12px;
+  color: #ddd;
+  cursor: pointer;
+  font-size: 0.9rem;
+}

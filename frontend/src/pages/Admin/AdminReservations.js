@@ -107,3 +107,97 @@
 
 // function Th({children}){ return <th style={{ border:"1px solid #333", padding:8, textAlign:"left" }}>{children}</th>; }
 // function Td({children, ...rest}){ return <td {...rest} style={{ border:"1px solid #333", padding:8 }}>{children}</td>; }
+
+import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import { useI18n } from "../../lib/i18n";
+import "../../styles/Reservations.css";
+
+export default function AdminReservations() {
+  const { t } = useI18n();
+  const [reservations, setReservations] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+
+  useEffect(() => {
+    async function load() {
+      try {
+        const res = await fetch("/api/reservations/all");
+        if (!res.ok) throw new Error("Nepavyko gauti rezervacijų");
+        const data = await res.json();
+        setReservations(data);
+      } catch (e) {
+        setError(e.message);
+      } finally {
+        setLoading(false);
+      }
+    }
+    load();
+  }, []);
+
+  if (loading) return <p className="reservations-loading">{t("reservations.loading")}</p>;
+  if (error) return <p className="reservations-error">{error}</p>;
+
+  if (!reservations.length)
+    return <p className="reservations-empty">{t("reservations.none")}</p>;
+
+  return (
+    <div className="admin-reservation-container">
+      <h2 className="admin-reservation-title">{t("reservations.tittle")}</h2>
+
+      <table className="admin-table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>{t("reservations.id")}</th>
+            <th>{t("reservations.user")}</th>
+            <th>{t("reservations.costume")}</th>
+            <th>{t("reservations.size")}</th>
+            <th>{t("reservations.time")}</th>
+            <th>{t("reservations.status")}</th>
+            <th>{t("reservations.created")}</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          {reservations.map((r, idx) => {
+            return (
+              <tr key={r._id}>
+                <td>{idx + 1}</td>
+
+                <td>
+                  <Link to={`/admin/reservations/${r._id}`} className="reservation-link">
+                    {r._id}
+                  </Link>
+                </td>
+
+                <td>
+                  {r.userId?.email || "-"}
+                </td>
+
+                <td>{r.costumeId}</td>
+
+                <td>{r.size || "-"}</td>
+
+                <td>
+                  {new Date(r.from).toLocaleDateString()} –{" "}
+                  {new Date(r.to).toLocaleDateString()}
+                </td>
+
+                <td>
+                  <span className="reservation-status-badge">
+                    {r.status}
+                  </span>
+                </td>
+
+                <td className="reservation-muted">
+                  {new Date(r.createdAt).toLocaleString("lt-LT")}
+                </td>
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
+    </div>
+  );
+}
