@@ -68,14 +68,13 @@
   box-shadow: 0 0 0 3px rgba(43,125,233,.15);
 }
 
-/* Кнопки */
+
 .btn{ cursor:pointer; border-radius:8px; padding:8px 12px; font-size:14px; }
 .btn--ghost{ background:transparent; border:1px solid var(--adm-line); color:var(--adm-text); }
 .btn--ghost:hover{ border-color:var(--adm-dim); }
 .btn--primary{ background:var(--adm-accent); border:1px solid var(--adm-accent); color:#fff; }
 .btn--primary:hover{ filter:brightness(1.05); }
 
-/* Таблицы (строго, без иконок) */
 .adm-table{
   width:100%; border-collapse:collapse; font-size:14px;
   border:1px solid var(--adm-line);
@@ -92,14 +91,24 @@
 .adm-table tbody tr:hover{ background:#111; }
 .adm-table .col-actions{ width:220px; }
 
-/* Пустые состояния */
+
 .admin__empty{
   border:1px dashed var(--adm-line);
   border-radius: var(--adm-radius);
   padding:18px; color:var(--adm-dim); text-align:center;
 }
 
-/* Адаптив */
+.admin__img {
+  width: 100%;
+  max-width: 700px;
+  margin: 0 auto 20px;
+  display: block;
+  opacity: 0.8;
+  border-radius: 12px;
+}
+
+
+
 @media (max-width: 768px){
   .admin__tabs{ flex-wrap: wrap; }
   .adm-table th, .adm-table td{ padding:8px; }
