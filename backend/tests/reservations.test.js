@@ -1,13 +1,6 @@
-/**
- * @jest-environment node
- */
-
-// ESM aplinkai reikia šito:
 import { jest } from "@jest/globals";
 import express from "express";
 import request from "supertest";
-
-// ---- MODULIŲ MOCK'AI (ESM būdas) ----
 
 jest.unstable_mockModule("../models/reservationModel.js", () => ({
   __esModule: true,
@@ -29,30 +22,27 @@ jest.unstable_mockModule("../models/Costume.js", () => ({
 jest.unstable_mockModule("../middleware/requireAuth.js", () => ({
   __esModule: true,
   default: (req, res, next) => {
-    // apsimetam, kad useris autentifikuotas
     req.user = { _id: "testUser123" };
     next();
   },
 }));
 
-// Čia laikysim dinamiškai importuotus modulius
+
 let Reservation;
 let Costume;
 let router;
 let overlaps;
 
-// VISKĄ importuojame po mock'ų
+
 beforeAll(async () => {
   const reservationModule = await import("../models/reservationModel.js");
   const costumeModule = await import("../models/Costume.js");
-
-  // 👇 PASITIKRINK KELIĄ – jei failas vadinasi kitaip, pakeisk čia
   const routerModule = await import("../routes/reservation.js");
 
   Reservation = reservationModule.default;
   Costume = costumeModule.default;
   router = routerModule.default;
-  overlaps = routerModule.overlaps; // eksportuota funkcija iš router'io
+  overlaps = routerModule.overlaps;
 });
 
 function createApp() {
@@ -61,8 +51,6 @@ function createApp() {
   app.use("/api/reservations", router);
   return app;
 }
-
-// ---- TESTAI ----
 
 describe("overlaps()", () => {
   test("TRUE kai datos persidengia", () => {
@@ -123,7 +111,7 @@ describe("POST /api/reservations", () => {
     });
 
     Reservation.find.mockResolvedValueOnce([
-      { from: "2025-01-10", to: "2025-01-12" }, // persidengia
+      { from: "2025-01-10", to: "2025-01-12" },
     ]);
 
     const res = await request(app)
@@ -142,7 +130,7 @@ describe("POST /api/reservations", () => {
       rentalPrice: 20,
     });
 
-    Reservation.find.mockResolvedValueOnce([]); // nėra persidengimų
+    Reservation.find.mockResolvedValueOnce([]);
 
     const fakeReservation = {
       _id: "res123",
@@ -160,8 +148,6 @@ describe("POST /api/reservations", () => {
     const res = await request(app)
       .post("/api/reservations")
       .send({ costumeId: 1, from: "2025-01-10", to: "2025-01-13", size: "M" });
-
-    // 3 dienos * 20 = 60
     expect(Reservation.create).toHaveBeenCalledWith({
       userId: "testUser123",
       costumeId: 1,
