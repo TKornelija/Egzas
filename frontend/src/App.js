@@ -10,8 +10,11 @@ import AdminReservations from "./pages/Admin/AdminReservations";
 import AdminReservationDetails from "./pages/Admin/AdminReservationDetails";
 import AdminQuestions from "./pages/Admin/AdminQuestions";
 import AdminFAQ from "./pages/Admin/AdminQuestions";
-import AdminFAQEdit from "./pages/AdminFAQEdit";
 import AdminFAQNew from "./pages/Admin/AdminFAQNew";
+import AdminFAQEdit from "./pages/Admin/AdminFAQEdit";
+import AdminCostumes from "./pages/Admin/AdminCostumes";
+import AdminCostumeEdit from "./pages/Admin/AdminCostumeEdit";
+import CostumesAdd from "./pages/Admin/CostumesAdd";
 
 import Home from "./pages/Home";
 import CostumesList from "./pages/CostumeList";
@@ -61,12 +64,15 @@ export default function App() {
             <Route path="/admin" element={<AdminDashboard />}>
               <Route path="orders" element={<AdminOrders />} />
               <Route path="orders/:id" element={<AdminOrderDetails />} />
-              <Route path="/admin/reservations" element={<AdminReservations />} />
-              <Route path="/admin/reservations/:id" element={<AdminReservationDetails />} />
+              <Route path="reservations" element={<AdminReservations />} />
+              <Route path="reservations/:id" element={<AdminReservationDetails />} />
               <Route path="faq" element={<AdminQuestions/>} />
               <Route path="faq/new" element={<AdminFAQNew />} />
               <Route path="faq/:id" element={<AdminFAQEdit />} />
-            </Route>
+              <Route path="costumes" element={<AdminCostumes />} />
+              <Route path="costumes/add" element={<CostumesAdd />} />
+              <Route path="costumes/:id" element={<AdminCostumeEdit />} />
+             </Route>
           </Route>
 
           {/* 404 */}

@@ -52,4 +52,54 @@ router.post("/:id/reviews", async (req, res) => {
   }
 });
 
+router.post("/", async (req, res) => {
+  try {
+    const data = req.body;
+
+    // automatiškai generuojame ID
+    const last = await Costume.findOne().sort({ id: -1 });
+    const newId = last ? last.id + 1 : 1;
+
+    const costume = await Costume.create({
+      ...data,
+      id: newId,
+    });
+
+    res.status(201).json(costume);
+  } catch (err) {
+    res.status(500).json({ message: "Server error", error: err.message });
+  }
+});
+
+router.delete("/:id", async (req, res) => {
+  try {
+    const id = Number(req.params.id);
+    const removed = await Costume.findOneAndDelete({ id });
+
+    if (!removed) return res.status(404).json({ message: "Costume not found" });
+
+    res.json({ message: "Deleted" });
+  } catch (err) {
+    res.status(500).json({ message: "Server error", error: err.message });
+  }
+});
+
+router.put("/:id", async (req, res) => {
+  try {
+    const id = Number(req.params.id);
+
+    const updated = await Costume.findOneAndUpdate(
+      { id },
+      req.body,
+      { new: true }
+    );
+
+    if (!updated) return res.status(404).json({ message: "Costume not found" });
+
+    res.json(updated);
+  } catch (err) {
+    res.status(500).json({ message: "Server error", error: err.message });
+  }
+});
+
 export default router;
