@@ -18,10 +18,13 @@ export default function AdminDashboard() {
         </nav>
       </header>
 
-      <section className="admin__card">
-          <img src={adminImg} alt="admin" className="admin__img" />
-        <Outlet />
-      </section>
+<section className="admin__card">
+  {loc.pathname === "/admin" && (
+    <img src={adminImg} alt="admin" className="admin__img" />
+  )}
+
+  <Outlet />
+</section>
     </div>
   );
 }
