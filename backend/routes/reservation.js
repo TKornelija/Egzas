@@ -6,7 +6,7 @@ import requireAuth from "../middleware/requireAuth.js";
 const router = express.Router();
 
 
-function overlaps(aFrom, aTo, bFrom, bTo) {
+export function overlaps(aFrom, aTo, bFrom, bTo) {
   const A1 = +new Date(aFrom);
   const A2 = +new Date(aTo);
   const B1 = +new Date(bFrom);
