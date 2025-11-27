@@ -1,9 +1,11 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../../styles/Adminfaq.css";
+import { useI18n } from "../../lib/i18n";
 
 export default function AdminFAQNew() {
   const navigate = useNavigate();
+  const { t } = useI18n();
 
   const [question, setQuestion] = useState("");
   const [answer, setAnswer] = useState("");
@@ -35,10 +37,10 @@ export default function AdminFAQNew() {
 
   return (
     <div className="admin-faq-container">
-      <h2 className="admin-faq-title">Naujas klausimas</h2>
+      <h2 className="admin-faq-title">{t("faqAdmin.edit")}</h2>
 
-      <form class="faqform" onSubmit={handleSubmit}  style={{ padding: 20 }}>
-        <label>Klausimas:</label>
+      <form class="faqform" onSubmit={handleSubmit}>
+        <label>{t("faqAdmin.question")}</label>
         <input
           type="text"
           className="input"
@@ -47,24 +49,24 @@ export default function AdminFAQNew() {
           required
         />
 
-        <label>Atsakymas (nebūtinas):</label>
+        <label>{t("faqAdmin.answer")}</label>
         <textarea
           className="input"
           value={answer}
           onChange={(e) => setAnswer(e.target.value)}
         />
 
-        <label style={{ marginTop: 10 }}>
+        <label>
           <input
             type="checkbox"
             checked={makePublic}
             onChange={() => setMakePublic(!makePublic)}
           />{" "}
-          Padaryti viešą
+          {t("faqAdmin.visability")}
         </label>
 
-        <button className="btn btn--primary"  style={{ marginTop: 20 }}>
-          Išsaugoti
+        <button className="btn btn--primary">
+          {t("faqAdmin.delete")}
         </button>
       </form>
     </div>

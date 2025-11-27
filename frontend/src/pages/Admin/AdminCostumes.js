@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { apiGet, apiDelete } from "../../lib/api";
+import { useI18n } from "../../lib/i18n";
 
 export default function AdminCostumes() {
   const [costumes, setCostumes] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const { t } = useI18n();
 
   async function load() {
     try {
@@ -34,30 +36,30 @@ export default function AdminCostumes() {
     }
   }
 
-  if (loading) return <p>Kraunama</p>;
-  if (error) return <p style={{ color: "red" }}>{error}</p>;
+  if (loading) return <p>{t("costumesAdmin.loading")}</p>;
+  if (error) return <p>{error}</p>;
 
   return (
     <div>
-      <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 20 }}>
-        <h2>Kostiumų valdymas</h2>
+      <div>
+        <h2>{t("costumesAdmin.edit")}</h2>
         <Link className="btn btn--primary" to="/admin/costumes/add">
-          Pridėti naują kostiumą
+          {t("costumesAdmin.add")}
         </Link>
       </div>
 
       {costumes.length === 0 ? (
-        <p>Šiuo metu nėra kostiumų.</p>
+        <p>{t("costumesAdmin.none")}</p>
       ) : (
         <table className="admin-table">
           <thead>
             <tr>
-              <th>ID</th>
-              <th>Pavadinimas</th>
-              <th>Kaina</th>
-              <th>Nuomos kaina</th>
-              <th>Kiekis</th>
-              <th>Veiksmai</th>
+              <th>{t("costumesAdmin.id")}</th>
+              <th>{t("costumesAdmin.name")}</th>
+              <th>{t("costumesAdmin.price")}</th>
+              <th>{t("costumesAdmin.rent")}</th>
+              <th>{t("costumesAdmin.quantity")}</th>
+              <th>{t("costumesAdmin.action")}</th>
             </tr>
           </thead>
           <tbody>
@@ -70,14 +72,14 @@ export default function AdminCostumes() {
                 <td>{c.quantity}</td>
                 <td>
                   <Link className="btn btn--ghost" to={`/admin/costumes/${c.id}`}>
-                    Redaguoti
+                    {t("costumesAdmin.change")}
                   </Link>
                   <button
                     className="btn btn--danger"
                     onClick={() => handleDelete(c.id)}
                     style={{ marginLeft: 10 }}
                   >
-                    Ištrinti
+                    {t("costumesAdmin.delete")}
                   </button>
                 </td>
               </tr>

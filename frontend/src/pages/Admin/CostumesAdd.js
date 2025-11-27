@@ -1,9 +1,12 @@
 import { useState } from "react";
 import { apiPost } from "../../lib/api";
 import { useNavigate } from "react-router-dom";
+import { useI18n } from "../../lib/i18n";
+import "../../styles/AdminCostumes.css";
 
 export default function CostumesAdd() {
   const navigate = useNavigate();
+  const { t } = useI18n();
 
   const [form, setForm] = useState({
     name: "",
@@ -48,41 +51,44 @@ export default function CostumesAdd() {
   }
 
   return (
-    <div style={{ maxWidth: 600 }}>
-      <h2>Pridėti naują kostiumą</h2>
+    <div>
+      <h2>{t("costumesAdd.tittle")}</h2>
 
-      {error && <p style={{ color: "red" }}>{error}</p>}
-      {success && <p style={{ color: "lightgreen" }}>{success}</p>}
+      {error && <p>{error}</p>}
+      {success && <p>{success}</p>}
 
       <form onSubmit={handleSubmit} className="form-admin">
 
-        <label>Pavadinimas</label>
+        <label>{t("costumesAdd.name")}</label>
         <input name="name" value={form.name} onChange={handleChange} required />
 
-        <label>Aprašymas</label>
+        <label>{t("costumesAdd.text")}</label>
         <textarea name="description" value={form.description} onChange={handleChange} required />
 
-        <label>Pirkimo kaina (€)</label>
+        <label>{t("costumesAdd.price")}</label>
         <input type="number" name="price" value={form.price} onChange={handleChange} required />
 
-        <label>Nuomos kaina (€ / dienai)</label>
+        <label>{t("costumesAdd.rent")}</label>
         <input type="number" name="rentalPrice" value={form.rentalPrice} onChange={handleChange} required />
 
-        <label>Kiekis sandėlyje</label>
+        <label>{t("costumesAdd.quantity")}</label>
         <input type="number" name="quantity" value={form.quantity} onChange={handleChange} />
 
-        <label>Kategorija</label>
+        <label>{t("costumesAdd.category")}</label>
         <input name="category" value={form.category} onChange={handleChange} />
 
-        <label>Dydžiai (pvz: S,M,L)</label>
+        <label>{t("costumesAdd.sizes")}</label>
         <input name="size" value={form.size} onChange={handleChange} />
 
-        <label>Nuotraukų URL (per kablelį)</label>
+        <label>{t("costumesAdd.images")}</label>
         <input name="imageUrls" value={form.imageUrls} onChange={handleChange} />
-
-        <button className="btn btn--primary" type="submit" style={{ marginTop: 20 }}>
-          Pridėti kostiumą
+        
+        <div class="mygtukas">
+        <button className="btn btn--primary" type="submit" >
+          {t("costumesAdd.add")}
+        
         </button>
+        </div>
       </form>
     </div>
   );

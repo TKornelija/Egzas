@@ -201,6 +201,79 @@ const translations = {
       address: "Adresas",
       note: "Dirbame I–V: 10:00–18:00. Laukiame jūsų klausimų ir užklausų!",
     },
+    costumesEdit:{
+      loading: "Kraunama",
+      edit: "Redaguoti kostiumą",
+      name: "Pavadinimas",
+      text: "Aprašymas",
+      price: "Pirkimo kaina",
+      rent: "Nuomos kaina (€ / dienai)",
+      quantity: "Kiekis sandėlyje",
+      category: "Kategorija",
+      size: "Dydis (pvz. S, M, L, XL)",
+      image: "Nuotraukų URL",
+      save: "Išsaugoti",
+    },
+    costumesAdmin:{
+    loading: "Kraunama...",
+    edit: "Kostiumų valdymas",
+    add: "Pridėti naują kostiumą",
+    none: "Šiuo metu nėra kostiumų.",
+    id: "ID",
+    name: "Pavadinimas",
+    price: "Kaina",
+    quantity: "Kiekis",
+    action: "Veiksmai",
+    change: "Redaguoti",
+    delete: "Ištrinti",
+    rent: "Nuomos kaina"
+   },
+   dashboardAdmin:{
+    costumes: "Kostiumai",
+    faq: "DUK",
+    reservations: "Rezervacijos",
+    orders: "Užsakymai"
+   },
+   faqAdmin:{
+   loading: "Kraunama...",
+   edit: "Redaguoti klausimą",
+   question: "Klausimas:",
+   answer: "Atsakymas:",
+   visability: "Viešas",
+   save: "Išsaugoti",
+   delete: "Ištrinti klausimą",
+   },
+   faqNew:{
+   new: "Naujas klausimas",
+   question: "Klausimas:",
+   answer: "Atsakymas (nebūtinas)",
+   visability: "Padaryti viešą",
+   save: "Išsaugoti"
+   },
+   costumesAdd:{
+   tittle: "Pridėti naują kostiumą",
+   name: "Pavadinimas",
+   text: "Aprašymas",
+   price: "Pirkimo kaina (€)",
+   rent: "Nuomos kaina (€ / dienai)",
+   quantity: "Kiekis sandėlyje",
+   category: "Kategorija",
+   sizes: "Dydžiai (pvz: S,M,L)",
+   images: "Nuotraukų URL (per kablelį)",
+   add: "Pridėti kostiumą"
+
+   },
+   faqAdminMain:{
+   loading: "Kraunama...",
+   tittle: "Klausimų sąrašas",
+   new: "Naujas klausimas",
+   question: "Klausimas",
+   visability: "Viešas",
+   action: "Veiksmai",
+   none: "Nėra atsakymo",
+   edit: "Redaguoti",
+   answer: "Atsakymas"
+   }
   },
 
   en: {
@@ -404,6 +477,79 @@ const translations = {
       address: "Address",
       note: "We work Mon–Fri: 10:00–18:00.",
     },
+        costumesEdit:{
+      loading: "Loading",
+      edit: "Edit costume",
+      name: "Name",
+      text: "Description",
+      price: "Purchase price",
+      rent: "Rental price (€/day)",
+      quantity: "Quantity in stock",
+      category: "Category",
+      size: "Size (e.g. S, M, L, XL)",
+      image: "Photo URLs",
+      save: "Save",
+    },
+    costumesAdmin:{
+    loading: "Loading",
+    edit: "Costume management",
+    add: "Add a new costume",
+    none: "There are no costumes at this time.",
+    id: "ID",
+    name: "Name",
+    price: "Price",
+    quantity: "Quantity",
+    action: "Actions",
+    change: "Edit",
+    delete: "Delete",
+    rent: "Rental price"
+   },
+   dashboardAdmin:{
+    costumes: "Costumes",
+    faq: "FAQ",
+    reservations: "Reservations",
+    orders: "Orders"
+   },
+   faqAdmin:{
+   loading: "Loading",
+   edit: "Edit question",
+   question: "Question:",
+   answer: "Answer:",
+   visability: "Public",
+   save: "Save",
+   delete: "Delete question",
+   },
+   faqNew:{
+   new: "New question",
+   question: "Question:",
+   answer: "Answer (optional)",
+   visability: "Make public",
+   save: "Save"
+   },
+   costumesAdd:{
+   tittle: "Add a new costume",
+   name: "Name",
+   text: "Description",
+   price: "Purchase price (€)",
+   rent: "Rental price (€/day)",
+   quantity: "Quantity in stock",
+   category: "Category",
+   sizes: "Sizes (e.g. S,M,L)",
+   images: "Photo URL (comma separated)",
+   add: "Add a costume"
+
+   },
+   faqAdminMain:{
+   loading: "Loading",
+   tittle: "List of questions",
+   new: "New question",
+   question: "Question",
+   visability: "Public",
+   action: "Actions",
+   none: "No answer",
+   edit: "Edit",
+   answer: "Answer"
+  },
   },
 
   ru: {
@@ -605,6 +751,79 @@ const translations = {
       address: "Адрес",
       note: "Мы работаем Пн–Пт с 10:00 до 18:00.",
     },
+     costumesEdit:{
+      loading: "Загрузка",
+      edit: "Изменить костюм",
+      name: "имя",
+      text: "Описание",
+      price: "Цена покупки",
+      rent: "Стоимость аренды (€/день)",
+      quantity: "Количество на складе",
+      category: "Категория",
+      size: "Размер (например, S, M, L, XL)",
+      image: "URL-адреса фотографий",
+      save: "Сохранять",
+    },
+    costumesAdmin:{
+    loading: "Загрузка",
+    edit: "Управление костюмами",
+    add: "Добавить новый костюм",
+    none: "На данный момент костюмов нет.",
+    id: "ИД",
+    name: "Имя",
+    price: "Цена",
+    quantity: "Количество",
+    action: "Действия",
+    change: "Редактировать",
+    delete: "Удалить",
+    rent: "Стоимость аренды"
+   },
+   dashboardAdmin:{
+    costumes: "Костюмы",
+    faq: "Часто задаваемые вопросы",
+    reservations: "Бронирование",
+    orders: "Заказы"
+   },
+   faqAdmin:{
+   loading: "Загрузка",
+   edit: "Редактировать вопрос",
+   question: "Вопрос:",
+   answer: "Отвечать:",
+   visability: "Публичный",
+   save: "Сохранять",
+   delete: "Удалить вопрос",
+   },
+   faqNew:{
+   new: "Новый вопрос",
+   question: "Вопрос:",
+   answer: "Ответ (необязательно)",
+   visability: "Сделать публичным",
+   save: "Сохранять"
+   },
+   costumesAdd:{
+   tittle: "Добавить новый костюм",
+   name: "Имя",
+   text: "Описание",
+   price: "Цена покупки (€)",
+   rent: "Стоимость аренды (€/день)",
+   quantity: "Количество на складе",
+   category: "Категория",
+   sizes: "Размеры (например, S,M,L)",
+   images: "URL-адрес фотографии (через запятую)",
+   add: "Добавить костюм"
+
+   },
+   faqAdminMain:{
+   loading: "Загрузка",
+   tittle: "Список вопросов",
+   new: "Новый вопрос",
+   question: "Вопрос",
+   visability: "Публичный",
+   action: "Действия",
+   none: "Нет ответа",
+   edit: "Редактировать",
+   answer: "Отвечать"
+  },
   },
 };
 

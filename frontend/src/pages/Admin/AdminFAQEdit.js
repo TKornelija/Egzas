@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { useI18n } from "../../lib/i18n";
 
 export default function AdminFAQEdit() {
   const { id } = useParams();
   const navigate = useNavigate();
+  const { t } = useI18n();
 
   const [question, setQuestion] = useState("");
   const [answer, setAnswer] = useState("");
@@ -43,18 +45,18 @@ export default function AdminFAQEdit() {
     navigate("/admin/faq");
   }
 
-  if (loading) return <p>Kraunama...</p>;
+  if (loading) return <p>{t("faqAdmin.loading")}</p>;
 
   return (
     <div className="admin-faq-container">
-      <h2 className="admin-faq-title">Redaguoti klausimą</h2>
+      <h2 className="admin-faq-title">{t("faqAdmin.edit")}</h2>
 
-      <form class="faqform" onSubmit={handleSave}  style={{ padding: 20 }}>
+      <form class="faqform" onSubmit={handleSave}>
 
-        <label>Klausimas:</label>
+        <label>{t("faqAdmin.question")}</label>
         <input type="text" value={question} disabled className="input" />
 
-        <label>Atsakymas:</label>
+        <label>{t("faqAdmin.answer")}</label>
         <textarea
           className="input"
           value={answer}
@@ -62,27 +64,28 @@ export default function AdminFAQEdit() {
           required
         />
 
-        <label style={{ marginTop: 10 }}>
+        <label>
           <input
             type="checkbox"
             checked={makePublic}
             onChange={() => setMakePublic(!makePublic)}
           />
-          Viešas
+          {t("faqAdmin.visability")}
         </label>
-
-        <button className="btn btn--primary" style={{ marginTop: 20 }}>
-          Išsaugoti
+        <div>
+        <button className="btn btn--primary">
+          {t("faqAdmin.save")}
         </button>
 
         <button
           type="button"
           className="btn btn--ghost"
-          style={{ marginTop: 20, color: "red" }}
           onClick={handleDelete}
         >
-          Ištrinti klausimą
+          {t("faqAdmin.delete")}
+          
         </button>
+        </div>
       </form>
     </div>
   );

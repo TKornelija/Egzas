@@ -1,0 +1,9 @@
+form{
+    display: grid;
+}
+textarea{
+    height: 100px;
+}
+.mygtukas{
+    padding: 15px;
+}
