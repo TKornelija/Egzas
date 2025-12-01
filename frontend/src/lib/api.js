@@ -1,4 +1,4 @@
-const BASE = "http://localhost:4000";
+const BASE = "https://egzas.onrender.com";
 function getToken() {
   try {
     const user = JSON.parse(localStorage.getItem("user"));
